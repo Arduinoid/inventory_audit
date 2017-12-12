@@ -1,7 +1,5 @@
 #!/bin/usr python3
 
-from itertools import islice
-
 FILE_PATH = '..\\..\\sample_info\\server-specs\\USE014NF5K-spec'
 FILE = 'hp-drives.txt'
 TERM = 'drive'
