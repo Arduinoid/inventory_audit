@@ -3,6 +3,14 @@
 FILE_PATH = '..\\..\\sample_info\\server-specs\\USE014NF5K-spec'
 FILE = 'hp-drives.txt'
 TERM = 'drive'
+HP_DRIVE_ATTRIBS = [
+    "InterfaceType",
+    "Size",
+    "RotationalSpeed",
+    "FirmwareRevision",
+    "SerialNumber",
+    "PHYTransferRate",
+]
 
 with open(FILE_PATH + '\\' + FILE, 'r') as f:
     drive_file = f.read()
@@ -73,3 +81,7 @@ def lines_to_dict(lines):
         result[spec[0].replace(' ','').strip()] = spec[-1].strip()
 
     return result
+
+
+def get_hp_drive_attributes(attribs, dict_):
+    return { key: dict_[key] for key in attribs }
