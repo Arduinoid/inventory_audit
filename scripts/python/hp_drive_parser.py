@@ -1,8 +1,8 @@
 #!/bin/usr python3
 
 # ----- SETUP VARIABLES ------ #
-HP_FILE_PATH = '..\\..\\sample_info\\server-specs\\USE014NF5K-spec'
-DELL_FILE_PATH = '..\\..\\sample_info\\server-specs\\6TJ74S1-spec'
+HP_FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\USE014NF5K-spec'
+DELL_FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\6TJ74S1-spec'
 HP_DRIVES = 'hp-drives.txt'
 DELL_DRIVES = 'server-drives.txt'
 TERM = 'drive'
@@ -15,11 +15,56 @@ HP_DRIVE_ATTRIBS = [
     "PHYTransferRate",
 ]
 
-with open(HP_FILE_PATH + '\\' + HP_DRIVES, 'r') as f:
-    DELL_DRIVES = 'server-drives.txt'
-    drive_file = f.read()
+server_files = {
+    'HP': {
+        'path': HP_FILE_PATH,
+        'drives': {
+            'file':'hp-drives.txt',
+            'attributes': [
+                "InterfaceType",
+                "Size",
+                "RotationalSpeed",
+                "FirmwareRevision",
+                "SerialNumber",
+                "PHYTransferRate",
+            ],
+            'split-term': 'drives'
+        },
+        'memory': 'dmi-memory.txt',
+        'system': 'dmi-system.txt',
+        'hpdiscovery': 'hpdiscovery-report.xml',
+        'lshw': 'lshw-report.txt',
+    },
+    'DELL': {
+        'path': DELL_FILE_PATH,
+        'drives': {
+            'file':'server-drives.txt',
+            'attributes': [
+                'RawSize',
+                'DeviceFirmwareLevel',
+                'InquiryData',
+                'DeviceSpeed',
+                'PDType'
+            ],
+            'split-term': 'Enclosure Device ID'
+            },
+        'controller': 'server-adapter-spec.txt',
+        'memory': 'dmi-memory.txt',
+        'system': 'dmi-system.txt',
+        'hpdiscovery': 'hpdiscovery-report.xml',
+        'lshw': 'lshw-report.txt'
+    }
+}
 
-file_lines = drive_file.split('\n')
+
+def open_spec_file(brand, spec, path_list=server_files):
+    '''
+    Simple utility to make opening and setting up file test more quickley
+    '''
+    TERM = path_list[brand][spec]['split-term']
+    with open(path_list[brand]['path'] + '\\' + path_list[brand][spec]['file'], 'r') as f:
+        return f.read().split('\n')
+
 
 # ------ BEGIN FUNCTIONS -------- #
 def get_context(lines, term=TERM):
@@ -30,6 +75,9 @@ def get_context(lines, term=TERM):
     get_context('drive',)
     > [3,8]
     '''
+    if type(lines).__name__ == 'str':
+        lines = lines.split('\n')
+
     start_index = term_index(term,lines)
     end_index = list()
 
@@ -67,6 +115,7 @@ def process_drive_list(drive_list):
         return [get_hp_drive_attributes(lines_to_dict(drive)) for drive in drive_list]
     except:
         print("Could not process drive list")
+
 
 # ------- UTILITY FUNCTIONS ------- #
 def term_index(term, lines):
@@ -119,7 +168,7 @@ def lines_to_dict(lines):
     return result
 
 
-def get_hp_drive_attributes(dict_, attribs=HP_DRIVE_ATTRIBS):
+def get_hp_drive_attributes(dict_, attribs=server_files['HP']['drives']['attributes']):
     '''
     Take a dictionary of HP drive specs and return a new dictionary of specs 
     based on a given list
