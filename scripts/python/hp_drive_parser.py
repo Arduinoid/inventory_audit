@@ -1,8 +1,10 @@
 #!/bin/usr python3
 
 # ----- SETUP VARIABLES ------ #
-FILE_PATH = '..\\..\\sample_info\\server-specs\\USE014NF5K-spec'
-FILE = 'hp-drives.txt'
+HP_FILE_PATH = '..\\..\\sample_info\\server-specs\\USE014NF5K-spec'
+DELL_FILE_PATH = '..\\..\\sample_info\\server-specs\\6TJ74S1-spec'
+HP_DRIVES = 'hp-drives.txt'
+DELL_DRIVES = 'server-drives.txt'
 TERM = 'drive'
 HP_DRIVE_ATTRIBS = [
     "InterfaceType",
@@ -13,7 +15,8 @@ HP_DRIVE_ATTRIBS = [
     "PHYTransferRate",
 ]
 
-with open(FILE_PATH + '\\' + FILE, 'r') as f:
+with open(HP_FILE_PATH + '\\' + HP_DRIVES, 'r') as f:
+    DELL_DRIVES = 'server-drives.txt'
     drive_file = f.read()
 
 file_lines = drive_file.split('\n')
