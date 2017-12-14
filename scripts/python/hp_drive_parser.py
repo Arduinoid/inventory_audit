@@ -170,7 +170,7 @@ def lines_to_dict(lines):
     return result
 
 
-def get_hp_drive_attributes(dict_, attribs=server_files['HP']['drives']['attributes']):
+def get_drive_attributes(dict_, attribs):
     '''
     Take a dictionary of HP drive specs and return a new dictionary of specs 
     based on a given list
@@ -182,7 +182,13 @@ def get_hp_drive_attributes(dict_, attribs=server_files['HP']['drives']['attribu
         print("Key value does not exist in your list or dict argument")
 
 
-def parse_megaraid_inquery_field(dict_):
+def parse_megaraid_inquiry_field(dict_):
+    '''
+    Takes a dictionary of megaraid attributes and parses
+    the 'InquiryData' field into it's separate 'make','model', and 'serial' data.
+    This is then injected back into the dictionary and returned. A non destructive
+    copy of the given dict is returned
+    '''
     result = list()
     data = dict_['InquiryData'].strip()
     while True:
