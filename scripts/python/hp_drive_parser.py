@@ -22,13 +22,15 @@ server_files = {
             'file':'hp-drives.txt',
             'attributes': [
                 "InterfaceType",
+                "Make",
+                "Model",
                 "Size",
                 "RotationalSpeed",
                 "FirmwareRevision",
                 "SerialNumber",
                 "PHYTransferRate",
             ],
-            'split-term': 'drives'
+            'split-term': 'drive'
         },
         'memory': 'dmi-memory.txt',
         'system': 'dmi-system.txt',
@@ -204,4 +206,17 @@ def parse_megaraid_inquiry_field(dict_):
     dict_['Model'] = result[1]
     dict_['Serial'] = result[2]
 
+    return dict_
+
+
+def parse_hp_model_field(dict_):
+    '''
+    Takes a dict of HP drive attributes and will parse the 'Model'
+    field into 'Make' and 'Model' values. This is because the hp utility 
+    that produces this data puts this info together in the 'Model' attribute. 
+    There will then be a new dict returned containing a new 'Make' field and the 
+    existing 'Model' field will only contain the model info
+    '''
+    data = dict_['Model'].strip().split(' ')
+    dict_['Make'], dict_['Model'] = data
     return dict_
