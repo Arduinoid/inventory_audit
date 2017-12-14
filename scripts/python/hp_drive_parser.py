@@ -42,7 +42,9 @@ server_files = {
             'attributes': [
                 'RawSize',
                 'DeviceFirmwareLevel',
-                'InquiryData',
+                'Make',
+                'Model',
+                'Serial',
                 'DeviceSpeed',
                 'PDType'
             ],
@@ -179,3 +181,21 @@ def get_hp_drive_attributes(dict_, attribs=server_files['HP']['drives']['attribu
     except KeyError:
         print("Key value does not exist in your list or dict argument")
 
+
+def parse_megaraid_inquery_field(dict_):
+    result = list()
+    data = dict_['InquiryData'].strip()
+    while True:
+        index = data.find(' ')
+        result.append(data[:index])
+        data = data[index:].strip()
+        if data.find(' ') < 0:
+            result.append(data)
+            break
+
+    assert len(result) == 3, f'Result does not have all three datum: {result}'
+    dict_['Make'] = result[0]
+    dict_['Model'] = result[1]
+    dict_['Serial'] = result[2]
+
+    return dict_
