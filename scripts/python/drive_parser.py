@@ -1,7 +1,9 @@
 #!/bin/usr python3
 
+import os
+
 # ----- SETUP VARIABLES ------ #
-HP_FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\USE014NF5K-spec'
+FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\'
 DELL_FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\6TJ74S1-spec'
 HP_DRIVES = 'hp-drives.txt'
 DELL_DRIVES = 'server-drives.txt'
@@ -15,7 +17,7 @@ HP_DRIVE_ATTRIBS = [
     "PHYTransferRate",
 ]
 
-class DriveProcess:
+class DriveProcess(object):
     '''
     This class will be used to process the output files
     for hard drive information. It will take a file object and determine
@@ -24,14 +26,29 @@ class DriveProcess:
     For now there will only be two manufactures. 
 
     Example:
-    drive = DriveProcess(file_obj)
+    drive = DriveProcess(file_path)
 
     When the new instance is called it will return a list of dicts
     containing drive attributes
     '''
 
-    def __init__(self, file_obj):
-        self.file = file_obj.read().split('\n')
+    def __init__(self, file_path):
+        self.files = get_files(file_path)
+        self.content = file_to_lines(self.files)
+
+
+    def file_to_lines(self,file_path):
+        with open(file_path, 'r') as f:
+            return f.read().split('\n')
+
+
+    def get_files(file_path):
+        dirs = os.listdir(file_path)
+        files = dict()
+        for d in file_path:
+            files[d] = os.listdir(file_path + '\\' + d)
+
+        return files
 
 server_files = {
     'HP': {
