@@ -15,6 +15,24 @@ HP_DRIVE_ATTRIBS = [
     "PHYTransferRate",
 ]
 
+class DriveProcess:
+    '''
+    This class will be used to process the output files
+    for hard drive information. It will take a file object and determine
+    based on prefix whether how the information should be parsed.
+
+    For now there will only be two manufactures. 
+
+    Example:
+    drive = DriveProcess(file_obj)
+
+    When the new instance is called it will return a list of dicts
+    containing drive attributes
+    '''
+
+    def __init__(self, file_obj):
+        self.file = file_obj.read().split('\n')
+
 server_files = {
     'HP': {
         'path': HP_FILE_PATH,
@@ -30,7 +48,8 @@ server_files = {
                 "SerialNumber",
                 "PHYTransferRate",
             ],
-            'split-term': 'drive'
+            'split-term': 'drive',
+            'process': parse_hp_model_field
         },
         'memory': 'dmi-memory.txt',
         'system': 'dmi-system.txt',
@@ -50,7 +69,8 @@ server_files = {
                 'DeviceSpeed',
                 'PDType'
             ],
-            'split-term': 'Enclosure Device ID'
+            'split-term': 'Enclosure Device ID',
+            'process': lambda drives : [ parse_megaraid_inquiry_field(drive) for drive in drives ],
             },
         'controller': 'server-adapter-spec.txt',
         'memory': 'dmi-memory.txt',
@@ -95,7 +115,7 @@ def get_context(lines, term=TERM):
     return sublist(context,lines)
 
 
-def process_drive_list(drive_list):
+def process_drives(brand):
     '''
     Takes a list of list and returns a list of dicts
 
@@ -106,7 +126,7 @@ def process_drive_list(drive_list):
     RESTful API
 
     example:
-    process_drive_list([
+    process_drives([
         ['spec1: value1', '   spec2: value2'],
         ['spec1: value1', '   spec2: value2']
     ]) 
@@ -115,10 +135,13 @@ def process_drive_list(drive_list):
         {'spec1': 'value1', 'spec2': 'value2'}
         ]
     '''
-    try:
-        return [get_hp_drive_attributes(lines_to_dict(drive)) for drive in drive_list]
-    except:
-        print("Could not process drive list")
+    spec = 'drives'
+    process = server_files[brand][spec]['process']
+    attribs = server_files[brand][spec]['attributes']
+    drives = [lines_to_dict(drive) for drive in get_context(open_spec_file(brand,spec,server_files),spec)]
+    drives = [get_drive_attributes(process(drive),attribs) for drive in drives]
+
+    return drives
 
 
 # ------- UTILITY FUNCTIONS ------- #
@@ -220,3 +243,4 @@ def parse_hp_model_field(dict_):
     data = dict_['Model'].strip().split(' ')
     dict_['Make'], dict_['Model'] = data
     return dict_
+
