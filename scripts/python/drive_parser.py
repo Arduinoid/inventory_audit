@@ -3,7 +3,7 @@
 import os
 
 # ----- SETUP VARIABLES ------ #
-FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\'
+FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs'
 DELL_FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\6TJ74S1-spec'
 HP_DRIVES = 'hp-drives.txt'
 DELL_DRIVES = 'server-drives.txt'
@@ -33,26 +33,37 @@ class DriveProcess(object):
     '''
 
     def __init__(self, file_path):
-        self.files = get_files(file_path)
-        self.content = file_to_lines(self.files)
+        assert os.path.exists(file_path), "File path is not valid or does not exist"
+        self.path = os.path.abspath(file_path)
+        self.files = self.get_files(file_path)
+        self.content = self.file_to_lines(self.files)
 
 
-    def file_to_lines(self,file_path):
-        with open(file_path, 'r') as f:
-            return f.read().split('\n')
+    def file_to_lines(self,files):
+        result = dict()
+        for d, l in files.items():
+            result[d] = dict()
+            for f in l:
+                with open(self.path + '\\' + d + '\\' + f, 'r') as file:
+                    result[d].update({f: file.read().split('\n')})
 
-
-    def get_files(file_path):
+        return result 
+                
+            
+    def get_files(self,file_path):
         dirs = os.listdir(file_path)
         files = dict()
-        for d in file_path:
+        for d in dirs:
             files[d] = os.listdir(file_path + '\\' + d)
 
         return files
 
+
+
+
 server_files = {
     'HP': {
-        'path': HP_FILE_PATH,
+        'path': FILE_PATH,
         'drives': {
             'file':'hp-drives.txt',
             'attributes': [
@@ -66,7 +77,7 @@ server_files = {
                 "PHYTransferRate",
             ],
             'split-term': 'drive',
-            'process': parse_hp_model_field
+            'process': ''
         },
         'memory': 'dmi-memory.txt',
         'system': 'dmi-system.txt',
