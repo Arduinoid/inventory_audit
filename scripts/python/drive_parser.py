@@ -124,7 +124,7 @@ def get_context(lines, term=TERM):
     Get the end index for each start index in a list
 
     example:
-    get_context('drive',)
+    get_context(lines, term=TERM)
     > [3,8]
     '''
     if type(lines).__name__ == 'str':
