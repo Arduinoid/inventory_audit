@@ -18,14 +18,28 @@ chmod +x $CLEANUP
 dmidecode -t 1 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Product/p' -e '/Serial/p' > $DIRPATH/dmi-system.txt
 dmidecode -t 3 | sed -e 's/\t//g' -e 's/\s//g' | sed -n '/Asset/p' >> $DIRPATH/dmi-system.txt
 dmidecode -t 17 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Part/p' -e '/Serial/p' -e '/Size/p' -e'/Type/p' -e '/Rank/p' > $DIRPATH/dmi-memory.txt
+lshw -xml > $DIRPATH/lshw-report.xml
 lshw > $DIRPATH/lshw-report.txt
 hpdiscovery -f $DIRPATH/hpdiscovery-report.xml
 
-if [ "$MANU" = "HP" ]
-then 
+# if [ "$MANU" = "HP" ]
+# then 
+#     hpssacli ctrl slot=0 pd all show detail > $DIRPATH/hp-drives.txt
+# else
+#     MegaCli64 -AdpAllInfo -aAll > $DIRPATH/dell-controller.txt
+#     MegaCli64 -PDList -aALL > $DIRPATH/dell-drives.txt
+# fi
+
+case "$MANU" in
+"HP")
     hpssacli ctrl slot=0 pd all show detail > $DIRPATH/hp-drives.txt
-else
-    MegaCli64 -AdpAllInfo -aAll > $DIRPATH/server-adapter-spec.txt
-    MegaCli64 -PDList -aALL > $DIRPATH/server-drives.txt
-fi
+    ;;
+"Dell*")
+    MegaCli64 -AdpAllInfo -aAll > $DIRPATH/dell-controller.txt
+    MegaCli64 -PDList -aALL > $DIRPATH/dell-drives.txt
+    ;;
+*)
+    lshw -C disk -xml > $DIRPATH/server-drives.xml
+    ;;
+esac
 
