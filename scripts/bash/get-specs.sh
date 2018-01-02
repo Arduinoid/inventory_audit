@@ -18,8 +18,7 @@ chmod +x $CLEANUP
 dmidecode -t 1 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Product/p' -e '/Serial/p' > $DIRPATH/dmi-system.txt
 dmidecode -t 3 | sed -e 's/\t//g' -e 's/\s//g' | sed -n '/Asset/p' >> $DIRPATH/dmi-system.txt
 dmidecode -t 17 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Part/p' -e '/Serial/p' -e '/Size/p' -e'/Type/p' -e '/Rank/p' > $DIRPATH/dmi-memory.txt
-lshw -xml > $DIRPATH/lshw-report.xml
-lshw > $DIRPATH/lshw-report.txt
+lshw -json > $DIRPATH/lshw-report.json
 hpdiscovery -f $DIRPATH/hpdiscovery-report.xml
 
 # if [ "$MANU" = "HP" ]
@@ -39,7 +38,7 @@ case "$MANU" in
     MegaCli64 -PDList -aALL > $DIRPATH/dell-drives.txt
     ;;
 *)
-    lshw -C disk -xml > $DIRPATH/server-drives.xml
+    lshw -C disk -quiet -json > $DIRPATH/server-drives.json
     ;;
 esac
 
