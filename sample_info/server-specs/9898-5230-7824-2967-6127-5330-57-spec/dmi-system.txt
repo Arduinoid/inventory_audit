@@ -1,0 +1,4 @@
+Manufacturer:MicrosoftCorporation
+ProductName:VirtualMachine
+SerialNumber:9898-5230-7824-2967-6127-5330-57
+AssetTag:9898-5230-7824-2967-6127-5330-57

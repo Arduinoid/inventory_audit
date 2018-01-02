@@ -36,7 +36,7 @@ class BaseProcess(object):
             result[d] = dict()
             for f in l:
                 with open(self.path + '\\' + d + '\\' + f, 'r') as file:
-                    result[d].update({f: file.read().split('\n')})
+                    result[d].update({f: file.read().split('\n') if '.txt' in f else file.read() })
 
         return result 
                 
@@ -98,15 +98,6 @@ server_files = {
         'lshw': 'lshw-report.txt'
     }
 }
-
-
-def open_spec_file(brand, spec, path_list=server_files):
-    '''
-    Simple utility to make opening and setting up file test more quickley
-    '''
-    TERM = path_list[brand][spec]['split-term']
-    with open(path_list[brand]['path'] + '\\' + path_list[brand][spec]['file'], 'r') as f:
-        return f.read().split('\n')
 
 
 # ------ BEGIN FUNCTIONS -------- #
