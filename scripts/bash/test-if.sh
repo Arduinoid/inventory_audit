@@ -1,10 +1,12 @@
 #!/bin/sh
 
-INET=`ifconfig | cut -d ' ' -f 1 | sed -n -e '1p'` | grep -i e
+INET=`ifconfig | cut -d ' ' -f 1 | sed -n -e '1p' | grep -i e`
 ETHCONF=/etc/network/interfaces
+NFS="10.11.203.100:/nfs"
 
 if [ -z "$INET" ]
 then
+    echo "Setting up interface..."
     INET=`ifconfig -a | cut -d ' ' -f 1 | sed -n -e '1p'`
     echo "source /etc/network/interfaces.d*" > $ETHCONF
     echo "auto lo" >> $ETHCONF
@@ -14,8 +16,18 @@ then
     echo "iface $INET inet dhcp" >> $ETHCONF
 
     dhclient $INET
-    mount 10.11.203.100:/nfs /mnt
+    echo "Interface $INET is now setup"
+    mount $NFS /mnt
 else
     echo 'Interface is up'
+    MOUNT=`df -h | grep -i /mnt`
+    if [ -z "$MOUNT" ]
+    then
+        echo "Mounting NFS from $NFS ..."
+        mount 10.11.203.100:/nfs /mnt
+        echo "Mount complete"
+    else
+        echo "NFS mounted from $NFS"
+    fi
 fi
 
