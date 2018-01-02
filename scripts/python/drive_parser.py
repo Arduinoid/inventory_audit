@@ -17,29 +17,20 @@ HP_DRIVE_ATTRIBS = [
     "PHYTransferRate",
 ]
 
-class DriveProcess(object):
+class BaseProcess(object):
     '''
-    This class will be used to process the output files
-    for hard drive information. It will take a file object and determine
-    based on prefix whether how the information should be parsed.
-
-    For now there will only be two manufactures. 
-
-    Example:
-    drive = DriveProcess(file_path)
-
-    When the new instance is called it will return a list of dicts
-    containing drive attributes
+    This is the base class that other parser classes will inherit from.
+    It contains the common properties and methods used by other parsers 
     '''
 
     def __init__(self, file_path):
         assert os.path.exists(file_path), "File path is not valid or does not exist"
         self.path = os.path.abspath(file_path)
         self.files = self.get_files(file_path)
-        self.content = self.file_to_lines(self.files)
+        self.content = self.get_contents(self.files)
 
 
-    def file_to_lines(self,files):
+    def get_contents(self,files):
         result = dict()
         for d, l in files.items():
             result[d] = dict()
