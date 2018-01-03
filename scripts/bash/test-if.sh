@@ -1,6 +1,6 @@
 #!/bin/sh
 
-INET=`ifconfig | cut -d ' ' -f 1 | sed -n -e '1p' | grep -i e`
+INET=`ifconfig -a | sed -n 's/^\S/&/p' | sed -n 's/^e.*/&/p' | cut -d ' ' -f 1`
 ETHCONF=/etc/network/interfaces
 NFS="10.11.203.100:/nfs"
 
@@ -14,6 +14,7 @@ then
     echo "" >> $ETHCONF
     echo "auto $INET" >> $ETHCONF
     echo "iface $INET inet dhcp" >> $ETHCONF
+    echo "" >> $ETHCONF
 
     dhclient $INET
     echo "Interface $INET is now setup"
