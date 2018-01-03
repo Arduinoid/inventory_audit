@@ -4,7 +4,7 @@ STAG=`dmidecode -t 1 | grep -i serial | sed -e 's/^.*:\s//' -e 's/\s//g'`
 MANU=`dmidecode -t 1 | grep -i manufact | sed -e 's/^.*:\s//' -e 's/\s//g'`
 DIRNAME=$STAG-spec
 DIRPATH="/tmp/$DIRNAME"
-CLEANUP="/home/tv/cleanup.sh"
+CLEANUP="/scripts/cleanup.sh"
 
 mkdir $DIRPATH
 
