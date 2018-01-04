@@ -23,20 +23,8 @@ done
 for i in $INET
 do
     dhclient $i
+    IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
     echo "Interface $i is now setup"
+    echo $IPADDR
+    echo ""
 done
-
-MOUNT=`df -h | grep -i /mnt`
-if [ -z "$MOUNT" ]
-then
-    echo "Mounting NFS from $NFS ..."
-    mount $NFS /mnt
-
-    # Check if mounted after mount attempt
-    MOUNT=`df -h | grep -i /mnt`
-    [ ! -z "$MOUNT"] && echo "Mount from $NFS complete" || echo "FAILED Mount from $NFS"
-
-else
-    echo "NFS already mounted from $NFS"
-fi
-
