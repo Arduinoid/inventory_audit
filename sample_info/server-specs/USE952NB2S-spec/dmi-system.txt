@@ -1,0 +1,4 @@
+Manufacturer:HP
+ProductName:ProLiantDL380G6
+SerialNumber:USE952NB2S
+AssetTag:

@@ -1,0 +1,82 @@
+
+Smart Array P410i in Slot 0 (Embedded)
+
+   array A
+
+      physicaldrive 1I:1:1
+         Port: 1I
+         Box: 1
+         Bay: 1
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: SAS
+         Size: 147.0 GB
+         Drive exposed to OS: False
+         Native Block Size: 512
+         Rotational Speed: 10000
+         Firmware Revision: 0102
+         Serial Number: D0A0PC206VLA
+         Model: FUJITSU MBD2147RC
+         Current Temperature (C): 23
+         PHY Count: 2
+         PHY Transfer Rate: 6.0Gbps, Unknown
+         Sanitize Erase Supported: False
+
+      physicaldrive 1I:1:2
+         Port: 1I
+         Box: 1
+         Bay: 2
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: SAS
+         Size: 147.0 GB
+         Drive exposed to OS: False
+         Native Block Size: 512
+         Rotational Speed: 10000
+         Firmware Revision: 0102
+         Serial Number: D0A0PC206VJN
+         Model: FUJITSU MBD2147RC
+         Current Temperature (C): 21
+         PHY Count: 2
+         PHY Transfer Rate: 6.0Gbps, Unknown
+         Sanitize Erase Supported: False
+
+      physicaldrive 1I:1:3
+         Port: 1I
+         Box: 1
+         Bay: 3
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: SAS
+         Size: 147.0 GB
+         Drive exposed to OS: False
+         Native Block Size: 512
+         Rotational Speed: 10000
+         Firmware Revision: 0102
+         Serial Number: D0A0PC206VLC
+         Model: FUJITSU MBD2147RC
+         Current Temperature (C): 24
+         PHY Count: 2
+         PHY Transfer Rate: 6.0Gbps, Unknown
+         Sanitize Erase Supported: False
+
+      physicaldrive 1I:1:4
+         Port: 1I
+         Box: 1
+         Bay: 4
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: SAS
+         Size: 147.0 GB
+         Drive exposed to OS: False
+         Native Block Size: 512
+         Rotational Speed: 10000
+         Firmware Revision: 0102
+         Serial Number: D0A0PC206VKK
+         Model: FUJITSU MBD2147RC
+         Current Temperature (C): 23
+         PHY Count: 2
+         PHY Transfer Rate: 6.0Gbps, Unknown
+         Sanitize Erase Supported: False
+
+
