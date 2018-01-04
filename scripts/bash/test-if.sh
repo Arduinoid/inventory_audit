@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 INET=`ifconfig -a | sed -n 's/^\S/&/p' | sed -n 's/^e.*/&/p' | cut -d ' ' -f 1`
 ETHCONF=/etc/network/interfaces
