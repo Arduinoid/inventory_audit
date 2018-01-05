@@ -1,0 +1,2090 @@
+{
+  "id" : "asset-audit",
+  "class" : "system",
+  "claimed" : true,
+  "handle" : "DMI:0100",
+  "description" : "Rack Mount Chassis",
+  "product" : "PowerEdge R410",
+  "vendor" : "Dell Inc.",
+  "serial" : "HP2NQL1",
+  "width" : 64,
+  "configuration" : {
+    "boot" : "normal",
+    "chassis" : "rackmount",
+    "uuid" : "44454C4C-5000-1032-804E-C8C04F514C31"
+  },
+  "capabilities" : {
+    "smbios-2.6" : "SMBIOS version 2.6",
+    "dmi-2.6" : "DMI version 2.6",
+    "vsyscall32" : "32-bit processes"
+  },
+  "children" : [
+    {
+      "id" : "core",
+      "class" : "bus",
+      "claimed" : true,
+      "handle" : "DMI:0200",
+      "description" : "Motherboard",
+      "product" : "0N051F",
+      "vendor" : "Dell Inc.",
+      "physid" : "0",
+      "version" : "A04",
+      "serial" : "..CN137409CM00LF.",
+      "children" : [
+        {
+          "id" : "firmware",
+          "class" : "memory",
+          "claimed" : true,
+          "description" : "BIOS",
+          "vendor" : "Dell Inc.",
+          "physid" : "0",
+          "version" : "1.12.0",
+          "date" : "07/30/2013",
+          "units" : "bytes",
+          "size" : 65536,
+          "capacity" : 4128768,
+          "capabilities" : {
+            "isa" : "ISA bus",
+            "pci" : "PCI bus",
+            "pnp" : "Plug-and-Play",
+            "upgrade" : "BIOS EEPROM can be upgraded",
+            "shadowing" : "BIOS shadowing",
+            "cdboot" : "Booting from CD-ROM/DVD",
+            "bootselect" : "Selectable boot path",
+            "edd" : "Enhanced Disk Drive extensions",
+            "int13floppytoshiba" : "Toshiba floppy",
+            "int13floppy360" : "5.25\" 360KB floppy",
+            "int13floppy1200" : "5.25\" 1.2MB floppy",
+            "int13floppy720" : "3.5\" 720KB floppy",
+            "int9keyboard" : "i8042 keyboard controller",
+            "int14serial" : "INT14 serial line control",
+            "int10video" : "INT10 CGA/Mono video",
+            "acpi" : "ACPI",
+            "usb" : "USB legacy emulation",
+            "biosbootspecification" : "BIOS boot specification",
+            "netboot" : "Function-key initiated network service boot"
+          }
+        },
+        {
+          "id" : "cpu:0",
+          "class" : "processor",
+          "claimed" : true,
+          "handle" : "DMI:0400",
+          "description" : "CPU",
+          "product" : "Intel(R) Xeon(R) CPU           E5504  @ 2.00GHz",
+          "vendor" : "Intel Corp.",
+          "physid" : "400",
+          "businfo" : "cpu@0",
+          "version" : "Intel(R) Xeon(R) CPU           E5504  @ 2.00GHz",
+          "slot" : "CPU1",
+          "units" : "Hz",
+          "size" : 2000000000,
+          "capacity" : 3600000000,
+          "width" : 64,
+          "clock" : 505032704,
+          "configuration" : {
+            "cores" : "4",
+            "enabledcores" : "4",
+            "threads" : "4"
+          },
+          "capabilities" : {
+            "x86-64" : "64bits extensions (x86-64)",
+            "fpu" : "mathematical co-processor",
+            "fpu_exception" : "FPU exceptions reporting",
+            "wp" : true,
+            "vme" : "virtual mode extensions",
+            "de" : "debugging extensions",
+            "pse" : "page size extensions",
+            "tsc" : "time stamp counter",
+            "msr" : "model-specific registers",
+            "pae" : "4GB+ memory addressing (Physical Address Extension)",
+            "mce" : "machine check exceptions",
+            "cx8" : "compare and exchange 8-byte",
+            "apic" : "on-chip advanced programmable interrupt controller (APIC)",
+            "sep" : "fast system calls",
+            "mtrr" : "memory type range registers",
+            "pge" : "page global enable",
+            "mca" : "machine check architecture",
+            "cmov" : "conditional move instruction",
+            "pat" : "page attribute table",
+            "pse36" : "36-bit page size extensions",
+            "clflush" : true,
+            "dts" : "debug trace and EMON store MSRs",
+            "acpi" : "thermal control (ACPI)",
+            "mmx" : "multimedia extensions (MMX)",
+            "fxsr" : "fast floating point save/restore",
+            "sse" : "streaming SIMD extensions (SSE)",
+            "sse2" : "streaming SIMD extensions (SSE2)",
+            "ss" : "self-snoop",
+            "ht" : "HyperThreading",
+            "tm" : "thermal interrupt and status",
+            "pbe" : "pending break event",
+            "syscall" : "fast system calls",
+            "nx" : "no-execute bit (NX)",
+            "rdtscp" : true,
+            "constant_tsc" : true,
+            "arch_perfmon" : true,
+            "pebs" : true,
+            "bts" : true,
+            "rep_good" : true,
+            "nopl" : true,
+            "xtopology" : true,
+            "nonstop_tsc" : true,
+            "aperfmperf" : true,
+            "pni" : true,
+            "dtes64" : true,
+            "monitor" : true,
+            "ds_cpl" : true,
+            "vmx" : true,
+            "est" : true,
+            "tm2" : true,
+            "ssse3" : true,
+            "cx16" : true,
+            "xtpr" : true,
+            "pdcm" : true,
+            "dca" : true,
+            "sse4_1" : true,
+            "sse4_2" : true,
+            "popcnt" : true,
+            "lahf_lm" : true,
+            "tpr_shadow" : true,
+            "vnmi" : true,
+            "flexpriority" : true,
+            "ept" : true,
+            "vpid" : true,
+            "dtherm" : true
+          },
+          "children" : [
+            {
+              "id" : "cache:0",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:0700",
+              "description" : "L1 cache",
+              "physid" : "700",
+              "units" : "bytes",
+              "size" : 131072,
+              "capacity" : 131072,
+              "configuration" : {
+                "level" : "1"
+              },
+              "capabilities" : {
+                "internal" : "Internal",
+                "write-back" : "Write-back",
+                "data" : "Data cache"
+              }
+            },
+            {
+              "id" : "cache:1",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:0701",
+              "description" : "L2 cache",
+              "physid" : "701",
+              "units" : "bytes",
+              "size" : 1048576,
+              "capacity" : 2097152,
+              "configuration" : {
+                "level" : "2"
+              },
+              "capabilities" : {
+                "internal" : "Internal",
+                "write-back" : "Write-back",
+                "unified" : "Unified cache"
+              }
+            },
+            {
+              "id" : "cache:2",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:0702",
+              "description" : "L3 cache",
+              "physid" : "702",
+              "units" : "bytes",
+              "size" : 4194304,
+              "capacity" : 4194304,
+              "configuration" : {
+                "level" : "3"
+              },
+              "capabilities" : {
+                "internal" : "Internal",
+                "write-back" : "Write-back",
+                "unified" : "Unified cache"
+              }
+            }
+          ]
+        },
+        {
+          "id" : "cpu:1",
+          "class" : "processor",
+          "claimed" : true,
+          "handle" : "DMI:0401",
+          "description" : "CPU",
+          "product" : "Intel(R) Xeon(R) CPU           E5504  @ 2.00GHz",
+          "vendor" : "Intel Corp.",
+          "physid" : "401",
+          "businfo" : "cpu@1",
+          "version" : "Intel(R) Xeon(R) CPU           E5504  @ 2.00GHz",
+          "slot" : "CPU2",
+          "units" : "Hz",
+          "size" : 2000000000,
+          "capacity" : 3600000000,
+          "width" : 64,
+          "clock" : 505032704,
+          "configuration" : {
+            "cores" : "4",
+            "enabledcores" : "4",
+            "threads" : "4"
+          },
+          "capabilities" : {
+            "x86-64" : "64bits extensions (x86-64)",
+            "fpu" : "mathematical co-processor",
+            "fpu_exception" : "FPU exceptions reporting",
+            "wp" : true,
+            "vme" : "virtual mode extensions",
+            "de" : "debugging extensions",
+            "pse" : "page size extensions",
+            "tsc" : "time stamp counter",
+            "msr" : "model-specific registers",
+            "pae" : "4GB+ memory addressing (Physical Address Extension)",
+            "mce" : "machine check exceptions",
+            "cx8" : "compare and exchange 8-byte",
+            "apic" : "on-chip advanced programmable interrupt controller (APIC)",
+            "sep" : "fast system calls",
+            "mtrr" : "memory type range registers",
+            "pge" : "page global enable",
+            "mca" : "machine check architecture",
+            "cmov" : "conditional move instruction",
+            "pat" : "page attribute table",
+            "pse36" : "36-bit page size extensions",
+            "clflush" : true,
+            "dts" : "debug trace and EMON store MSRs",
+            "acpi" : "thermal control (ACPI)",
+            "mmx" : "multimedia extensions (MMX)",
+            "fxsr" : "fast floating point save/restore",
+            "sse" : "streaming SIMD extensions (SSE)",
+            "sse2" : "streaming SIMD extensions (SSE2)",
+            "ss" : "self-snoop",
+            "ht" : "HyperThreading",
+            "tm" : "thermal interrupt and status",
+            "pbe" : "pending break event",
+            "syscall" : "fast system calls",
+            "nx" : "no-execute bit (NX)",
+            "rdtscp" : true,
+            "constant_tsc" : true,
+            "arch_perfmon" : true,
+            "pebs" : true,
+            "bts" : true,
+            "rep_good" : true,
+            "nopl" : true,
+            "xtopology" : true,
+            "nonstop_tsc" : true,
+            "aperfmperf" : true,
+            "pni" : true,
+            "dtes64" : true,
+            "monitor" : true,
+            "ds_cpl" : true,
+            "vmx" : true,
+            "est" : true,
+            "tm2" : true,
+            "ssse3" : true,
+            "cx16" : true,
+            "xtpr" : true,
+            "pdcm" : true,
+            "dca" : true,
+            "sse4_1" : true,
+            "sse4_2" : true,
+            "popcnt" : true,
+            "lahf_lm" : true,
+            "tpr_shadow" : true,
+            "vnmi" : true,
+            "flexpriority" : true,
+            "ept" : true,
+            "vpid" : true,
+            "dtherm" : true
+          },
+          "children" : [
+            {
+              "id" : "cache:0",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:0703",
+              "description" : "L1 cache",
+              "physid" : "703",
+              "units" : "bytes",
+              "size" : 131072,
+              "capacity" : 131072,
+              "configuration" : {
+                "level" : "1"
+              },
+              "capabilities" : {
+                "internal" : "Internal",
+                "write-back" : "Write-back",
+                "data" : "Data cache"
+              }
+            },
+            {
+              "id" : "cache:1",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:0704",
+              "description" : "L2 cache",
+              "physid" : "704",
+              "units" : "bytes",
+              "size" : 1048576,
+              "capacity" : 2097152,
+              "configuration" : {
+                "level" : "2"
+              },
+              "capabilities" : {
+                "internal" : "Internal",
+                "write-back" : "Write-back",
+                "unified" : "Unified cache"
+              }
+            },
+            {
+              "id" : "cache:2",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:0705",
+              "description" : "L3 cache",
+              "physid" : "705",
+              "units" : "bytes",
+              "size" : 4194304,
+              "capacity" : 4194304,
+              "configuration" : {
+                "level" : "3"
+              },
+              "capabilities" : {
+                "internal" : "Internal",
+                "write-back" : "Write-back",
+                "unified" : "Unified cache"
+              }
+            }
+          ]
+        },
+        {
+          "id" : "memory",
+          "class" : "memory",
+          "claimed" : true,
+          "handle" : "DMI:1000",
+          "description" : "System Memory",
+          "physid" : "1000",
+          "slot" : "System board or motherboard",
+          "units" : "bytes",
+          "size" : 17179869184,
+          "children" : [
+            {
+              "id" : "bank:0",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:1100",
+              "description" : "DIMM DDR3 Synchronous 1333 MHz (0.8 ns)",
+              "product" : "36JSZF51272PZ1G4F1",
+              "vendor" : "002C04B3802C",
+              "physid" : "0",
+              "serial" : "39047B4F",
+              "slot" : "DIMM_A1",
+              "units" : "bytes",
+              "size" : 4294967296,
+              "width" : 64,
+              "clock" : 1333000000
+            },
+            {
+              "id" : "bank:1",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:1101",
+              "description" : "DIMM DDR3 Synchronous 1333 MHz (0.8 ns)",
+              "product" : "36JSZF51272PZ1G4F1",
+              "vendor" : "002C04B3802C",
+              "physid" : "1",
+              "serial" : "D65F8A45",
+              "slot" : "DIMM_A2",
+              "units" : "bytes",
+              "size" : 4294967296,
+              "width" : 64,
+              "clock" : 1333000000
+            },
+            {
+              "id" : "bank:2",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:1102",
+              "description" : "DIMM DDR3 Synchronous [empty]",
+              "physid" : "2",
+              "slot" : "DIMM_A3",
+              "width" : 64
+            },
+            {
+              "id" : "bank:3",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:1103",
+              "description" : "DIMM DDR3 Synchronous [empty]",
+              "physid" : "3",
+              "slot" : "DIMM_A4",
+              "width" : 64
+            },
+            {
+              "id" : "bank:4",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:1109",
+              "description" : "DIMM DDR3 Synchronous 1333 MHz (0.8 ns)",
+              "product" : "36JSZF51272PZ1G4G1",
+              "vendor" : "002C00B3802C",
+              "physid" : "4",
+              "serial" : "335802B7",
+              "slot" : "DIMM_B1",
+              "units" : "bytes",
+              "size" : 4294967296,
+              "width" : 64,
+              "clock" : 1333000000
+            },
+            {
+              "id" : "bank:5",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:110A",
+              "description" : "DIMM DDR3 Synchronous 1333 MHz (0.8 ns)",
+              "product" : "36JSZF51272PZ1G4F1",
+              "vendor" : "002C04B3802C",
+              "physid" : "5",
+              "serial" : "D94BD823",
+              "slot" : "DIMM_B2",
+              "units" : "bytes",
+              "size" : 4294967296,
+              "width" : 64,
+              "clock" : 1333000000
+            },
+            {
+              "id" : "bank:6",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:110B",
+              "description" : "DIMM DDR3 Synchronous [empty]",
+              "physid" : "6",
+              "slot" : "DIMM_B3",
+              "width" : 64
+            },
+            {
+              "id" : "bank:7",
+              "class" : "memory",
+              "claimed" : true,
+              "handle" : "DMI:110C",
+              "description" : "DIMM DDR3 Synchronous [empty]",
+              "physid" : "7",
+              "slot" : "DIMM_B4",
+              "width" : 64
+            }
+          ]
+        },
+        {
+          "id" : "pci:0",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:00",
+          "description" : "Host bridge",
+          "product" : "5500 I/O Hub to ESI Port",
+          "vendor" : "Intel Corporation",
+          "physid" : "100",
+          "businfo" : "pci@0000:00:00.0",
+          "version" : "13",
+          "width" : 32,
+          "clock" : 33000000,
+          "children" : [
+            {
+              "id" : "pci:0",
+              "class" : "bridge",
+              "claimed" : true,
+              "handle" : "PCIBUS:0000:01",
+              "description" : "PCI bridge",
+              "product" : "5520/5500/X58 I/O Hub PCI Express Root Port 1",
+              "vendor" : "Intel Corporation",
+              "physid" : "1",
+              "businfo" : "pci@0000:00:01.0",
+              "version" : "13",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "pcieport"
+              },
+              "capabilities" : {
+                "pci" : true,
+                "msi" : "Message Signalled Interrupts",
+                "pciexpress" : "PCI Express",
+                "pm" : "Power Management",
+                "normal_decode" : true,
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "network:0",
+                  "class" : "network",
+                  "claimed" : true,
+                  "handle" : "PCI:0000:01:00.0",
+                  "description" : "Ethernet interface",
+                  "product" : "NetXtreme II BCM5716 Gigabit Ethernet",
+                  "vendor" : "Broadcom Corporation",
+                  "physid" : "0",
+                  "businfo" : "pci@0000:01:00.0",
+                  "logicalname" : "eno1",
+                  "version" : "20",
+                  "serial" : "a4:ba:db:0e:57:74",
+                  "units" : "bit/s",
+                  "size" : 1000000000,
+                  "capacity" : 1000000000,
+                  "width" : 64,
+                  "clock" : 33000000,
+                  "configuration" : {
+                    "autonegotiation" : "on",
+                    "broadcast" : "yes",
+                    "driver" : "bnx2",
+                    "driverversion" : "2.2.6",
+                    "duplex" : "full",
+                    "firmware" : "7.12.19 bc 7.10.0 NCSI 2.0.13",
+                    "ip" : "10.11.7.114",
+                    "latency" : "0",
+                    "link" : "yes",
+                    "multicast" : "yes",
+                    "port" : "twisted pair",
+                    "speed" : "1Gbit/s"
+                  },
+                  "capabilities" : {
+                    "pm" : "Power Management",
+                    "vpd" : "Vital Product Data",
+                    "msi" : "Message Signalled Interrupts",
+                    "msix" : "MSI-X",
+                    "pciexpress" : "PCI Express",
+                    "bus_master" : "bus mastering",
+                    "cap_list" : "PCI capabilities listing",
+                    "ethernet" : true,
+                    "physical" : "Physical interface",
+                    "tp" : "twisted pair",
+                    "10bt" : "10Mbit/s",
+                    "10bt-fd" : "10Mbit/s (full duplex)",
+                    "100bt" : "100Mbit/s",
+                    "100bt-fd" : "100Mbit/s (full duplex)",
+                    "1000bt-fd" : "1Gbit/s (full duplex)",
+                    "autonegotiation" : "Auto-negotiation"
+                  }
+                },
+                {
+                  "id" : "network:1",
+                  "class" : "network",
+                  "claimed" : true,
+                  "handle" : "PCI:0000:01:00.1",
+                  "description" : "Ethernet interface",
+                  "product" : "NetXtreme II BCM5716 Gigabit Ethernet",
+                  "vendor" : "Broadcom Corporation",
+                  "physid" : "0.1",
+                  "businfo" : "pci@0000:01:00.1",
+                  "logicalname" : "eno2",
+                  "version" : "20",
+                  "serial" : "a4:ba:db:0e:57:75",
+                  "units" : "bit/s",
+                  "capacity" : 1000000000,
+                  "width" : 64,
+                  "clock" : 33000000,
+                  "configuration" : {
+                    "autonegotiation" : "on",
+                    "broadcast" : "yes",
+                    "driver" : "bnx2",
+                    "driverversion" : "2.2.6",
+                    "firmware" : "7.12.19 bc 7.10.0 NCSI 2.0.13",
+                    "latency" : "0",
+                    "link" : "no",
+                    "multicast" : "yes",
+                    "port" : "twisted pair"
+                  },
+                  "capabilities" : {
+                    "pm" : "Power Management",
+                    "vpd" : "Vital Product Data",
+                    "msi" : "Message Signalled Interrupts",
+                    "msix" : "MSI-X",
+                    "pciexpress" : "PCI Express",
+                    "bus_master" : "bus mastering",
+                    "cap_list" : "PCI capabilities listing",
+                    "ethernet" : true,
+                    "physical" : "Physical interface",
+                    "tp" : "twisted pair",
+                    "10bt" : "10Mbit/s",
+                    "10bt-fd" : "10Mbit/s (full duplex)",
+                    "100bt" : "100Mbit/s",
+                    "100bt-fd" : "100Mbit/s (full duplex)",
+                    "1000bt-fd" : "1Gbit/s (full duplex)",
+                    "autonegotiation" : "Auto-negotiation"
+                  }
+                }
+              ]
+            },
+            {
+              "id" : "pci:1",
+              "class" : "bridge",
+              "claimed" : true,
+              "handle" : "PCIBUS:0000:02",
+              "description" : "PCI bridge",
+              "product" : "5520/5500/X58 I/O Hub PCI Express Root Port 3",
+              "vendor" : "Intel Corporation",
+              "physid" : "3",
+              "businfo" : "pci@0000:00:03.0",
+              "version" : "13",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "pcieport"
+              },
+              "capabilities" : {
+                "pci" : true,
+                "msi" : "Message Signalled Interrupts",
+                "pciexpress" : "PCI Express",
+                "pm" : "Power Management",
+                "normal_decode" : true,
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              }
+            },
+            {
+              "id" : "pci:2",
+              "class" : "bridge",
+              "claimed" : true,
+              "handle" : "PCIBUS:0000:03",
+              "description" : "PCI bridge",
+              "product" : "5520/5500/X58 I/O Hub PCI Express Root Port 7",
+              "vendor" : "Intel Corporation",
+              "physid" : "7",
+              "businfo" : "pci@0000:00:07.0",
+              "version" : "13",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "pcieport"
+              },
+              "capabilities" : {
+                "pci" : true,
+                "msi" : "Message Signalled Interrupts",
+                "pciexpress" : "PCI Express",
+                "pm" : "Power Management",
+                "normal_decode" : true,
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "storage",
+                  "class" : "storage",
+                  "claimed" : true,
+                  "handle" : "PCI:0000:03:00.0",
+                  "description" : "RAID bus controller",
+                  "product" : "MegaRAID SAS 1078",
+                  "vendor" : "LSI Logic / Symbios Logic",
+                  "physid" : "0",
+                  "businfo" : "pci@0000:03:00.0",
+                  "logicalname" : "scsi3",
+                  "version" : "04",
+                  "width" : 64,
+                  "clock" : 33000000,
+                  "configuration" : {
+                    "driver" : "megaraid_sas",
+                    "latency" : "0"
+                  },
+                  "capabilities" : {
+                    "storage" : true,
+                    "pciexpress" : "PCI Express",
+                    "msi" : "Message Signalled Interrupts",
+                    "msix" : "MSI-X",
+                    "pm" : "Power Management",
+                    "vpd" : "Vital Product Data",
+                    "bus_master" : "bus mastering",
+                    "cap_list" : "PCI capabilities listing",
+                    "rom" : "extension ROM"
+                  },
+                  "children" : [
+                    {
+                      "id" : "enclosure",
+                      "class" : "generic",
+                      "handle" : "SCSI:03:00:32:00",
+                      "description" : "SCSI Enclosure",
+                      "product" : "BACKPLANE",
+                      "vendor" : "DP",
+                      "physid" : "0.20.0",
+                      "businfo" : "scsi@3:0.32.0",
+                      "version" : "1.07",
+                      "configuration" : {
+                        "ansiversion" : "5"
+                      }
+                    },
+                    {
+                      "id" : "disk",
+                      "class" : "disk",
+                      "claimed" : true,
+                      "handle" : "SCSI:03:02:00:00",
+                      "description" : "SCSI Disk",
+                      "product" : "PERC 6/i",
+                      "vendor" : "DELL",
+                      "physid" : "2.0.0",
+                      "businfo" : "scsi@3:2.0.0",
+                      "logicalname" : "/dev/sdb",
+                      "dev" : "8:16",
+                      "version" : "1.22",
+                      "serial" : "0090238d053091cb2100bac854906b02",
+                      "units" : "bytes",
+                      "size" : 598879502336,
+                      "configuration" : {
+                        "ansiversion" : "5",
+                        "logicalsectorsize" : "512",
+                        "sectorsize" : "512",
+                        "signature" : "27555859"
+                      },
+                      "capabilities" : {
+                        "partitioned" : "Partitioned disk",
+                        "partitioned:dos" : "MS-DOS partition table"
+                      },
+                      "children" : [
+                        {
+                          "id" : "volume:0",
+                          "class" : "volume",
+                          "claimed" : true,
+                          "description" : "EXT4 volume",
+                          "vendor" : "Linux",
+                          "physid" : "1",
+                          "businfo" : "scsi@3:2.0.0,1",
+                          "logicalname" : "/dev/sdb1",
+                          "dev" : "8:17",
+                          "version" : "1.0",
+                          "serial" : "df663a77-c0aa-4590-add9-abaab7b8cc69",
+                          "size" : 581712216064,
+                          "capacity" : 581712216064,
+                          "configuration" : {
+                            "created" : "2017-12-19 07:15:56",
+                            "filesystem" : "ext4",
+                            "lastmountpoint" : "/",
+                            "modified" : "2017-12-21 04:28:04",
+                            "mounted" : "2017-12-21 04:28:06",
+                            "state" : "clean"
+                          },
+                          "capabilities" : {
+                            "primary" : "Primary partition",
+                            "bootable" : "Bootable partition (active)",
+                            "journaled" : true,
+                            "extended_attributes" : "Extended Attributes",
+                            "large_files" : "4GB+ files",
+                            "huge_files" : "16TB+ files",
+                            "dir_nlink" : "directories with 65000+ subdirs",
+                            "recover" : "needs recovery",
+                            "extents" : "extent-based allocation",
+                            "ext4" : true,
+                            "ext2" : "EXT2/EXT3",
+                            "initialized" : "initialized volume"
+                          }
+                        },
+                        {
+                          "id" : "volume:1",
+                          "class" : "volume",
+                          "claimed" : true,
+                          "description" : "Extended partition",
+                          "physid" : "2",
+                          "businfo" : "scsi@3:2.0.0,2",
+                          "logicalname" : "/dev/sdb2",
+                          "dev" : "8:18",
+                          "size" : 17164141568,
+                          "capacity" : 17164141568,
+                          "capabilities" : {
+                            "primary" : "Primary partition",
+                            "extended" : "Extended partition",
+                            "partitioned" : "Partitioned disk",
+                            "partitioned:extended" : "Extended partition"
+                          },
+                          "children" : [
+                            {
+                              "id" : "logicalvolume",
+                              "class" : "volume",
+                              "claimed" : true,
+                              "description" : "Linux swap / Solaris partition",
+                              "physid" : "5",
+                              "logicalname" : "/dev/sdb5",
+                              "dev" : "8:21",
+                              "capacity" : 17164140544,
+                              "capabilities" : {
+                                "nofs" : "No filesystem"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id" : "generic:0",
+              "class" : "generic",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:14.0",
+              "description" : "PIC",
+              "product" : "7500/5520/5500/X58 I/O Hub System Management Registers",
+              "vendor" : "Intel Corporation",
+              "physid" : "14",
+              "businfo" : "pci@0000:00:14.0",
+              "version" : "13",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "i7core_edac",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "pciexpress" : "PCI Express",
+                "8259" : true,
+                "cap_list" : "PCI capabilities listing"
+              }
+            },
+            {
+              "id" : "generic:1",
+              "class" : "generic",
+              "handle" : "PCI:0000:00:14.1",
+              "description" : "PIC",
+              "product" : "7500/5520/5500/X58 I/O Hub GPIO and Scratch Pad Registers",
+              "vendor" : "Intel Corporation",
+              "physid" : "14.1",
+              "businfo" : "pci@0000:00:14.1",
+              "version" : "13",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "pciexpress" : "PCI Express",
+                "8259" : true,
+                "cap_list" : "PCI capabilities listing"
+              }
+            },
+            {
+              "id" : "generic:2",
+              "class" : "generic",
+              "handle" : "PCI:0000:00:14.2",
+              "description" : "PIC",
+              "product" : "7500/5520/5500/X58 I/O Hub Control Status and RAS Registers",
+              "vendor" : "Intel Corporation",
+              "physid" : "14.2",
+              "businfo" : "pci@0000:00:14.2",
+              "version" : "13",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "pciexpress" : "PCI Express",
+                "8259" : true,
+                "cap_list" : "PCI capabilities listing"
+              }
+            },
+            {
+              "id" : "usb:0",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1a.0",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB UHCI Controller #4",
+              "vendor" : "Intel Corporation",
+              "physid" : "1a",
+              "businfo" : "pci@0000:00:1a.0",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "uhci_hcd",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "uhci" : "Universal Host Controller Interface (USB1)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:3:1",
+                  "product" : "UHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic uhci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@3",
+                  "logicalname" : "usb3",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "2",
+                    "speed" : "12Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-1.10" : "USB 1.1"
+                  },
+                  "children" : [
+                    {
+                      "id" : "usb",
+                      "class" : "input",
+                      "claimed" : true,
+                      "handle" : "USB:3:2",
+                      "description" : "Keyboard",
+                      "product" : "Dell USB Keyboard",
+                      "vendor" : "Dell",
+                      "physid" : "1",
+                      "businfo" : "usb@3:1",
+                      "version" : "1.00",
+                      "configuration" : {
+                        "driver" : "usbkbd",
+                        "maxpower" : "70mA",
+                        "speed" : "2Mbit/s"
+                      },
+                      "capabilities" : {
+                        "usb-1.10" : "USB 1.1"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id" : "usb:1",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1a.1",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB UHCI Controller #5",
+              "vendor" : "Intel Corporation",
+              "physid" : "1a.1",
+              "businfo" : "pci@0000:00:1a.1",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "uhci_hcd",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "uhci" : "Universal Host Controller Interface (USB1)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:4:1",
+                  "product" : "UHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic uhci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@4",
+                  "logicalname" : "usb4",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "2",
+                    "speed" : "12Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-1.10" : "USB 1.1"
+                  }
+                }
+              ]
+            },
+            {
+              "id" : "usb:2",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1a.7",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB2 EHCI Controller #2",
+              "vendor" : "Intel Corporation",
+              "physid" : "1a.7",
+              "businfo" : "pci@0000:00:1a.7",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "ehci-pci",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "pm" : "Power Management",
+                "debug" : "Debug port",
+                "ehci" : "Enhanced Host Controller Interface (USB2)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:1:1",
+                  "product" : "EHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic ehci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@1",
+                  "logicalname" : "usb1",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "4",
+                    "speed" : "480Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-2.00" : "USB 2.0"
+                  },
+                  "children" : [
+                    {
+                      "id" : "usb",
+                      "class" : "bus",
+                      "claimed" : true,
+                      "handle" : "USB:1:3",
+                      "description" : "USB hub",
+                      "product" : "USB 2.0 Hub",
+                      "vendor" : "Standard Microsystems Corp.",
+                      "physid" : "3",
+                      "businfo" : "usb@1:3",
+                      "version" : "0.00",
+                      "configuration" : {
+                        "driver" : "hub",
+                        "maxpower" : "2mA",
+                        "slots" : "4",
+                        "speed" : "480Mbit/s"
+                      },
+                      "capabilities" : {
+                        "usb-2.00" : "USB 2.0"
+                      },
+                      "children" : [
+                        {
+                          "id" : "usb",
+                          "class" : "storage",
+                          "claimed" : true,
+                          "handle" : "SCSI:02",
+                          "description" : "Mass storage device",
+                          "product" : "DataTraveler G3",
+                          "vendor" : "Kingston",
+                          "physid" : "1",
+                          "businfo" : "usb@1:3.1",
+                          "logicalname" : "scsi2",
+                          "version" : "1.00",
+                          "serial" : "00137277657FBA7145CD027B",
+                          "configuration" : {
+                            "driver" : "usb-storage",
+                            "maxpower" : "200mA",
+                            "speed" : "480Mbit/s"
+                          },
+                          "capabilities" : {
+                            "usb-2.00" : "USB 2.0",
+                            "scsi" : "SCSI",
+                            "emulated" : "Emulated device",
+                            "scsi-host" : "SCSI host adapter"
+                          },
+                          "children" : [
+                            {
+                              "id" : "disk",
+                              "class" : "disk",
+                              "claimed" : true,
+                              "handle" : "SCSI:02:00:00:00",
+                              "description" : "SCSI Disk",
+                              "physid" : "0.0.0",
+                              "businfo" : "scsi@2:0.0.0",
+                              "logicalname" : "/dev/sda",
+                              "dev" : "8:0",
+                              "units" : "bytes",
+                              "size" : 4007657472,
+                              "configuration" : {
+                                "logicalsectorsize" : "512",
+                                "sectorsize" : "512",
+                                "signature" : "1f5c2a15"
+                              },
+                              "capabilities" : {
+                                "partitioned" : "Partitioned disk",
+                                "partitioned:dos" : "MS-DOS partition table"
+                              },
+                              "children" : [
+                                {
+                                  "id" : "volume",
+                                  "class" : "volume",
+                                  "claimed" : true,
+                                  "description" : "Windows FAT volume",
+                                  "vendor" : "SYSLINUX",
+                                  "physid" : "1",
+                                  "businfo" : "scsi@2:0.0.0,1",
+                                  "logicalname" : ["/dev/sda1", "/mnt/live/memory/data"],
+                                  "dev" : "8:1",
+                                  "version" : "FAT32",
+                                  "serial" : "4cf8-d6ec",
+                                  "size" : 4004981760,
+                                  "capacity" : 4006608896,
+                                  "configuration" : {
+                                    "FATs" : "2",
+                                    "filesystem" : "fat",
+                                    "label" : "LINUX-AUDIT",
+                                    "mount.fstype" : "vfat",
+                                    "mount.options" : "rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=utf8,shortname=mixed,check=s,errors=remount-ro",
+                                    "state" : "mounted"
+                                  },
+                                  "capabilities" : {
+                                    "primary" : "Primary partition",
+                                    "bootable" : "Bootable partition (active)",
+                                    "fat" : "Windows FAT",
+                                    "initialized" : "initialized volume"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id" : "usb:3",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1d.0",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB UHCI Controller #1",
+              "vendor" : "Intel Corporation",
+              "physid" : "1d",
+              "businfo" : "pci@0000:00:1d.0",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "uhci_hcd",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "uhci" : "Universal Host Controller Interface (USB1)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:5:1",
+                  "product" : "UHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic uhci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@5",
+                  "logicalname" : "usb5",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "2",
+                    "speed" : "12Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-1.10" : "USB 1.1"
+                  },
+                  "children" : [
+                    {
+                      "id" : "usb",
+                      "class" : "input",
+                      "claimed" : true,
+                      "handle" : "USB:5:2",
+                      "description" : "Mouse",
+                      "product" : "USB Optical Mouse",
+                      "vendor" : "Primax Electronics, Ltd",
+                      "physid" : "1",
+                      "businfo" : "usb@5:1",
+                      "version" : "2.00",
+                      "configuration" : {
+                        "driver" : "usbmouse",
+                        "maxpower" : "100mA",
+                        "speed" : "2Mbit/s"
+                      },
+                      "capabilities" : {
+                        "usb-2.00" : "USB 2.0"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id" : "usb:4",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1d.1",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB UHCI Controller #2",
+              "vendor" : "Intel Corporation",
+              "physid" : "1d.1",
+              "businfo" : "pci@0000:00:1d.1",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "uhci_hcd",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "uhci" : "Universal Host Controller Interface (USB1)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:6:1",
+                  "product" : "UHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic uhci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@6",
+                  "logicalname" : "usb6",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "2",
+                    "speed" : "12Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-1.10" : "USB 1.1"
+                  }
+                }
+              ]
+            },
+            {
+              "id" : "usb:5",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1d.2",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB UHCI Controller #3",
+              "vendor" : "Intel Corporation",
+              "physid" : "1d.2",
+              "businfo" : "pci@0000:00:1d.2",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "uhci_hcd",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "uhci" : "Universal Host Controller Interface (USB1)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:7:1",
+                  "product" : "UHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic uhci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@7",
+                  "logicalname" : "usb7",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "2",
+                    "speed" : "12Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-1.10" : "USB 1.1"
+                  }
+                }
+              ]
+            },
+            {
+              "id" : "usb:6",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1d.3",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB UHCI Controller #6",
+              "vendor" : "Intel Corporation",
+              "physid" : "1d.3",
+              "businfo" : "pci@0000:00:1d.3",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "uhci_hcd",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "uhci" : "Universal Host Controller Interface (USB1)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:8:1",
+                  "product" : "UHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic uhci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@8",
+                  "logicalname" : "usb8",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "2",
+                    "speed" : "12Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-1.10" : "USB 1.1"
+                  }
+                }
+              ]
+            },
+            {
+              "id" : "usb:7",
+              "class" : "bus",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1d.7",
+              "description" : "USB controller",
+              "product" : "82801JI (ICH10 Family) USB2 EHCI Controller #1",
+              "vendor" : "Intel Corporation",
+              "physid" : "1d.7",
+              "businfo" : "pci@0000:00:1d.7",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "ehci-pci",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "pm" : "Power Management",
+                "debug" : "Debug port",
+                "ehci" : "Enhanced Host Controller Interface (USB2)",
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "usbhost",
+                  "class" : "bus",
+                  "claimed" : true,
+                  "handle" : "USB:2:1",
+                  "product" : "EHCI Host Controller",
+                  "vendor" : "Linux 4.4.0-97-generic ehci_hcd",
+                  "physid" : "1",
+                  "businfo" : "usb@2",
+                  "logicalname" : "usb2",
+                  "version" : "4.04",
+                  "configuration" : {
+                    "driver" : "hub",
+                    "slots" : "4",
+                    "speed" : "480Mbit/s"
+                  },
+                  "capabilities" : {
+                    "usb-2.00" : "USB 2.0"
+                  }
+                }
+              ]
+            },
+            {
+              "id" : "pci:3",
+              "class" : "bridge",
+              "claimed" : true,
+              "handle" : "PCIBUS:0000:04",
+              "description" : "PCI bridge",
+              "product" : "82801 PCI Bridge",
+              "vendor" : "Intel Corporation",
+              "physid" : "1e",
+              "businfo" : "pci@0000:00:1e.0",
+              "version" : "90",
+              "width" : 32,
+              "clock" : 33000000,
+              "capabilities" : {
+                "pci" : true,
+                "subtractive_decode" : true,
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              },
+              "children" : [
+                {
+                  "id" : "display",
+                  "class" : "display",
+                  "handle" : "PCI:0000:04:03.0",
+                  "description" : "VGA compatible controller",
+                  "product" : "MGA G200eW WPCM450",
+                  "vendor" : "Matrox Electronics Systems Ltd.",
+                  "physid" : "3",
+                  "businfo" : "pci@0000:04:03.0",
+                  "version" : "0a",
+                  "width" : 32,
+                  "clock" : 33000000,
+                  "configuration" : {
+                    "latency" : "32",
+                    "maxlatency" : "32",
+                    "mingnt" : "16"
+                  },
+                  "capabilities" : {
+                    "pm" : "Power Management",
+                    "vga_controller" : true,
+                    "bus_master" : "bus mastering",
+                    "cap_list" : "PCI capabilities listing"
+                  }
+                }
+              ]
+            },
+            {
+              "id" : "isa",
+              "class" : "bridge",
+              "claimed" : true,
+              "handle" : "PCI:0000:00:1f.0",
+              "description" : "ISA bridge",
+              "product" : "82801JIR (ICH10R) LPC Interface Controller",
+              "vendor" : "Intel Corporation",
+              "physid" : "1f",
+              "businfo" : "pci@0000:00:1f.0",
+              "version" : "00",
+              "width" : 32,
+              "clock" : 33000000,
+              "configuration" : {
+                "driver" : "lpc_ich",
+                "latency" : "0"
+              },
+              "capabilities" : {
+                "isa" : true,
+                "bus_master" : "bus mastering",
+                "cap_list" : "PCI capabilities listing"
+              }
+            }
+          ]
+        },
+        {
+          "id" : "pci:1",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QuickPath Architecture Generic Non-Core Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "101",
+          "businfo" : "pci@0000:fe:00.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:2",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QuickPath Architecture System Address Decoder",
+          "vendor" : "Intel Corporation",
+          "physid" : "102",
+          "businfo" : "pci@0000:fe:00.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:3",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Link 0",
+          "vendor" : "Intel Corporation",
+          "physid" : "103",
+          "businfo" : "pci@0000:fe:02.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:4",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Physical 0",
+          "vendor" : "Intel Corporation",
+          "physid" : "104",
+          "businfo" : "pci@0000:fe:02.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:5",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Link 1",
+          "vendor" : "Intel Corporation",
+          "physid" : "105",
+          "businfo" : "pci@0000:fe:02.4",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:6",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Physical 1",
+          "vendor" : "Intel Corporation",
+          "physid" : "106",
+          "businfo" : "pci@0000:fe:02.5",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:7",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller",
+          "vendor" : "Intel Corporation",
+          "physid" : "107",
+          "businfo" : "pci@0000:fe:03.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:8",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Target Address Decoder",
+          "vendor" : "Intel Corporation",
+          "physid" : "108",
+          "businfo" : "pci@0000:fe:03.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:9",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller RAS Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "109",
+          "businfo" : "pci@0000:fe:03.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:10",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Test Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "10a",
+          "businfo" : "pci@0000:fe:03.4",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:11",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "10b",
+          "businfo" : "pci@0000:fe:04.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:12",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Address Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "10c",
+          "businfo" : "pci@0000:fe:04.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:13",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Rank Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "10d",
+          "businfo" : "pci@0000:fe:04.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:14",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Thermal Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "10e",
+          "businfo" : "pci@0000:fe:04.3",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:15",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "10f",
+          "businfo" : "pci@0000:fe:05.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:16",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Address Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "110",
+          "businfo" : "pci@0000:fe:05.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:17",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Rank Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "111",
+          "businfo" : "pci@0000:fe:05.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:18",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Thermal Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "112",
+          "businfo" : "pci@0000:fe:05.3",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:19",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "113",
+          "businfo" : "pci@0000:fe:06.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:20",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Address Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "114",
+          "businfo" : "pci@0000:fe:06.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:21",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Rank Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "115",
+          "businfo" : "pci@0000:fe:06.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:22",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:fe",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Thermal Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "116",
+          "businfo" : "pci@0000:fe:06.3",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:23",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QuickPath Architecture Generic Non-Core Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "117",
+          "businfo" : "pci@0000:ff:00.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:24",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QuickPath Architecture System Address Decoder",
+          "vendor" : "Intel Corporation",
+          "physid" : "118",
+          "businfo" : "pci@0000:ff:00.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:25",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Link 0",
+          "vendor" : "Intel Corporation",
+          "physid" : "119",
+          "businfo" : "pci@0000:ff:02.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:26",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Physical 0",
+          "vendor" : "Intel Corporation",
+          "physid" : "11a",
+          "businfo" : "pci@0000:ff:02.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:27",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Link 1",
+          "vendor" : "Intel Corporation",
+          "physid" : "11b",
+          "businfo" : "pci@0000:ff:02.4",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:28",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 QPI Physical 1",
+          "vendor" : "Intel Corporation",
+          "physid" : "11c",
+          "businfo" : "pci@0000:ff:02.5",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:29",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller",
+          "vendor" : "Intel Corporation",
+          "physid" : "11d",
+          "businfo" : "pci@0000:ff:03.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:30",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Target Address Decoder",
+          "vendor" : "Intel Corporation",
+          "physid" : "11e",
+          "businfo" : "pci@0000:ff:03.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:31",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller RAS Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "11f",
+          "businfo" : "pci@0000:ff:03.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:32",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Test Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "120",
+          "businfo" : "pci@0000:ff:03.4",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:33",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "121",
+          "businfo" : "pci@0000:ff:04.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:34",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Address Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "122",
+          "businfo" : "pci@0000:ff:04.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:35",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Rank Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "123",
+          "businfo" : "pci@0000:ff:04.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:36",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 0 Thermal Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "124",
+          "businfo" : "pci@0000:ff:04.3",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:37",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "125",
+          "businfo" : "pci@0000:ff:05.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:38",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Address Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "126",
+          "businfo" : "pci@0000:ff:05.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:39",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Rank Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "127",
+          "businfo" : "pci@0000:ff:05.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:40",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 1 Thermal Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "128",
+          "businfo" : "pci@0000:ff:05.3",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:41",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "129",
+          "businfo" : "pci@0000:ff:06.0",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:42",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Address Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "12a",
+          "businfo" : "pci@0000:ff:06.1",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:43",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Rank Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "12b",
+          "businfo" : "pci@0000:ff:06.2",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        },
+        {
+          "id" : "pci:44",
+          "class" : "bridge",
+          "claimed" : true,
+          "handle" : "PCIBUS:0000:ff",
+          "description" : "Host bridge",
+          "product" : "Xeon 5500/Core i7 Integrated Memory Controller Channel 2 Thermal Control Registers",
+          "vendor" : "Intel Corporation",
+          "physid" : "12c",
+          "businfo" : "pci@0000:ff:06.3",
+          "version" : "05",
+          "width" : 32,
+          "clock" : 33000000
+        }
+      ]
+    }
+  ]
+}
