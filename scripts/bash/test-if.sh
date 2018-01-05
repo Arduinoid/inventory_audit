@@ -2,7 +2,6 @@
 
 INET=`ifconfig -a | sed -n 's/^\S/&/p' | sed -n 's/^e.*/&/p' | cut -d ' ' -f 1`
 ETHCONF=/etc/network/interfaces
-NFS="10.11.203.100:/nfs"
 
 # Initialize interface file
 echo "Setting up interface..."
@@ -24,6 +23,12 @@ for i in $INET
 do
     dhclient $i
     IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
+    if [ -z "$IPADDR"]
+    then
+        dhclient $i
+        IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
+    fi
+    
     echo "Interface $i is now setup"
     echo $IPADDR
     echo ""

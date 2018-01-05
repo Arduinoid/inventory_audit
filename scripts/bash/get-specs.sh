@@ -18,6 +18,7 @@ dmidecode -t 3 | sed -e 's/\t//g' -e 's/\s//g' | sed -n '/Asset/p' >> $DIRPATH/d
 dmidecode -t 17 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Part/p' -e '/Serial/p' -e '/Size/p' -e'/Type/p' -e '/Rank/p' > $DIRPATH/dmi-memory.txt
 lshw -json -quiet > $DIRPATH/lshw-report.json
 hpdiscovery -f $DIRPATH/hpdiscovery-report.xml
+lspci -nn | grep -i net > $DIRPATH/lspci-net.txt
 
 
 case "$MANU" in
