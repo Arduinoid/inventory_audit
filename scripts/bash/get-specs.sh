@@ -1,7 +1,7 @@
 #!/bin/bash
 
 STAG=`dmidecode -t 1 | grep -i serial | sed -e 's/^.*:\s//' -e 's/\s//g'`
-MANU=`dmidecode -t 1 | grep -i manufact | sed -e 's/^.*:\s//' -e 's/\s//g'`
+MANU=`dmidecode -t 1 | grep -i manufact | sed -e 's/^.*:\s//' | cut -d ' ' -f 1`
 DIRNAME=$STAG-spec
 DIRPATH="/tmp/$DIRNAME"
 CLEANUP="/scripts/cleanup.sh"
@@ -24,7 +24,7 @@ case "$MANU" in
 "HP")
     hpssacli ctrl slot=0 pd all show detail > $DIRPATH/hp-drives.txt
     ;;
-"Dell*")
+"Dell")
     MegaCli64 -AdpAllInfo -aAll > $DIRPATH/dell-controller.txt
     MegaCli64 -PDList -aALL > $DIRPATH/dell-drives.txt
     ;;
