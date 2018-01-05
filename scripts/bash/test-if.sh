@@ -13,23 +13,21 @@ echo "" >> $ETHCONF
 # Build out interface file config
 for i in $INET
 do
-    echo "auto $i" >> $ETHCONF
-    echo "iface $i inet dhcp" >> $ETHCONF
-    echo "" >> $ETHCONF
-done
-
-# Bring up each interface
-for i in $INET
-do
-    dhclient $i
-    IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
-    if [ -z "$IPADDR"]
+    UPLINK=`cat /sys/class/net/$i/carrier`
+    if[[ $UPLINK = 1 ]]
     then
+        echo "auto $i" >> $ETHCONF
+        echo "iface $i inet dhcp" >> $ETHCONF
+        echo "" >> $ETHCONF
         dhclient $i
         IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
+        if [ -z "$IPADDR" ]
+        then
+            dhclient $i
+            IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
+        fi
+        [ ! -z $IPADDR ] && echo "Interface $i is now setup with ip: $IPADDR" || echo "FAILED to setup interface $i"
+        else
+            echo "interface $i is not connected"
     fi
-    
-    echo "Interface $i is now setup"
-    echo $IPADDR
-    echo ""
 done
