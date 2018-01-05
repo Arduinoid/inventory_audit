@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MOUNT=`df | grep -i nfs`
-SRC=/mnt
+SRC=/mnt/scripts/*
 DEST=/tmp/scripts
 
 if [ ! -z "$MOUNT" ]
