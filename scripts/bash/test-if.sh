@@ -13,8 +13,8 @@ echo "" >> $ETHCONF
 # Build out interface file config
 for i in $INET
 do
-    UPLINK=`cat /sys/class/net/$i/carrier`
-    if[[ $UPLINK = 1 ]]
+    UPLINK=`cat /sys/class/net/$i/operstate`
+    if [ "$UPLINK" = "up" ]
     then
         echo "auto $i" >> $ETHCONF
         echo "iface $i inet dhcp" >> $ETHCONF
