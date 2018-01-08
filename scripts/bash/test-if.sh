@@ -14,12 +14,12 @@ echo "" >> $ETHCONF
 # Build out interface file config
 for i in $INET
 do
+    echo "auto $i" >> $ETHCONF
+    echo "iface $i inet dhcp" >> $ETHCONF
+    echo "" >> $ETHCONF
     UPLINK=`cat /sys/class/net/$i/operstate`
-    if [ "$UPLINK" = "up" ]
+    if [ "$UPLINK" = "up" ] || [ "$UPLINK" = "unknown" ]
     then
-        echo "auto $i" >> $ETHCONF
-        echo "iface $i inet dhcp" >> $ETHCONF
-        echo "" >> $ETHCONF
         dhclient $i
         IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
         if [ -z "$IPADDR" ]
