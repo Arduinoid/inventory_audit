@@ -2,6 +2,7 @@
 
 INET=`ifconfig -a | sed -n 's/^\S/&/p' | sed -n 's/^e.*/&/p' | cut -d ' ' -f 1`
 ETHCONF=/etc/network/interfaces
+ECODE=0
 
 # Initialize interface file
 echo "Setting up interface..."
@@ -26,8 +27,10 @@ do
             dhclient $i
             IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
         fi
-        [ ! -z $IPADDR ] && echo "Interface $i is now setup with ip: $IPADDR" || echo "FAILED to setup interface $i"
-        else
-            echo "interface $i is not connected"
+        [ ! -z $IPADDR ] && echo "Interface $i is now setup with ip: $IPADDR"; exit 0 || echo "FAILED to setup interface $i"; ((ECODE++))
+    else
+        echo "interface $i is not connected"
+        ((ECODE++))
     fi
 done
+exit $ECODE
