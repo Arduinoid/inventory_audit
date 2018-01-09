@@ -18,6 +18,8 @@ do
     echo "auto $i" >> $ETHCONF
     echo "iface $i inet dhcp" >> $ETHCONF
     echo "" >> $ETHCONF
+    echo "Obtaining IP address from DHCP server"
+    dhclient $i
+    IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
+    [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR" || echo "Couldn't assign interface $i an ip"
 done
-echo "Obtaining IP address from DHCP server"
-dhclient $INET
