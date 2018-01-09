@@ -49,6 +49,12 @@ class BaseProcess(object):
 
         return files
 
+    def get_file_content(self, directory, file):
+        with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
+            content = f.read()
+        
+        return content
+
 
 
 

@@ -29,5 +29,5 @@ class FileWatcher(object):
 
     def watch(self):
         while True:
-            result = self._check():
+            result = self._check()
             func(result, *args, **kwargs) if result != None else None
