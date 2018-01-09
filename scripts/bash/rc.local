@@ -11,7 +11,7 @@
 #
 # By default this script does nothing.
 /scripts/test-if.sh
-/scripts/check-mount.sh
+[ $? -eq 0 ] && /scripts/check-mount.sh || echo "Cannot mount NFS at this time, network unavailible"
 /scripts/get-specs.sh
 /scripts/cleanup.sh
 
