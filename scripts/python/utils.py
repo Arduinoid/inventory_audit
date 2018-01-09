@@ -19,7 +19,7 @@ class FileWatcher(object):
     def _compare(self):
         result = set(self.new_files) - set(self.old_files)
         if result != set():
-            return result
+            return list(result)
 
     def _check(self):
         self.new_files = os.listdir(self.path)
