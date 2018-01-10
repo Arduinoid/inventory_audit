@@ -32,7 +32,7 @@ class FileWatcher(object):
         while True:
             result = self._check()
             if result != None:
-                [self.func("New file: {}".format(r)) for r in result]
+                [self.func(r) for r in result]
 
 
 def fix_json(data):

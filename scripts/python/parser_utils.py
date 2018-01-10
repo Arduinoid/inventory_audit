@@ -1,6 +1,8 @@
 #!/bin/usr python3
 
+from json import JSONDecodeError, loads
 import os
+import re
 
 # ----- SETUP VARIABLES ------ #
 FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs'
@@ -58,15 +60,41 @@ class BaseProcess(object):
 
 
 class MacAddressParse(BaseProcess):
-    def __init__(self,file_path, descriptor, directory, file_name='lshw-network.json'):
+    def __init__(self,file_path, descriptor, file_name='lshw-network.json'):
         super().__init__(file_path)
         self.descriptor = descriptor
-        self.directory = directory
         self.file_name = file_name
-        self.data = self.get_file_content(directory,file_name)
 
-    def extract_mac(self):
-        pass
+    def _fix_json(self, data):
+        '''
+        Input a string containing json and return a corrected
+        json string.
+
+        This function assumes that the invalid json needs to be wrapped in 
+        a list and proper comma delimiters be inserted between objects
+        '''
+        data = data.strip()
+        if data.find('[') != 0:
+            data = '[' + data + ']'
+        data = re.sub("}\s*{", "},{", data)
+        return data
+
+
+    def extract_mac(self, directory):
+        data = self.get_file_content(directory, self.file_name)
+        try:
+            obj = loads(data)
+        except JSONDecodeError:
+            data = self._fix_json(data)
+            obj = loads(data)
+
+        tag = directory.split('-')[0]
+        for i in obj:
+            if self.descriptor in i['product']:
+                print(tag,obj[0]['serial'])
+                break
+        else:
+            print("Card info not found for {}".format(tag))
 
 
 server_files = {
