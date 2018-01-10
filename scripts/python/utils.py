@@ -2,6 +2,7 @@
 This is a module to contain some useful functions and classes
 '''
 import os
+import re
 
 
 class FileWatcher(object):
@@ -31,3 +32,18 @@ class FileWatcher(object):
         while True:
             result = self._check()
             func(result, *args, **kwargs) if result != None else None
+
+
+def fix_json(data):
+    '''
+    Input a string containing json and return a corrected
+    json string.
+
+    This function assumes that the invalid json needs to be wrapped in 
+    a list and proper comma delimiters be inserted between objects
+    '''
+    data = data.strip()
+    if data.find('[') != 0:
+        data = '[' + data + ']'
+    data = re.sub("}\s*{", "},{", data)
+    return data
