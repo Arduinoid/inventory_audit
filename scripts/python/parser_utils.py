@@ -53,10 +53,12 @@ class BaseProcess(object):
         return files
 
     def get_file_content(self, directory, file):
-        with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
-            content = f.read()
-        
-        return content
+        try:
+            with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
+                content = f.read()
+            return content
+        except FileNotFoundError:
+            return None
 
 
 class MacAddressParse(BaseProcess):
@@ -86,20 +88,21 @@ class MacAddressParse(BaseProcess):
 
     def extract_mac(self, directory):
         data = self.get_file_content(directory, self.file_name)
-        try:
-            obj = loads(data)
-        except JSONDecodeError:
-            data = self._fix_json(data)
-            obj = loads(data)
+        if data:
+            try:
+                obj = loads(data)
+            except JSONDecodeError:
+                data = self._fix_json(data)
+                obj = loads(data)
 
-        tag = directory.split('-')[0]
-        for i in obj:
-            if self.descriptor in i['product']:
-                print('Service Tag | Mac Address')
-                print(tag,'|',i['serial'],'\n')
-                return {'tag': tag, 'mac': i['serial']}
-        else:
-            print("Card info not found for {}".format(tag),'\n')
+            tag = directory.split('-')[0]
+            for i in obj:
+                if self.descriptor in i['product']:
+                    print('Service Tag | Mac Address')
+                    print(tag,'|',i['serial'],'\n')
+                    return {'tag': tag, 'mac': i['serial']}
+            else:
+                print("Card info not found for {}".format(tag),'\n')
 
 
 server_files = {

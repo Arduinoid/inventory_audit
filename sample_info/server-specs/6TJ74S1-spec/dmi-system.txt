@@ -1,4 +1,0 @@
-Manufacturer:DellInc.
-ProductName:PowerEdgeR610
-SerialNumber:6TJ74S1
-AssetTag:NotSpecified
