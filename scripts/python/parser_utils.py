@@ -45,7 +45,8 @@ class BaseProcess(object):
         dirs = os.listdir(file_path)
         files = dict()
         for d in dirs:
-            files[d] = os.listdir(file_path + '\\' + d)
+            if os.path.isdir(d) and '-spec' in d:
+                files[d] = os.listdir(file_path + '\\' + d)
 
         return files
 
@@ -56,6 +57,16 @@ class BaseProcess(object):
         return content
 
 
+class MacAddressParse(BaseProcess):
+    def __init__(self,file_path, descriptor, directory, file_name='lshw-network.json'):
+        super().__init__(file_path)
+        self.descriptor = descriptor
+        self.directory = directory
+        self.file_name = file_name
+        self.data = self.get_file_content(directory,file_name)
+
+    def extract_mac(self):
+        pass
 
 
 server_files = {
