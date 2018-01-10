@@ -22,7 +22,7 @@ class FileWatcher(object):
         if result != set():
             return list(result)
 
-    def _check(self):
+    def check(self):
         self.new_files = os.listdir(self.path)
         result = self._compare()
         self.old_files = self.new_files
@@ -30,21 +30,7 @@ class FileWatcher(object):
 
     def watch(self):
         while True:
-            result = self._check()
+            result = self.check()
             if result != None:
                 [self.func(r) for r in result]
 
-
-def fix_json(data):
-    '''
-    Input a string containing json and return a corrected
-    json string.
-
-    This function assumes that the invalid json needs to be wrapped in 
-    a list and proper comma delimiters be inserted between objects
-    '''
-    data = data.strip()
-    if data.find('[') != 0:
-        data = '[' + data + ']'
-    data = re.sub("}\s*{", "},{", data)
-    return data

@@ -60,6 +60,10 @@ class BaseProcess(object):
 
 
 class MacAddressParse(BaseProcess):
+    '''
+    This class will extract mac address information
+    based on a descriptor in a cards product name
+    '''
     def __init__(self,file_path, descriptor, file_name='lshw-network.json'):
         super().__init__(file_path)
         self.descriptor = descriptor
@@ -91,10 +95,11 @@ class MacAddressParse(BaseProcess):
         tag = directory.split('-')[0]
         for i in obj:
             if self.descriptor in i['product']:
-                print(tag,obj[0]['serial'])
-                break
+                print('Service Tag | Mac Address')
+                print(tag,'|',i['serial'],'\n')
+                return {'tag': tag, 'mac': i['serial']}
         else:
-            print("Card info not found for {}".format(tag))
+            print("Card info not found for {}".format(tag),'\n')
 
 
 server_files = {

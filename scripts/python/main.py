@@ -1,9 +1,11 @@
 from parser_utils import BaseProcess, MacAddressParse
-from utils import *
+from print_mac import ThermalPrinter,TEMPLATE,z
+from utils import FileWatcher
 
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
-p = MacAddressParse(FILE_PATH, 'SFP')
-w = FileWatcher(FILE_PATH, p.extract_mac)
+mac = MacAddressParse(FILE_PATH, 'SFP')
+zeb = ThermalPrinter(TEMPLATE)
+watcher = FileWatcher(FILE_PATH, mac.extract_mac)
 
 if __name__ == "__main__":
     print("   ________________________")
@@ -11,4 +13,7 @@ if __name__ == "__main__":
     print(r"||    Script running...   ||")
     print(r"\\________________________//",'\n')
 
-    w.watch()
+    while True:
+        result = watcher.check()
+        if result != None:
+            [zeb.print_out(mac.extract_mac(r)) for r in result] 
