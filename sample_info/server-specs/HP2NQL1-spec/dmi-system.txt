@@ -1,0 +1,4 @@
+Manufacturer:DellInc.
+ProductName:PowerEdgeR410
+SerialNumber:HP2NQL1
+AssetTag:

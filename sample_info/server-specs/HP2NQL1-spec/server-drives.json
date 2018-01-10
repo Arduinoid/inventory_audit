@@ -1,0 +1,54 @@
+                                                                                                                                                                      {
+    "id" : "disk",
+    "class" : "disk",
+    "claimed" : true,
+    "handle" : "SCSI:03:02:00:00",
+    "description" : "SCSI Disk",
+    "product" : "PERC 6/i",
+    "vendor" : "DELL",
+    "physid" : "2.0.0",
+    "businfo" : "scsi@3:2.0.0",
+    "logicalname" : "/dev/sdb",
+    "dev" : "8:16",
+    "version" : "1.22",
+    "serial" : "0090238d053091cb2100bac854906b02",
+    "units" : "bytes",
+    "size" : 598879502336,
+    "configuration" : {
+      "ansiversion" : "5",
+      "logicalsectorsize" : "512",
+      "sectorsize" : "512",
+      "signature" : "27555859"
+    },
+    "capabilities" : {
+      "partitioned" : "Partitioned disk",
+      "partitioned:dos" : "MS-DOS partition table"
+    },
+    "children" : [
+                      
+    ]
+  }                                                                              {
+    "id" : "disk",
+    "class" : "disk",
+    "claimed" : true,
+    "handle" : "SCSI:02:00:00:00",
+    "description" : "SCSI Disk",
+    "physid" : "0.0.0",
+    "businfo" : "scsi@2:0.0.0",
+    "logicalname" : "/dev/sda",
+    "dev" : "8:0",
+    "units" : "bytes",
+    "size" : 4007657472,
+    "configuration" : {
+      "logicalsectorsize" : "512",
+      "sectorsize" : "512",
+      "signature" : "1f5c2a15"
+    },
+    "capabilities" : {
+      "partitioned" : "Partitioned disk",
+      "partitioned:dos" : "MS-DOS partition table"
+    },
+    "children" : [
+      
+    ]
+  }                                                                                                                                                                                                                                                                                                                                                            

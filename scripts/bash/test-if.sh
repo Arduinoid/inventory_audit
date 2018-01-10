@@ -2,6 +2,7 @@
 
 INET=`ifconfig -a | sed -n 's/^\S/&/p' | sed -n 's/^e.*/&/p' | cut -d ' ' -f 1`
 ETHCONF=/etc/network/interfaces
+ECODE=0
 
 # Initialize interface file
 echo "Setting up interface..."
@@ -11,25 +12,16 @@ echo "iface lo inet loopback" >> $ETHCONF
 echo "" >> $ETHCONF
 
 # Build out interface file config
+echo "Creating config file"
 for i in $INET
 do
     echo "auto $i" >> $ETHCONF
     echo "iface $i inet dhcp" >> $ETHCONF
     echo "" >> $ETHCONF
-done
-
-# Bring up each interface
-for i in $INET
-do
+    echo "Obtaining IP address from DHCP server"
     dhclient $i
-    IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
-    if [ -z "$IPADDR"]
-    then
-        dhclient $i
-        IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' '  -f 2`
-    fi
-    
-    echo "Interface $i is now setup"
-    echo $IPADDR
-    echo ""
+    sleep 1
+    IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
+    [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
 done
+exit $ECODE

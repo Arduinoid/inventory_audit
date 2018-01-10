@@ -26,11 +26,11 @@ class BaseProcess(object):
     def __init__(self, file_path):
         assert os.path.exists(file_path), "File path is not valid or does not exist"
         self.path = os.path.abspath(file_path)
-        self.files = self.get_files(file_path)
-        self.content = self.get_contents(self.files)
+        self.files = self._get_files(file_path)
+        self.content = self._get_contents(self.files)
 
 
-    def get_contents(self,files):
+    def _get_contents(self,files):
         result = dict()
         for d, l in files.items():
             result[d] = dict()
@@ -41,13 +41,19 @@ class BaseProcess(object):
         return result 
                 
             
-    def get_files(self,file_path):
+    def _get_files(self,file_path):
         dirs = os.listdir(file_path)
         files = dict()
         for d in dirs:
             files[d] = os.listdir(file_path + '\\' + d)
 
         return files
+
+    def get_file_content(self, directory, file):
+        with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
+            content = f.read()
+        
+        return content
 
 
 
