@@ -105,6 +105,19 @@ class MacAddressParse(BaseProcess):
                 print("Card info not found for {}".format(tag),'\n')
 
 
+class ServerParse(BaseProcess):
+    def __init__(self,file_path):
+        self.file_path = file_path
+        self.content = dict()
+        self.attributes = self.attributes()
+
+    def attributes(self):
+        return ['test'] * 3
+
+    def process(self,directory):
+        return {'test': 1, 'test': 2, 'test': 3}
+
+
 server_files = {
     'HP': {
         'path': FILE_PATH,
