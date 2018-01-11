@@ -5,7 +5,7 @@ ETHCONF=/etc/network/interfaces
 ECODE=0
 
 check_ips() {
-    for i in $INET
+    for i in $@
     do
         IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
         [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
@@ -26,21 +26,21 @@ do
     echo "auto $i" >> $ETHCONF
     echo "iface $i inet dhcp" >> $ETHCONF
     echo "" >> $ETHCONF
-    echo "Obtaining IP address from DHCP server"
     # dhclient $i
     # sleep 1
     # IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
     # [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
 done
 
+echo "Going to restart network"
 /etc/init.d/networking restart
-ifup -a
-check_ips
+ifup -a > /dev/null 2>&1 
+check_ips $INET
 
 if [ $ECODE -gt 0 ]
 then
     ECODE=0
-    ifup -a
-    check_ips
+    ifup -a > /dev/null 2>&1
+    check_ips $INET
 fi
 exit $ECODE

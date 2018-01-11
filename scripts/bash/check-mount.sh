@@ -5,11 +5,13 @@ MOUNT=`df | grep -i nfs`
 COUNT=1
 PCOUNT=0
 
+echo "Attempting to reach NFS server at $SERVER"
 ping -c 1 $SERVER > /dev/null
-echo "Attempting to reach server at $SERVER"
+[ $? -eq 0 ] && echo "NFS server at $SERVER reached" || echo "First attempt failed, going to retry..."
 while [ $? -ne 0 ]
 do
     ((PCOUNT++))
+    echo "Ping retry count: $PCOUNT"
     ping -c 1 $SERVER > /dev/null
     [ $PCOUNT -eq 4 ] && echo "Could not reach NFS server at $SERVER"; exit $PCOUNT
 done
