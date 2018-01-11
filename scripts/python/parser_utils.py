@@ -109,13 +109,25 @@ class ServerParse(BaseProcess):
     def __init__(self,file_path):
         self.file_path = file_path
         self.content = dict()
-        self.attributes = self.attributes()
-
-    def attributes(self):
-        return ['test'] * 3
+        self.attributes = [
+            'make',
+            'model',
+            'serial',
+            'memory_total',
+            'memory_count',
+            'memory_size',
+            'cpu',
+            'cpu_count',
+            'mac',
+            'controller',
+            'cache',
+            ]
 
     def process(self,directory):
-        return {'test': 1, 'test': 2, 'test': 3}
+        tag = directory.split('-')[0]
+        payload = dict()
+        with open(self.file_path + '/' + directory) as f:
+            pass
 
 
 server_files = {

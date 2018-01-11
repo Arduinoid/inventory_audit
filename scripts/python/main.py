@@ -18,21 +18,27 @@ if __name__ == "__main__":
     print(r"||    Script running...   ||")
     print(r"\\________________________//",'\n')
 
-    while True:
-        result = watcher.check()
-        if result != None:
-            # print out mac address labels
-            # [zeb.print_out(mac.extract_mac(r)) for r in result]
-            # Write scanned in servers to a csv file
-            report_name = 'server-report_{}.csv'.format(datetime.now())
-            report_name = report_name.replace(' ','_').replace(':','-')
-            with open(FILE_PATH + '/' + report_name, 'w+') as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=specs.attributes)
-                if not header_written:
-                    writer.writeheader()
-                    header_written = True
-                for r in result:
-                    writer.writerow(specs.process(r))
+    report_name = 'server-report_{}.csv'.format(datetime.now())
+    report_name = report_name.replace(' ','_').replace(':','-')
+    
+    with open(FILE_PATH + '/' + report_name, 'w', newline='') as csvfile:
+        while True:
+            result = watcher.check()
+            if result != None:
+                # print out mac address labels
+                [zeb.print_out(mac.extract_mac(r)) for r in result]
+                # Write scanned in servers to a csv file
 
+                # print(specs.attributes)
+                # writer = csv.DictWriter(csvfile, fieldnames=specs.attributes)
+                # if not header_written:
+                #     writer.writeheader()
+                #     header_written = True
+                # for r in result:
+                #     print(r)
+                #     if '-spec' in r:
+                #         print(specs.process(r))
+                #         writer.writerow(specs.process(r))
+                #         print("captured {serial} server to report".format(**specs.process(r)))
 
-        time.sleep(1)
+            time.sleep(1)
