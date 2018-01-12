@@ -25,11 +25,14 @@ class BaseProcess(object):
     It contains the common properties and methods used by other parsers 
     '''
 
-    def __init__(self, file_path):
+    def __init__(self, file_path, file_name=None):
         assert os.path.exists(file_path), "File path is not valid or does not exist"
         self.path = os.path.abspath(file_path)
         self.files = self._get_files(file_path)
         self.content = self._get_contents(self.files)
+        self.json_data = None
+        self.tag = None
+        self.file_name = file_name
 
 
     def _get_contents(self,files):
@@ -60,23 +63,6 @@ class BaseProcess(object):
         except FileNotFoundError:
             return None
 
-
-class MacAddressParse(BaseProcess):
-    '''
-    This class will extract mac address information
-    based on a descriptor in a cards product name
-    '''
-    def __init__(self,file_path, descriptor, file_name='lshw-network.json'):
-        super().__init__(file_path)
-        self.descriptor = descriptor
-        self.file_name = file_name
-        self.data = None
-        self.tag = None
-
-    def __call__(self, directory):
-        obj = self.get_data(directory)
-        return self.extract_mac()
-
     def _fix_json(self, data):
         '''
         Input a string containing json and return a corrected
@@ -91,18 +77,34 @@ class MacAddressParse(BaseProcess):
         data = re.sub("}\s*{", "},{", data)
         return data
 
-    def get_data(self, directory):
+    def get_json_data(self, directory):
         self.tag = directory.split('-')[0]
         data = self.get_file_content(directory, self.file_name)
         if data:
             try:
-                self.data = loads(data)
+                self.json_data = loads(data)
             except JSONDecodeError:
                 data = self._fix_json(data)
-                self.data = loads(data)
+                self.json_data = loads(data)
+
+
+class MacAddressParse(BaseProcess):
+    '''
+    This class will extract mac address information
+    based on a descriptor in a cards product name
+    '''
+    def __init__(self,file_path, descriptor, file_name='lshw-network.json'):
+        super().__init__(file_path, file_name)
+        self.descriptor = descriptor
+        self.json_data = None
+        self.tag = None
+
+    def __call__(self, directory):
+        obj = self.get_json_data(directory)
+        return self.extract_mac()
 
     def extract_mac(self):
-            for i in self.data:
+            for i in self.json_data:
                 if self.descriptor in i['product']:
                     print('Service Tag | Mac Address')
                     print(self.tag,'|',i['serial'],'\n')

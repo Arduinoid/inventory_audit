@@ -5,11 +5,11 @@ from parser_utils import BaseProcess, MacAddressParse, ServerParse
 from utils import CSVReport, FileWatcher, ThermalPrinter,TEMPLATE,z
 
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
-report = CSVReport(FILE_PATH, 'test_report', spec)
+specs = ServerParse(FILE_PATH)
+# report = CSVReport(FILE_PATH, 'test_report', specs)
 mac = MacAddressParse(FILE_PATH, 'SFP')
 zeb = ThermalPrinter(TEMPLATE, mac)
 watcher = FileWatcher(FILE_PATH)
-specs = ServerParse(FILE_PATH)
 header_written = False
 
 if __name__ == "__main__":
@@ -18,5 +18,5 @@ if __name__ == "__main__":
     print(r"||    Script running...   ||")
     print(r"\\________________________//",'\n')
 
-    report.open_report()
-    watcher.watch(zeb,report)
+    # report.open_report()
+    watcher.watch(zeb)
