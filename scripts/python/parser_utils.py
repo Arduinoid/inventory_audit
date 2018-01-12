@@ -71,6 +71,9 @@ class MacAddressParse(BaseProcess):
         self.descriptor = descriptor
         self.file_name = file_name
 
+    def __call__(self, directory):
+        self.extract_mac(directory)
+
     def _fix_json(self, data):
         '''
         Input a string containing json and return a corrected
@@ -122,6 +125,9 @@ class ServerParse(BaseProcess):
             'controller',
             'cache',
             ]
+
+    def __call__(self, directory):
+        self.process(directory)
 
     def process(self,directory):
         tag = directory.split('-')[0]
