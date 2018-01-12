@@ -96,11 +96,10 @@ class MacAddressParse(BaseProcess):
     def __init__(self,file_path, descriptor, file_name='lshw-network.json'):
         super().__init__(file_path, file_name)
         self.descriptor = descriptor
-        self.json_data = None
-        self.tag = None
+        self.attributes = ['tag','mac']
 
     def __call__(self, directory):
-        obj = self.get_json_data(directory)
+        self.get_json_data(directory)
         return self.extract_mac()
 
     def extract_mac(self):

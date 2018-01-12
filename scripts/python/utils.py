@@ -71,8 +71,9 @@ class FileWatcher(object):
             result = self.check()
             if result != None:
                 for r in result:
-                    for task in tasks:
-                        task(r)
+                    if '-spec' in r:
+                        for task in tasks:
+                            task(r)
             sleep(interval)
 
 
@@ -119,7 +120,7 @@ class CSVReport(object):
 
     def new_report(self,name):
         formatted = '{}_{}.csv'.format(name, datetime.now())
-        self.report_name = report_name.replace(' ','_').replace(':','-')
+        return formatted.replace(' ','_').replace(':','-')
 
     def write_row(self, data):
         self.writer.writerow(data)
