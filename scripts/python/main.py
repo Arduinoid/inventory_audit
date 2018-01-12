@@ -2,15 +2,14 @@ import csv, time
 from datetime import datetime
 
 from parser_utils import BaseProcess, MacAddressParse, ServerParse
-from print_mac import ThermalPrinter,TEMPLATE,z
-from utils import FileWatcher, TestObj
+from print_mac import 
+from utils import FileWatcher, ThermalPrinter,TEMPLATE,z
 
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
 mac = MacAddressParse(FILE_PATH, 'SFP')
 zeb = ThermalPrinter(TEMPLATE)
 watcher = FileWatcher(FILE_PATH, mac.extract_mac)
 specs = ServerParse(FILE_PATH)
-test = TestObj('in', 'out')
 header_written = False
 
 if __name__ == "__main__":

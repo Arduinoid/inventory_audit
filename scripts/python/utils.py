@@ -3,6 +3,24 @@ This is a module to contain some useful functions and classes
 '''
 import os
 import re
+from zebra import zebra
+
+TEMPLATE = '''
+^XA
+^FO100,100
+^A0,60,60
+^FD
+MAC:{mac}
+^FS
+^FO100,200
+^A0,60,60
+^FD
+TAG:{tag}
+^FS
+^XZ
+'''
+
+z = zebra(queue='ZDesigner GK420d')
 
 
 class FileWatcher(object):
@@ -50,4 +68,18 @@ class FileWatcher(object):
             result = self.check()
             if result != None:
                 [ task(result) for task in tasks ]
+
+
+class ThermalPrinter(object):
+    '''
+    p = ThermalPrinter(mac.extract,template, 'Zebra')
+    '''
+    def __init__(self, template, printer=z):
+        self.printer = printer
+        self.template = template
+
+    def print_out(self,content):
+        if content != None:
+            payload = self.template.format(**content)
+            self.printer.output(payload)
 
