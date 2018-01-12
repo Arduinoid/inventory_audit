@@ -1,8 +1,8 @@
 '''
 This is a module to contain some useful functions and classes
 '''
-import os
-import re
+import csv, os, re
+from time import sleep
 from zebra import zebra
 
 TEMPLATE = '''
@@ -46,7 +46,7 @@ class FileWatcher(object):
         self.old_files = self.new_files
         return result
 
-    def watch(self, *tasks):
+    def watch(self, *tasks, interval=1):
         '''
         This method will start a loop which is intended to be 
         used in a main script.
@@ -70,19 +70,28 @@ class FileWatcher(object):
         while True:
             result = self.check()
             if result != None:
-                [ task(result) for task in tasks ]
+                for r in result:
+                    for task in tasks:
+                        task(r)
+            sleep(interval)
 
 
 class ThermalPrinter(object):
     '''
     p = ThermalPrinter(mac.extract,template, 'Zebra')
     '''
-    def __init__(self, template, printer=z):
+    def __init__(self, template, processor, printer=z):
         self.printer = printer
         self.template = template
+        self.content = None
+        self.processor = processor
 
-    def print_out(self,content):
-        if content != None:
-            payload = self.template.format(**content)
-            self.printer.output(payload)
+    def __call__(self, directory):
+        self.content = self.processor(directory)
+        if self.content != None:
+            self.print_out()
+
+    def print_out(self):
+        payload = self.template.format(**self.content)
+        self.printer.output(payload)
 

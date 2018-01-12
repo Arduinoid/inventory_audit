@@ -1,13 +1,12 @@
-import csv, time
+import csv
 from datetime import datetime
 
 from parser_utils import BaseProcess, MacAddressParse, ServerParse
-from print_mac import 
 from utils import FileWatcher, ThermalPrinter,TEMPLATE,z
 
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
 mac = MacAddressParse(FILE_PATH, 'SFP')
-zeb = ThermalPrinter(TEMPLATE)
+zeb = ThermalPrinter(TEMPLATE, mac)
 watcher = FileWatcher(FILE_PATH, mac.extract_mac)
 specs = ServerParse(FILE_PATH)
 header_written = False
@@ -21,24 +20,4 @@ if __name__ == "__main__":
     report_name = 'server-report_{}.csv'.format(datetime.now())
     report_name = report_name.replace(' ','_').replace(':','-')
     
-    watcher.watch(zeb,specs)
-    while True:
-        result = watcher.check()
-        if result != None:
-            # print out mac address labels
-            [zeb.print_out(mac.extract_mac(int(r))) for r in result]
-            # Write scanned in servers to a csv file
-
-            # print(specs.attributes)
-            # writer = csv.DictWriter(csvfile, fieldnames=specs.attributes)
-            # if not header_written:
-            #     writer.writeheader()
-            #     header_written = True
-            # for r in result:
-            #     print(r)
-            #     if '-spec' in r:
-            #         print(specs.process(r))
-            #         writer.writerow(specs.process(r))
-            #         print("captured {serial} server to report".format(**specs.process(r)))
-
-        time.sleep(1)
+    watcher.watch(zeb)

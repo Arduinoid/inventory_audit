@@ -70,9 +70,12 @@ class MacAddressParse(BaseProcess):
         super().__init__(file_path)
         self.descriptor = descriptor
         self.file_name = file_name
+        self.data = None
+        self.tag = None
 
     def __call__(self, directory):
-        self.extract_mac(directory)
+        obj = self.get_data(directory)
+        return self.extract_mac()
 
     def _fix_json(self, data):
         '''
@@ -88,24 +91,24 @@ class MacAddressParse(BaseProcess):
         data = re.sub("}\s*{", "},{", data)
         return data
 
-
-    def extract_mac(self, directory):
+    def get_data(self, directory):
+        self.tag = directory.split('-')[0]
         data = self.get_file_content(directory, self.file_name)
         if data:
             try:
-                obj = loads(data)
+                self.data = loads(data)
             except JSONDecodeError:
                 data = self._fix_json(data)
-                obj = loads(data)
+                self.data = loads(data)
 
-            tag = directory.split('-')[0]
-            for i in obj:
+    def extract_mac(self):
+            for i in self.data:
                 if self.descriptor in i['product']:
                     print('Service Tag | Mac Address')
-                    print(tag,'|',i['serial'],'\n')
-                    return {'tag': tag, 'mac': i['serial']}
+                    print(self.tag,'|',i['serial'],'\n')
+                    return {'tag': self.tag, 'mac': i['serial']}
             else:
-                print("Card info not found for {}".format(tag),'\n')
+                print("Card info not found for {}".format(self.tag),'\n')
 
 
 class ServerParse(BaseProcess):
