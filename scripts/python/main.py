@@ -21,6 +21,7 @@ if __name__ == "__main__":
     report_name = 'server-report_{}.csv'.format(datetime.now())
     report_name = report_name.replace(' ','_').replace(':','-')
     
+    watcher.watch(zeb,specs)
     while True:
         result = watcher.check()
         if result != None:
