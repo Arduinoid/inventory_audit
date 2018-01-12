@@ -28,9 +28,26 @@ class FileWatcher(object):
         self.old_files = self.new_files
         return result
 
-    def watch(self):
+    def watch(self, tasks):
+        '''
+        This method will start a loop which is intended to be 
+        used in a main script.
+
+        It will continue to check a directory for newly added or changed files and folders.
+        Any new directories will be capture as a list and passed to task objects. These tasks
+        are given as a list at call time.
+
+        Example:
+            watcher.watch([task1,task2,task3])
+
+        Parameters:
+            tasks = object or function (object must be callable)
+
+        Returns:
+            None (this method has side effects)
+        '''
         while True:
             result = self.check()
             if result != None:
-                [self.func(r) for r in result]
+                [ task(result) for task in tasks ]
 
