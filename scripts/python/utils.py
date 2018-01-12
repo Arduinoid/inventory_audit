@@ -30,9 +30,10 @@ class FileWatcher(object):
     for when new files and folders show up.
     '''
 
-    def __init__(self, path):
+    def __init__(self, path, descriptor):
         self.path = path
-        self.old_files = os.listdir(path)
+        self.descriptor = descriptor
+        self.old_files = self._filter_folders()
         self.new_files = None
 
     def _compare(self):
@@ -40,8 +41,18 @@ class FileWatcher(object):
         if result != set():
             return list(result)
 
-    def check(self):
-        self.new_files = os.listdir(self.path)
+    def _filter_folders(self):
+        result = list()
+        for file in os.listdir(self.path):
+            if self.descriptor in file:
+                result.append(file)
+        return result
+        # Debating on whether the above code is better which is more readable 
+        # or is the more terse list comprehesion below better to save on lines...
+        # return [file for file in os.listdir(self.path) if self.descriptor in file]
+
+    def update(self, path):
+        self.new_files = self._filter_folders()
         result = self._compare()
         self.old_files = self.new_files
         return result
@@ -68,12 +79,11 @@ class FileWatcher(object):
             None (this method has side effects)
         '''
         while True:
-            result = self.check()
+            result = self.update(self.path)
             if result != None:
                 for r in result:
-                    if '-spec' in r:
-                        for task in tasks:
-                            task(r)
+                    for task in tasks:
+                        task(r)
             sleep(interval)
 
 
@@ -108,7 +118,7 @@ class CSVReport(object):
 
     def __call__(self, directory):
         self.write_row(self.processor(directory))
-        print('new row written')
+        print('new row written to report','\n')
 
     def __del__(self):
         self.file.close()

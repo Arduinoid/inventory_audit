@@ -8,7 +8,7 @@ FILE_PATH = "//10.11.203.100/nfs/server-specs"
 specs = ServerParse(FILE_PATH)
 mac = MacAddressParse(FILE_PATH, 'SFP')
 zeb = ThermalPrinter(TEMPLATE, mac)
-watcher = FileWatcher(FILE_PATH)
+watcher = FileWatcher(FILE_PATH, '-spec')
 report = CSVReport(FILE_PATH, 'test_report', mac)
 header_written = False
 
