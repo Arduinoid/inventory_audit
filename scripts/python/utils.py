@@ -2,6 +2,7 @@
 This is a module to contain some useful functions and classes
 '''
 import csv, os, re
+from datetime import datetime
 from time import sleep
 from zebra import zebra
 
@@ -29,9 +30,8 @@ class FileWatcher(object):
     for when new files and folders show up.
     '''
 
-    def __init__(self, path, func):
+    def __init__(self, path):
         self.path = path
-        self.func = func
         self.old_files = os.listdir(path)
         self.new_files = None
 
@@ -95,3 +95,31 @@ class ThermalPrinter(object):
         payload = self.template.format(**self.content)
         self.printer.output(payload)
 
+
+class CSVReport(object):
+    def __init__(self, file_path, report_name, processor):
+        self.file_path = file_path
+        self.report_name = self.new_report(report_name)
+        self.processor = processor
+        self.headers = self.processor.attributes
+        self.file = None
+        self.writer = None
+
+    def __call__(self, directory):
+        self.write_row(self.processor(directory))
+        print('new row written')
+
+    def __del__(self):
+        self.file.close()
+
+    def open_report(self):
+        self.file = open(self.file_path + '/' + self.report_name, 'w', newline='')
+        self.writer = csv.DictWriter(self.file, fieldnames=self.headers)
+        self.writer.writeheader()
+
+    def new_report(self,name):
+        formatted = '{}_{}.csv'.format(name, datetime.now())
+        self.report_name = report_name.replace(' ','_').replace(':','-')
+
+    def write_row(self, data):
+        self.writer.writerow(data)
