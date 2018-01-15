@@ -7,6 +7,7 @@ ECODE=0
 check_ips() {
     for i in $@
     do
+        echo "Attempting to raise interface: $i"
         IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
         [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
         dhclient $i
@@ -28,13 +29,12 @@ do
     echo "iface $i inet dhcp" >> $ETHCONF
     echo "" >> $ETHCONF
 done
-
+echo "Attempting to raise interfaces..."
 check_ips $INET
 
 if [ $ECODE -gt 0 ]
 then
     ECODE=0
-    ifup -a > /dev/null 2>&1
     check_ips $INET
 fi
 echo "network script exited with code: $ECODE" >> /scripts/script-log

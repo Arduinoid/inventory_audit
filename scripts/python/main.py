@@ -21,4 +21,4 @@ if __name__ == "__main__":
 
     report.get_po_input()
     report.open_report()
-    watcher.watch(report)
+    watcher.watch(report,zeb)
