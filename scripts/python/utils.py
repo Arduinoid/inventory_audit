@@ -89,23 +89,38 @@ class FileWatcher(object):
 
 class ThermalPrinter(object):
     '''
-    p = ThermalPrinter(mac.extract,template, 'Zebra')
+    Takes a string template containing key value formating and runs 
+    several given processor objects to compose the content that will be merged 
+    with the template and sent to a printer.
+
+    p = ThermalPrinter(template, [mac, specs, memory], 'Zebra')
     '''
-    def __init__(self, template, processor, printer=z):
+    def __init__(self, template, processors, printer=z):
         self.printer = printer
         self.template = template
-        self.content = None
-        self.processor = processor
+        self.content = dict()
+        self.processors = processors
 
     def __call__(self, directory):
-        self.content = self.processor(directory)
-        if self.content != None:
+        self.compose_content(directory)
+        if self.isEmpty(self.content):
             self.print_out()
+            self._flush_content()
 
     def print_out(self):
         payload = self.template.format(**self.content)
         self.printer.output(payload)
 
+    def compose_content(self, directory):
+        for p in self.processors:
+            self.content.update(p(directory)) if p(directory) else None
+
+    def isEmpty(self, dict_):
+        if dict_ and len(dict_) > 0 and isinstance(dict_,dict):
+                return dict_
+
+    def _flush_content(self):
+        self.content = dict()
 
 class CSVReport(object):
     def __init__(self, file_path, report_name, processor):
@@ -118,7 +133,6 @@ class CSVReport(object):
 
     def __call__(self, directory):
         self.write_row(self.processor(directory))
-        print('new row written to report','\n')
 
     def __del__(self):
         self.file.close()
@@ -133,4 +147,8 @@ class CSVReport(object):
         return formatted.replace(' ','_').replace(':','-')
 
     def write_row(self, data):
-        self.writer.writerow(data)
+        if data:
+            self.writer.writerow(data)
+            print('new row written to report','\n')
+        else:
+            print('Empty data, no rows written','\n')

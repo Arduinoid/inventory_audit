@@ -100,16 +100,25 @@ class MacAddressParse(BaseProcess):
 
     def __call__(self, directory):
         self.get_json_data(directory)
-        return self.extract_mac()
+        return self.get_each_card()
 
-    def extract_mac(self):
-            for i in self.json_data:
-                if self.descriptor in i['product']:
-                    print('Service Tag | Mac Address')
-                    print(self.tag,'|',i['serial'],'\n')
-                    return {'tag': self.tag, 'mac': i['serial']}
-            else:
-                print("Card info not found for {}".format(self.tag),'\n')
+    def get_each_card(self):
+            if isinstance(self.json_data,list):
+                for i in self.json_data:
+                    if self._get_mac_address(self._is_product(i)):
+                        return self._get_mac_address(self._is_product(i))
+            elif isinstance(self.json_data,dict):
+                return self._get_mac_address(self._is_product(self.json_data))
+
+    def _get_mac_address(self, card):
+        if card:
+            print('Service Tag | Mac Address')
+            print(self.tag,'|',card['serial'],'\n')
+            return {'tag': self.tag, 'mac': card['serial']}
+
+    def _is_product(self, card):
+        if self.descriptor in card['product']:
+            return card
 
 
 class ServerParse(BaseProcess):
@@ -139,53 +148,9 @@ class ServerParse(BaseProcess):
         with open(self.file_path + '/' + directory) as f:
             pass
 
-
-server_files = {
-    'HP': {
-        'path': FILE_PATH,
-        'drives': {
-            'file':'hp-drives.txt',
-            'attributes': [
-                "InterfaceType",
-                "Make",
-                "Model",
-                "Size",
-                "RotationalSpeed",
-                "FirmwareRevision",
-                "SerialNumber",
-                "PHYTransferRate",
-            ],
-            'split-term': 'drive',
-            'process': ''
-        },
-        'memory': 'dmi-memory.txt',
-        'system': 'dmi-system.txt',
-        'hpdiscovery': 'hpdiscovery-report.xml',
-        'lshw': 'lshw-report.txt',
-    },
-    'DELL': {
-        'path': DELL_FILE_PATH,
-        'drives': {
-            'file':'server-drives.txt',
-            'attributes': [
-                'RawSize',
-                'DeviceFirmwareLevel',
-                'Make',
-                'Model',
-                'Serial',
-                'DeviceSpeed',
-                'PDType'
-            ],
-            'split-term': 'Enclosure Device ID',
-            'process': lambda drives : [ parse_megaraid_inquiry_field(drive) for drive in drives ],
-            },
-        'controller': 'server-adapter-spec.txt',
-        'memory': 'dmi-memory.txt',
-        'system': 'dmi-system.txt',
-        'hpdiscovery': 'hpdiscovery-report.xml',
-        'lshw': 'lshw-report.txt'
-    }
-}
+########################################
+# CLEAN UP ZONE FOLLOWING THIS COMMENT #
+########################################
 
 
 # ------ BEGIN FUNCTIONS -------- #
