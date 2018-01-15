@@ -17,7 +17,7 @@ then
     cp $DEST/test-if.sh /scripts/test-if.sh
     cp $DEST/pull-scripts.sh /scripts/pull-scripts.sh
     cp $DEST/config /home/tv/Tom/config 
-    cp $DEST/rc.local /etc/rc.local
+    cp $DEST/startup.sh /scripts/startup.sh
 else
     echo "NFS mount not availible"
 fi
