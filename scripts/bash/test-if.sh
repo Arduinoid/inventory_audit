@@ -8,15 +8,15 @@ check_ips() {
     for i in $@
     do
         echo "Attempting to raise interface: $i"
+        dhclient $i
         IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
         [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
-        dhclient $i
     done
 }
 
 # Initialize interface file
 echo "Setting up interface..."
-echo "source /etc/network/interfaces" > $ETHCONF
+echo "source /etc/network/interfaces.d*" > $ETHCONF
 echo "auto lo" >> $ETHCONF
 echo "iface lo inet loopback" >> $ETHCONF
 echo "" >> $ETHCONF
