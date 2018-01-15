@@ -122,13 +122,16 @@ class ThermalPrinter(object):
     def _flush_content(self):
         self.content = dict()
 
+
 class CSVReport(object):
     def __init__(self, file_path, report_name, processor):
         self.file_path = file_path
-        self.report_name = self.new_report(report_name)
+        self.report_name = report_name
+        self.POnumber = None
         self.processor = processor
         self.headers = self.processor.attributes
         self.file = None
+        self.file_name = None
         self.writer = None
 
     def __call__(self, directory):
@@ -138,12 +141,12 @@ class CSVReport(object):
         self.file.close()
 
     def open_report(self):
-        self.file = open(self.file_path + '/' + self.report_name, 'w', newline='')
+        self.file = open(self.file_path + '/' + self.file_name, 'w', newline='')
         self.writer = csv.DictWriter(self.file, fieldnames=self.headers)
         self.writer.writeheader()
 
-    def new_report(self,name):
-        formatted = '{}_{}.csv'.format(name, datetime.now())
+    def new_report(self):
+        formatted = '{}_PO-{}_{}.csv'.format(self.report_name, self.POnumber, datetime.now())
         return formatted.replace(' ','_').replace(':','-')
 
     def write_row(self, data):
@@ -152,3 +155,20 @@ class CSVReport(object):
             print('new row written to report','\n')
         else:
             print('Empty data, no rows written','\n')
+
+    def get_po_input(self):
+        valid = False
+        while not valid:
+            POnum = input('Please enter PO number: ')
+            print(POnum,type(POnum))
+            if POnum.isalnum:
+                self.POnumber = POnum
+                self.file_name = self.new_report()
+                print("PO input excepted")
+                print("Scan servers to populate report located at:")
+                print(self.file_path, self.file_name)
+                valid = True
+            else:
+                print("please enter a valid alpha numeric PO Number containing no symbols")
+
+

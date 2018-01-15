@@ -1,7 +1,7 @@
 import csv
 from datetime import datetime
 
-from parser_utils import BaseProcess, MacAddressParse, ServerParse
+from parser_utils import MacAddressParse, ServerParse
 from utils import CSVReport, FileWatcher, ThermalPrinter,TEMPLATE,z
 
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
@@ -19,5 +19,6 @@ if __name__ == "__main__":
     print(r"\\________________________//",'\n')
     print('Press: ctrl+c to exit program','\n')
 
+    report.get_po_input()
     report.open_report()
-    watcher.watch(report,zeb)
+    watcher.watch(report)
