@@ -26,10 +26,6 @@ do
     echo "auto $i" >> $ETHCONF
     echo "iface $i inet dhcp" >> $ETHCONF
     echo "" >> $ETHCONF
-    # dhclient $i
-    # sleep 1
-    # IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
-    # [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
 done
 
 echo "Going to restart network"
