@@ -9,12 +9,13 @@ check_ips() {
     do
         IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
         [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
+        dhclient $i
     done
 }
 
 # Initialize interface file
 echo "Setting up interface..."
-echo "source /etc/network/interfaces.d*" > $ETHCONF
+echo "source /etc/network/interfaces" > $ETHCONF
 echo "auto lo" >> $ETHCONF
 echo "iface lo inet loopback" >> $ETHCONF
 echo "" >> $ETHCONF
@@ -28,9 +29,6 @@ do
     echo "" >> $ETHCONF
 done
 
-echo "Going to restart network"
-/etc/init.d/networking restart
-ifup -a > /dev/null 2>&1 
 check_ips $INET
 
 if [ $ECODE -gt 0 ]
@@ -39,4 +37,4 @@ then
     ifup -a > /dev/null 2>&1
     check_ips $INET
 fi
-exit $ECODE
+echo "network script exited with code: $ECODE" >> /scripts/script-log
