@@ -148,6 +148,11 @@ class ServerParse(BaseProcess):
         with open(self.file_path + '/' + directory) as f:
             pass
 
+
+class MemoryParser(BaseProcess):
+    def __init__(self, file_path, term, file_name='dmi-memory.txt'):
+        pass
+
 ########################################
 # CLEAN UP ZONE FOLLOWING THIS COMMENT #
 ########################################
