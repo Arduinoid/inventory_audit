@@ -49,9 +49,6 @@ class BaseProcess(object):
         get_context(lines, term=TERM)
         > [3,8]
         '''
-        if isinstance(lines, str):
-            lines = lines.split('\n')
-
         start_index = term_index(term,lines)
         end_index = list()
 
@@ -170,6 +167,7 @@ class MemoryParser(BaseProcess):
 
     def __call__(self,directory):
         self.get_file_content(directory, self.file_name)
+        indexes = self.term_index(self.descriptor,self.content)
         self.content = self.process.convert(directory, file_name)
 
 
