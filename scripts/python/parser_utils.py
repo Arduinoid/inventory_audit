@@ -37,11 +37,11 @@ class BaseProcess(object):
         """Opens and extracts contents of a file"""
         with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
             if '.txt' in file:
-                self.content = f.read().split('\n').strip()
+                self.content = [ i.strip() for i in f.read().split('\n') if i != '' ]
             else:
                 self.content = f.read()
 
-    def get_context(lines, term):
+    def get_context(self, lines, term):
         '''
         Get the end index for each start index in a list
 
@@ -63,6 +63,17 @@ class BaseProcess(object):
             end_index.append(start_index[index+1] -1 )
 
         return sublist(context,lines)
+
+    def term_index(self, term, lines):
+        '''
+        Small function that takes a list and a string and returns a list of line
+        indexes where that term shows up
+        '''
+        result = list()
+        for index, line in enumerate(lines):
+            if term in line:
+                result.append(index)
+        return result
 
     def _fix_json(self, data):
         '''
@@ -223,18 +234,18 @@ def process_drives(brand):
 
 
 # ------- UTILITY FUNCTIONS ------- #
-def term_index(term, lines):
-    '''
-    Small function that takes a list and a string and returns a list of line
-    indexes where that term shows up
-    '''
-    result = list()
+# def term_index(term, lines):
+#     '''
+#     Small function that takes a list and a string and returns a list of line
+#     indexes where that term shows up
+#     '''
+#     result = list()
 
-    for index, line in enumerate(lines):
-        if term in line:
-            result.append(index)
+#     for index, line in enumerate(lines):
+#         if term in line:
+#             result.append(index)
 
-    return result
+#     return result
 
 
 def sublist(bounds, lines):
