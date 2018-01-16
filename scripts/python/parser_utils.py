@@ -28,40 +28,41 @@ class BaseProcess(object):
     def __init__(self, file_path, file_name=None):
         assert os.path.exists(file_path), "File path is not valid or does not exist"
         self.path = os.path.abspath(file_path)
-        self.files = self._get_files(file_path)
-        self.content = self._get_contents(self.files)
+        self.file_name = file_name
+        self.content = None
         self.json_data = None
         self.tag = None
-        self.file_name = file_name
-
-
-    def _get_contents(self,files):
-        result = dict()
-        for d, l in files.items():
-            result[d] = dict()
-            for f in l:
-                with open(self.path + '\\' + d + '\\' + f, 'r') as file:
-                    result[d].update({f: file.read().split('\n') if '.txt' in f else file.read() })
-
-        return result 
-                
-            
-    def _get_files(self,file_path):
-        dirs = os.listdir(file_path)
-        files = dict()
-        for d in dirs:
-            if os.path.isdir(d) and '-spec' in d:
-                files[d] = os.listdir(file_path + '\\' + d)
-
-        return files
 
     def get_file_content(self, directory, file):
-        try:
-            with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
-                content = f.read()
-            return content
-        except FileNotFoundError:
-            return None
+        """Opens and extracts contents of a file"""
+        with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
+            if '.txt' in file:
+                self.content = f.read().split('\n').strip()
+            else:
+                self.content = f.read()
+
+    def get_context(lines, term):
+        '''
+        Get the end index for each start index in a list
+
+        example:
+        get_context(lines, term=TERM)
+        > [3,8]
+        '''
+        if isinstance(lines, str):
+            lines = lines.split('\n')
+
+        start_index = term_index(term,lines)
+        end_index = list()
+
+        for index, value in enumerate(lines):
+            if start_index[index+1:] == []:
+                end_index.append(len(lines))
+                context = list(zip(start_index, end_index))
+                break
+            end_index.append(start_index[index+1] -1 )
+
+        return sublist(context,lines)
 
     def _fix_json(self, data):
         '''
@@ -151,7 +152,16 @@ class ServerParse(BaseProcess):
 
 class MemoryParser(BaseProcess):
     def __init__(self, file_path, term, file_name='dmi-memory.txt'):
-        pass
+        super().__init__(file_path, file_name)
+        self.content = None
+        self.descriptor = term
+        self.attributes = None
+
+    def __call__(self,directory):
+        self.get_file_content(directory, self.file_name)
+        self.content = self.process.convert(directory, file_name)
+
+
 
 ########################################
 # CLEAN UP ZONE FOLLOWING THIS COMMENT #
@@ -159,28 +169,28 @@ class MemoryParser(BaseProcess):
 
 
 # ------ BEGIN FUNCTIONS -------- #
-def get_context(lines, term=TERM):
-    '''
-    Get the end index for each start index in a list
+# def get_context(lines, term=TERM):
+#     '''
+#     Get the end index for each start index in a list
 
-    example:
-    get_context(lines, term=TERM)
-    > [3,8]
-    '''
-    if type(lines).__name__ == 'str':
-        lines = lines.split('\n')
+#     example:
+#     get_context(lines, term=TERM)
+#     > [3,8]
+#     '''
+#     if type(lines).__name__ == 'str':
+#         lines = lines.split('\n')
 
-    start_index = term_index(term,lines)
-    end_index = list()
+#     start_index = term_index(term,lines)
+#     end_index = list()
 
-    for index, value in enumerate(lines):
-        if start_index[index+1:] == []:
-            end_index.append(len(lines))
-            context = list(zip(start_index, end_index))
-            break
-        end_index.append(start_index[index+1] -1 )
+#     for index, value in enumerate(lines):
+#         if start_index[index+1:] == []:
+#             end_index.append(len(lines))
+#             context = list(zip(start_index, end_index))
+#             break
+#         end_index.append(start_index[index+1] -1 )
 
-    return sublist(context,lines)
+#     return sublist(context,lines)
 
 
 def process_drives(brand):

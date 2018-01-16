@@ -8,9 +8,9 @@ check_ips() {
     for i in $@
     do
         echo "Attempting to raise interface: $i"
-        dhclient $i
+        ifup $i
         IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
-        [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR"; exit 0 || echo "Couldn't assign interface $i an ip"; ((ECODE++))
+        [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR" || echo "Couldn't assign interface $i an ip"; ((ECODE++))
     done
 }
 
