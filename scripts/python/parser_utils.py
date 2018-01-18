@@ -176,11 +176,24 @@ class MemoryParser(BaseProcess):
         for index, value in enumerate(data):
             if self.descriptor in value:
                 first_term = index
-                sub_data = data[last_term:first_term]
-                if sub_data != []:
+                sub_data =self.list_to_dict(data[last_term:first_term])
+                if sub_data != {}:
                     result.append(sub_data)
                 last_term = first_term
         return result
+
+    def list_to_dict(self, list_, delimiter=':'):
+        '''
+        Takes a string and a delimiter then splits into key values.
+        returns a dict
+        '''
+        result = dict()
+        key, value = (0, -1)
+        for string in list_:
+            spec = string.split(delimiter)
+            result.update({ spec[key].replace(' ','') : spec[value] })
+        return result
+
 
 class CPUParser(BaseProcess):
     pass
@@ -278,30 +291,30 @@ def sublist(bounds, lines):
     return [lines[i[0]:i[1]] for i in bounds]
 
 
-def lines_to_dict(lines):
-    '''
-    Takes a list of file lines and converts it into a python dictionary
+# def lines_to_dict(lines):
+#     '''
+#     Takes a list of file lines and converts it into a python dictionary
 
-    This is a very specific tool used for how hp outputs the drive contents
+#     This is a very specific tool used for how hp outputs the drive contents
     
-    Example:
-    lines_to_dict(file_lines)
-    > {'physicaldrive': 1, 'SerialNumber': '12345hgfd'}
-    '''
-    if type(lines).__name__ != 'list':
-        raise TypeError(
-            "Argument needs to be of <class list>, "
-            "<class {}> was given instead".format(type(lines).__name__)
-            ,lines)
+#     Example:
+#     lines_to_dict(file_lines)
+#     > {'physicaldrive': 1, 'SerialNumber': '12345hgfd'}
+#     '''
+#     if type(lines).__name__ != 'list':
+#         raise TypeError(
+#             "Argument needs to be of <class list>, "
+#             "<class {}> was given instead".format(type(lines).__name__)
+#             ,lines)
 
-    result = dict()
+#     result = dict()
 
-    for line in lines:
-        line = line.strip()
-        spec = line.split(':')
-        result[spec[0].replace(' ','').strip()] = spec[-1].strip()
+#     for line in lines:
+#         line = line.strip()
+#         spec = line.split(':')
+#         result[spec[0].replace(' ','').strip()] = spec[-1].strip()
 
-    return result
+#     return result
 
 
 def get_drive_attributes(dict_, attribs):
