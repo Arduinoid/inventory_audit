@@ -201,7 +201,15 @@ class MemoryParser(BaseProcess):
 
 
 class CPUParser(BaseProcess):
-    pass
+    def __init__(self, file_path, file_name='lshw-processor.json'):
+        super().__init__(file_path, file_name)
+        self.attributes = [
+            'vendor',
+            'model',
+            'speed',
+            'cores',
+            'threads'
+        ]
 
 
 class DriveParser(BaseProcess):
