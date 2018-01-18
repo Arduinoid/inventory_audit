@@ -18,6 +18,7 @@ class BaseProcess(object):
         self.path = os.path.abspath(file_path)
         self.file_name = file_name
         self.content = None
+        self.delimiter = ':'
         self.json_data = None
         self.tag = None
 
@@ -97,7 +98,7 @@ class BaseProcess(object):
                 last_term = first_term
         return result
 
-    def list_to_dict(self, list_, delimiter=':'):
+    def list_to_dict(self, list_, delimiter=self.delimiter):
         '''
         Takes a string and a delimiter then splits into key values.
         returns a dict
