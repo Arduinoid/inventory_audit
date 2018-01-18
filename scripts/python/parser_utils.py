@@ -84,6 +84,31 @@ class BaseProcess(object):
                 data = self._fix_json(data)
                 self.json_data = loads(data)
 
+    def split_by_term(self, data):
+        last_term = 0
+        first_term = 0
+        result = list()
+        for index, value in enumerate(data):
+            if self.descriptor in value:
+                first_term = index
+                sub_data =self.list_to_dict(data[last_term:first_term])
+                if sub_data != {}:
+                    result.append(sub_data)
+                last_term = first_term
+        return result
+
+    def list_to_dict(self, list_, delimiter=':'):
+        '''
+        Takes a string and a delimiter then splits into key values.
+        returns a dict
+        '''
+        result = dict()
+        key, value = (0, -1)
+        for string in list_:
+            spec = string.split(delimiter)
+            result.update({ spec[key].replace(' ','') : spec[value] })
+        return result
+
 
 class MacAddressParse(BaseProcess):
     '''
@@ -156,31 +181,6 @@ class MemoryParser(BaseProcess):
     def __call__(self,directory):
         self.get_file_content(directory, self.file_name)
         return self.split_by_term(self.content)
-
-    def split_by_term(self, data):
-        last_term = 0
-        first_term = 0
-        result = list()
-        for index, value in enumerate(data):
-            if self.descriptor in value:
-                first_term = index
-                sub_data =self.list_to_dict(data[last_term:first_term])
-                if sub_data != {}:
-                    result.append(sub_data)
-                last_term = first_term
-        return result
-
-    def list_to_dict(self, list_, delimiter=':'):
-        '''
-        Takes a string and a delimiter then splits into key values.
-        returns a dict
-        '''
-        result = dict()
-        key, value = (0, -1)
-        for string in list_:
-            spec = string.split(delimiter)
-            result.update({ spec[key].replace(' ','') : spec[value] })
-        return result
 
 
 class CPUParser(BaseProcess):
