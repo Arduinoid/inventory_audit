@@ -211,6 +211,13 @@ class CPUParser(BaseProcess):
             'threads'
         ]
 
+    def __call__(self, directory):
+        self.get_json_data(directory)
+        return self.cpu_data()
+
+    def cpu_data(self):
+        pass
+
 
 class DriveParser(BaseProcess):
     pass
