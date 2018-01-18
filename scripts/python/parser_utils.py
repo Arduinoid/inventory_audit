@@ -167,12 +167,20 @@ class MemoryParser(BaseProcess):
 
     def __call__(self,directory):
         self.get_file_content(directory, self.file_name)
-        indexes = self.get_context(self.content,self.descriptor)
-        return self.process.convert(self.content)
+        return self.split_by_term(self.content)
 
-    def convert(self, data):
-        pass
-
+    def split_by_term(self, data):
+        last_term = 0
+        first_term = 0
+        result = list()
+        for index, value in enumerate(data):
+            if self.descriptor in value:
+                first_term = index
+                sub_data = data[last_term:first_term]
+                if sub_data != []:
+                    result.append(sub_data)
+                last_term = first_term
+        return result
 
 class CPUParser(BaseProcess):
     pass
