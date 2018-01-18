@@ -49,7 +49,7 @@ class BaseProcess(object):
         get_context(lines, term=TERM)
         > [3,8]
         '''
-        start_index = term_index(term,lines)
+        start_index =self.term_index(term,lines)
         end_index = list()
 
         for index, value in enumerate(lines):
