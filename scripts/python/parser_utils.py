@@ -19,6 +19,7 @@ class BaseProcess(object):
         self.file_name = file_name
         self.content = None
         self.delimiter = ':'
+        self.empty_terms = None
         self.json_data = None
         self.tag = None
 
@@ -92,13 +93,13 @@ class BaseProcess(object):
         for index, value in enumerate(data):
             if self.descriptor in value:
                 first_term = index
-                sub_data =self.list_to_dict(data[last_term:first_term])
+                sub_data = self.list_to_dict(data[last_term:first_term])
                 if sub_data != {}:
                     result.append(sub_data)
                 last_term = first_term
         return result
 
-    def list_to_dict(self, list_, delimiter=self.delimiter):
+    def list_to_dict(self, list_):
         '''
         Takes a string and a delimiter then splits into key values.
         returns a dict
@@ -106,9 +107,18 @@ class BaseProcess(object):
         result = dict()
         key, value = (0, -1)
         for string in list_:
-            spec = string.split(delimiter)
+            spec = string.split(self.delimiter)
             result.update({ spec[key].replace(' ','') : spec[value] })
         return result
+
+    def filter_empty_terms(self, dict_):
+        '''
+        Takes a dict of parts info and returns any that don't
+        match empty terms
+        '''
+        key = list(self.empty_terms)[0]
+        terms = self.empty_terms[key]
+        return not any(term for term in terms if term in dict_[key])
 
 
 class MacAddressParse(BaseProcess):
@@ -173,15 +183,21 @@ class ServerParse(BaseProcess):
 
 
 class MemoryParser(BaseProcess):
-    def __init__(self, file_path, term, file_name='dmi-memory.txt'):
+    def __init__(self, file_path, term='Size', file_name='dmi-memory.txt'):
         super().__init__(file_path, file_name)
         self.content = None
         self.descriptor = term
         self.attributes = None
+        self.empty_terms = {
+            'Size': [
+                'NoModuleInstalled'
+            ]
+        }
 
     def __call__(self,directory):
         self.get_file_content(directory, self.file_name)
-        return self.split_by_term(self.content)
+        result = self.split_by_term(self.content)
+        return list(filter(self.filter_empty_terms, result))
 
 
 class CPUParser(BaseProcess):
