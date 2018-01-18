@@ -171,6 +171,17 @@ class MemoryParser(BaseProcess):
         self.content = self.process.convert(directory, file_name)
 
 
+class CPUParser(BaseProcess):
+    pass
+
+
+class DriveParser(BaseProcess):
+    pass
+
+
+class NetworkParser(BaseProcess):
+    pass
+
 
 ########################################
 # CLEAN UP ZONE FOLLOWING THIS COMMENT #
