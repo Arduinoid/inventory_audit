@@ -168,7 +168,10 @@ class MemoryParser(BaseProcess):
     def __call__(self,directory):
         self.get_file_content(directory, self.file_name)
         indexes = self.get_context(self.content,self.descriptor)
-        self.content = self.process.convert(directory, file_name)
+        return self.process.convert(self.content)
+
+    def convert(self, data):
+        pass
 
 
 class CPUParser(BaseProcess):
