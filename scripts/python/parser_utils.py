@@ -23,10 +23,11 @@ class BaseProcess(object):
         self.json_data = None
         self.tag = None
 
-    def get_file_content(self, directory, file):
+    def extract_file_content(self, directory):
         """Opens and extracts contents of a file"""
-        with open(self.path + '\\' + directory + '\\' + file, 'r') as f:
-            if '.txt' in file:
+        self.get_service_tag(directory)
+        with open(self.path + '\\' + directory + '\\' + self.file_name, 'r') as f:
+            if '.txt' in self.file_name:
                 self.content = [ i.strip() for i in f.read().split('\n') if i != '' ]
             else:
                 self.content = f.read()
@@ -71,20 +72,34 @@ class BaseProcess(object):
         a list and proper comma delimiters be inserted between objects
         '''
         data = data.strip()
+        data = self.insert_commas(self.wrap_in_list(self.remove_trailing_comma(data)))
+        return data
+
+    def remove_trailing_comma(self, data):
+        if ',' in data[-1]:
+            data = data[:-1]
+        return data
+
+    def wrap_in_list(self, data):
         if data.find('[') != 0:
             data = '[' + data + ']'
+        return data
+
+    def insert_commas(self, data):
         data = re.sub("}\s*{", "},{", data)
         return data
 
-    def get_json_data(self, directory):
-        self.tag = directory.split('-')[0]
-        data = self.get_file_content(directory, self.file_name)
+    def get_json_data(self):
+        data = self.content
         if data:
             try:
                 self.json_data = loads(data)
             except JSONDecodeError:
                 data = self._fix_json(data)
                 self.json_data = loads(data)
+
+    def get_service_tag(self, directory):
+        self.tag = directory.split('-')[0]
 
     def split_by_term(self, data):
         last_term = 0
@@ -132,7 +147,8 @@ class MacAddressParse(BaseProcess):
         self.attributes = ['tag','mac']
 
     def __call__(self, directory):
-        self.get_json_data(directory)
+        self.extract_file_content(directory)
+        self.get_json_data()
         return self.get_each_card()
 
     def get_each_card(self):
@@ -195,13 +211,29 @@ class MemoryParser(BaseProcess):
         }
 
     def __call__(self,directory):
-        self.get_file_content(directory, self.file_name)
+        self.extract_file_content(directory)
         result = self.split_by_term(self.content)
         return list(filter(self.filter_empty_terms, result))
 
 
 class CPUParser(BaseProcess):
-    pass
+    def __init__(self, file_path, file_name='lshw-processor.json'):
+        super().__init__(file_path, file_name)
+        self.attributes = [
+            'vendor',
+            'model',
+            'speed',
+            'cores',
+            'threads'
+        ]
+
+    def __call__(self, directory):
+        self.extract_file_content(directory)
+        self.get_json_data()
+        return self.cpu_data()
+
+    def cpu_data(self):
+        return self.json_data
 
 
 class DriveParser(BaseProcess):

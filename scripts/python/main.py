@@ -1,7 +1,7 @@
 import csv
 from datetime import datetime
 
-from parser_utils import MacAddressParse, MemoryParser, ServerParse
+from parser_utils import CPUParser, MacAddressParse, MemoryParser, ServerParse
 from utils import CSVReport, FileWatcher, ThermalPrinter,TEMPLATE,z
 
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
