@@ -6,18 +6,6 @@ import re
 
 # ----- SETUP VARIABLES ------ #
 FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs'
-DELL_FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs\\6TJ74S1-spec'
-HP_DRIVES = 'hp-drives.txt'
-DELL_DRIVES = 'server-drives.txt'
-TERM = 'drive'
-HP_DRIVE_ATTRIBS = [
-    "InterfaceType",
-    "Size",
-    "RotationalSpeed",
-    "FirmwareRevision",
-    "SerialNumber",
-    "PHYTransferRate",
-]
 
 class BaseProcess(object):
     '''
@@ -213,29 +201,6 @@ class NetworkParser(BaseProcess):
 
 
 # ------ BEGIN FUNCTIONS -------- #
-# def get_context(lines, term=TERM):
-#     '''
-#     Get the end index for each start index in a list
-
-#     example:
-#     get_context(lines, term=TERM)
-#     > [3,8]
-#     '''
-#     if type(lines).__name__ == 'str':
-#         lines = lines.split('\n')
-
-#     start_index = term_index(term,lines)
-#     end_index = list()
-
-#     for index, value in enumerate(lines):
-#         if start_index[index+1:] == []:
-#             end_index.append(len(lines))
-#             context = list(zip(start_index, end_index))
-#             break
-#         end_index.append(start_index[index+1] -1 )
-
-#     return sublist(context,lines)
-
 
 def process_drives(brand):
     '''
@@ -267,19 +232,6 @@ def process_drives(brand):
 
 
 # ------- UTILITY FUNCTIONS ------- #
-# def term_index(term, lines):
-#     '''
-#     Small function that takes a list and a string and returns a list of line
-#     indexes where that term shows up
-#     '''
-#     result = list()
-
-#     for index, line in enumerate(lines):
-#         if term in line:
-#             result.append(index)
-
-#     return result
-
 
 def sublist(bounds, lines):
     '''
@@ -289,33 +241,6 @@ def sublist(bounds, lines):
     The intended use is for grouping lines from a file
     '''
     return [lines[i[0]:i[1]] for i in bounds]
-
-
-# def lines_to_dict(lines):
-#     '''
-#     Takes a list of file lines and converts it into a python dictionary
-
-#     This is a very specific tool used for how hp outputs the drive contents
-    
-#     Example:
-#     lines_to_dict(file_lines)
-#     > {'physicaldrive': 1, 'SerialNumber': '12345hgfd'}
-#     '''
-#     if type(lines).__name__ != 'list':
-#         raise TypeError(
-#             "Argument needs to be of <class list>, "
-#             "<class {}> was given instead".format(type(lines).__name__)
-#             ,lines)
-
-#     result = dict()
-
-#     for line in lines:
-#         line = line.strip()
-#         spec = line.split(':')
-#         result[spec[0].replace(' ','').strip()] = spec[-1].strip()
-
-#     return result
-
 
 def get_drive_attributes(dict_, attribs):
     '''
