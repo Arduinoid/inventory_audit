@@ -241,7 +241,22 @@ class CPUParser(BaseProcess):
 
 
 class DriveParser(BaseProcess):
-    pass
+    def __init__(self, file_path, term='physicaldrive', make, file_name='-drives.txt'):
+        super()__init__(file_path, make+file_name)
+        self.descriptor = term
+        self.attributes = [
+            'make',
+            'model',
+            'type',
+            'interface',
+            'serial',
+            'firmware',
+        ]
+
+    def __call__(self, directory):
+        self.extract_file_content(directory)
+        result = self.split_by_term(self.content)
+        return result
 
 
 class NetworkParser(BaseProcess):
