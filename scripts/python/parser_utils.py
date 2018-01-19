@@ -135,6 +135,12 @@ class BaseProcess(object):
         terms = self.empty_terms[key]
         return not any(term for term in terms if term in dict_[key])
 
+    def extract_attributes(self):
+        result = list()
+        for data in self.json_data:
+            result.append({ k: data[v] if isinstance(v,str) else data[v[0]][v[1]] for k,v in self.attributes.items()})
+        return result
+
 
 class MacAddressParse(BaseProcess):
     '''
@@ -231,13 +237,8 @@ class CPUParser(BaseProcess):
     def __call__(self, directory):
         self.extract_file_content(directory)
         self.get_json_data()
-        return self.cpu_data()
+        return self.extract_attributes()
 
-    def cpu_data(self):
-        result = list()
-        for proc in self.json_data:
-            result.append({ k: proc[v] if isinstance(v,str) else proc[v[0]][v[1]] for k,v in self.attributes.items()})
-        return result
 
 class DriveParser(BaseProcess):
     pass
@@ -256,10 +257,7 @@ class NetworkParser(BaseProcess):
     def __call__(self, directory):
         self.extract_file_content(directory)
         self.get_json_data()
-        return self.network_data()
-
-    def network_data(self):
-        return self.json_data
+        return self.extract_attributes()
 
 
 ########################################
