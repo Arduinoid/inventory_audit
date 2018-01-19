@@ -219,13 +219,14 @@ class MemoryParser(BaseProcess):
 class CPUParser(BaseProcess):
     def __init__(self, file_path, file_name='lshw-processor.json'):
         super().__init__(file_path, file_name)
-        self.attributes = [
-            'vendor',
-            'model',
-            'speed',
-            'cores',
-            'threads'
-        ]
+        self.attributes = {
+            'make':'vendor',
+            'model':'version',
+            'speed':'size',
+            'width': 'width',
+            'cores': ['configuration', 'cores'],
+            'threads': ['configuration', 'threads'],
+        }
 
     def __call__(self, directory):
         self.extract_file_content(directory)
@@ -233,8 +234,10 @@ class CPUParser(BaseProcess):
         return self.cpu_data()
 
     def cpu_data(self):
-        return self.json_data
-
+        result = list()
+        for proc in self.json_data:
+            result.append({ k: proc[v] if isinstance(v,str) else proc[v[0]][v[1]] for k,v in self.attributes.items()})
+        return result
 
 class DriveParser(BaseProcess):
     pass

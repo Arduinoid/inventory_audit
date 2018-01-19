@@ -1,4 +1,4 @@
-import csv
+import csv, os
 from datetime import datetime
 
 from parser_utils import CPUParser, MacAddressParse, MemoryParser, ServerParse
