@@ -244,7 +244,22 @@ class DriveParser(BaseProcess):
 
 
 class NetworkParser(BaseProcess):
-    pass
+    def __init__(self, file_path, file_name='lshw-network.json'):
+        super().__init__(file_path, file_name)
+        self.attributes = {
+            'make': 'vendor',
+            'model': 'product',
+            'mac': 'serial',
+            'firmware': ['configuration', 'firmware'],
+        }
+
+    def __call__(self, directory):
+        self.extract_file_content(directory)
+        self.get_json_data()
+        return self.network_data()
+
+    def network_data(self):
+        return self.json_data
 
 
 ########################################

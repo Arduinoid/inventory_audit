@@ -30,7 +30,7 @@ class FileWatcher(object):
     for when new files and folders show up.
     '''
 
-    def __init__(self, path, descriptor):
+    def __init__(self, path, descriptor='-spec'):
         self.path = path
         self.descriptor = descriptor
         self.old_files = self._filter_folders()
