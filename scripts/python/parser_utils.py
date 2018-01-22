@@ -20,7 +20,7 @@ class BaseProcess(object):
         self.content = None
         self.delimiter = ':'
         self.empty_terms = None
-        self.json_data = None
+        self.data = None
         self.tag = None
 
     def extract_file_content(self, directory):
@@ -93,10 +93,10 @@ class BaseProcess(object):
         data = self.content
         if data:
             try:
-                self.json_data = loads(data)
+                self.data = loads(data)
             except JSONDecodeError:
                 data = self._fix_json(data)
-                self.json_data = loads(data)
+                self.data = loads(data)
 
     def get_service_tag(self, directory):
         self.tag = directory.split('-')[0]
@@ -112,7 +112,7 @@ class BaseProcess(object):
                 if sub_data != {}:
                     result.append(sub_data)
                 last_term = first_term
-        return result
+        self.data = result
 
     def list_to_dict(self, list_):
         '''
@@ -137,7 +137,7 @@ class BaseProcess(object):
 
     def extract_attributes(self):
         result = list()
-        for data in self.json_data:
+        for data in self.data:
             result.append({ k: data[v] if isinstance(v,str) else data[v[0]][v[1]] for k,v in self.attributes.items()})
         return result
 
@@ -158,12 +158,12 @@ class MacAddressParse(BaseProcess):
         return self.get_each_card()
 
     def get_each_card(self):
-            if isinstance(self.json_data,list):
-                for i in self.json_data:
+            if isinstance(self.data,list):
+                for i in self.data:
                     if self._get_mac_address(self._is_product(i)):
                         return self._get_mac_address(self._is_product(i))
-            elif isinstance(self.json_data,dict):
-                return self._get_mac_address(self._is_product(self.json_data))
+            elif isinstance(self.data,dict):
+                return self._get_mac_address(self._is_product(self.data))
 
     def _get_mac_address(self, card):
         if card:
@@ -247,6 +247,7 @@ class DriveParser(BaseProcess):
         self.attributes = {
             'make': 'Make',
             'model': 'Model',
+            'size': 'Size',
             'type': 'DriveType',
             'interface': 'InterfaceType',
             'serial': 'SerialNumber',
@@ -255,8 +256,9 @@ class DriveParser(BaseProcess):
 
     def __call__(self, directory):
         self.extract_file_content(directory)
-        result = self.split_by_term(self.content)[1:]
-        result = list(map(self.split_hp_model_field, result))
+        self.split_by_term(self.content)
+        self.data = list(map(self.split_hp_model_field, self.data[1:]))
+        result = self.extract_attributes()
         return result
 
     def split_hp_model_field(self, dict_):
