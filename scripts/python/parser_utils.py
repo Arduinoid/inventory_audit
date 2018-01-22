@@ -5,7 +5,7 @@ import os
 import re
 
 # ----- SETUP VARIABLES ------ #
-FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs'
+# FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs'
 
 class BaseProcess(object):
     '''
@@ -31,6 +31,14 @@ class BaseProcess(object):
                 self.content = [ i.strip() for i in f.read().split('\n') if i != '' ]
             else:
                 self.content = f.read()
+
+    def set_server_make(self, directory):
+        files = os.listdir(self.path + '\\' + directory)
+        for file in files:
+            if file.find(self.file_name) > -1:
+                self.make = file.split('-')[0]
+                break
+        self.file_name = self.make + self.file_name
 
     def get_context(self, lines, term):
         '''
@@ -90,13 +98,7 @@ class BaseProcess(object):
         return data
 
     def get_json_data(self):
-        data = self.content
-        if data:
-            try:
-                self.data = loads(data)
-            except JSONDecodeError:
-                data = self._fix_json(data)
-                self.data = loads(data)
+        self.data = loads(self._fix_json(self.content))
 
     def get_service_tag(self, directory):
         self.tag = directory.split('-')[0]
@@ -241,9 +243,10 @@ class CPUParser(BaseProcess):
 
 
 class DriveParser(BaseProcess):
-    def __init__(self, file_path, make, term='physicaldrive', file_name='-drives.txt'):
-        super().__init__(file_path, make+file_name)
+    def __init__(self, file_path, term='physicaldrive', file_name='-drives.txt'):
+        super().__init__(file_path, file_name)
         self.descriptor = term
+        self.make = None
         self.attributes = {
             'make': 'Make',
             'model': 'Model',
@@ -253,13 +256,31 @@ class DriveParser(BaseProcess):
             'serial': 'SerialNumber',
             'firmware': 'FirmwareRevision',
         }
+        self.procedures = {
+            'hp': self.hp_process,
+            'dell': self.dell_process,
+            'server': self.server_process,
+        }
 
     def __call__(self, directory):
+        self.set_server_make(directory)
         self.extract_file_content(directory)
         self.split_by_term(self.content)
+        self.process_by_make()
+        return self.extract_attributes()
+
+    def hp_process(self):
         self.data = list(map(self.split_hp_model_field, self.data[1:]))
-        result = self.extract_attributes()
-        return result
+
+    def dell_process(self):
+        pass
+
+    def server_process(self):
+        pass
+
+    def process_by_make(self):
+        processor = self.procedures[self.make]
+        processor()
 
     def split_hp_model_field(self, dict_):
         '''
@@ -281,7 +302,6 @@ class NetworkParser(BaseProcess):
             'make': 'vendor',
             'model': 'product',
             'mac': 'serial',
-            'firmware': ['configuration', 'firmware'],
         }
 
     def __call__(self, directory):

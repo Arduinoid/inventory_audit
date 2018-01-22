@@ -15,8 +15,8 @@ header_written = False
 net = NetworkParser(FILE_PATH)
 net_data = net(os.listdir(net.path)[1])
 
-drive = DriveParser(FILE_PATH, 'hp')
-drive_data = drive(os.listdir(drive.path)[1])
+drive = DriveParser(FILE_PATH)
+drive_data = drive(os.listdir(drive.path)[2])
 
 if __name__ == "__main__":
     print("   ________________________")
