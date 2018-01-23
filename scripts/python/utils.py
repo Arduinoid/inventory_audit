@@ -172,3 +172,11 @@ class CSVReport(object):
                 print("please enter a valid alpha numeric PO Number containing no symbols")
 
 
+class PrinterTemplate(object):
+    def __init__(self, attrs):
+        self.attrs = attrs
+        self.line = "{a}: {{{a}}}"
+
+    def generate(self):
+        temp_string = [ line.format(a=a) for a in self.attrs ]
+        return '\n'.join(temp_string)
