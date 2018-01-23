@@ -155,6 +155,7 @@ class MacAddressParse(BaseProcess):
         super().__init__(file_path, file_name)
         self.descriptor = descriptor
         self.attributes = ['mac','tag']
+        self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
         self.extract_file_content(directory)
@@ -197,6 +198,7 @@ class ServerParse(BaseProcess):
             'controller',
             'cache',
             ]
+        self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
         self.process(directory)
@@ -219,6 +221,7 @@ class MemoryParser(BaseProcess):
                 'NoModuleInstalled'
             ]
         }
+        # self.template = PrinterTemplate(self.attributes)
 
     def __call__(self,directory):
         self.extract_file_content(directory)
@@ -237,6 +240,7 @@ class CPUParser(BaseProcess):
             'cores': ['configuration', 'cores'],
             'threads': ['configuration', 'threads'],
         }
+        self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
         self.extract_file_content(directory)
@@ -253,9 +257,9 @@ class DriveParser(BaseProcess):
             'make': 'Make',
             'model': 'Model',
             'size': 'Size',
+            'serial': 'SerialNumber',
             'type': 'DriveType',
             'interface': 'InterfaceType',
-            'serial': 'SerialNumber',
             'firmware': 'FirmwareRevision',
         }
         self.procedures = {
@@ -263,6 +267,7 @@ class DriveParser(BaseProcess):
             'dell': self.dell_process,
             'server': self.server_process,
         }
+        self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
         self.set_server_make(directory)
