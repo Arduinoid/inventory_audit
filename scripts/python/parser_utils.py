@@ -236,8 +236,8 @@ class CPUParser(BaseProcess):
             'make':'vendor',
             'model':'version',
             'speed':'size',
-            'width': 'width',
             'cores': ['configuration', 'cores'],
+            'width': 'width',
             'threads': ['configuration', 'threads'],
         }
         self.template = PrinterTemplate(self.attributes)
@@ -245,8 +245,12 @@ class CPUParser(BaseProcess):
     def __call__(self, directory):
         self.extract_file_content(directory)
         self.get_json_data()
+        self.convert_speed()
         return self.extract_attributes()
 
+    def convert_speed(self):
+        for d in self.data:
+            d['size'] = d['size'] / 1000**3
 
 class DriveParser(BaseProcess):
     def __init__(self, file_path, term='physicaldrive', file_name='-drives.txt'):
