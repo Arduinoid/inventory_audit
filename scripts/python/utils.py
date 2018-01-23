@@ -89,41 +89,34 @@ class FileWatcher(object):
 
 class ThermalPrinter(object):
     '''
-    Takes a string template containing key value formating and runs 
-    several given processor objects to compose the content that will be merged 
-    with the template and sent to a printer.
+    Takes an object that should return a list of dicts when called.
+    The object should also have a callable template attribute that returns
+    a string that is used for a template. The template and the content are combined
+    and then printed.
 
-    p = ThermalPrinter(template, [mac, specs, memory], 'Zebra')
+    p = ThermalPrinter(mac, printer=Zebra)
     '''
-    def __init__(self, template, processors, printer=z):
+    def __init__(self, parser, printer=z):
         self.printer = printer
-        self.template = template
-        self.content = dict()
-        self.processors = processors
-        self.payload = None
+        self.template = None
+        self.content = None
+        self.parser = parser
+        self.payload = list()
 
     def __call__(self, directory):
         self.compose_content(directory)
-        if self.isEmpty(self.content):
-            self.print_out()
-            self._flush_content()
+        self.print_out()
 
     def print_out(self):
-        self.payload = self.template.format(**self.content)
-        self.printer.output(self.payload)
+        for p in self.payload:
+            self.printer.output(p)
 
     def compose_content(self, directory):
-        for p in self.processors:
-            self.content.update(p(directory)) if p(directory) else None
-            self.template = p.template(directory) if p.template(directory) else None
-        
-
-    def isEmpty(self, dict_):
-        if dict_ and len(dict_) > 0 and isinstance(dict_,dict):
-                return dict_
-
-    def _flush_content(self):
-        self.content = dict()
+        self.content = self.parser(directory)
+        self.template = self.parser.template()
+        for c in self.content:
+            temp = self.template.format(**c)
+            self.payload.append(temp)
 
 
 class CSVReport(object):
@@ -180,16 +173,20 @@ class PrinterTemplate(object):
         self.attrs = list(attrs)
         self.font_size = font_size
         self.dpi = 203
+        self.label_size = None
+        self.margin = None
+        self.line_positions = None
+        self.data = None
         self.main_temp = '^XA\n{main}\n^XZ'
-        self.label_size = self.convert_size(label_size)
-        self.margin = self.set_margin(margin)
-        self.line_positions = self.calculate_positions()
-        self.data = self.combine_data()
+        self.attr_content = '^FO20,{pos_y}\n^A0,{size},{size}\n^FD\n{attribute}: {{{attribute}}}\n^FS'
         self.payload = None
-        self.attr_content = '^FO70,{pos_y}\n^A0,{size},{size}\n^FD\n{attribute}: {{{attribute}}}\n^FS'
+        self.convert_size(label_size)
+        self.set_margin(margin)
+        self.calculate_positions()
+        self.combine_data()
+        self.generate()
 
     def __call__(self):
-        self.generate()
         return self.payload
 
     def generate(self):
@@ -205,7 +202,7 @@ class PrinterTemplate(object):
     def convert_size(self, size):
         '''Takes a tuple and returns a tuple'''
         height, width = size
-        return (height*self.dpi, width*self.dpi)
+        self.label_size = (height*self.dpi, width*self.dpi)
 
     def set_margin(self, percent):
         '''
@@ -215,13 +212,13 @@ class PrinterTemplate(object):
         set_margin(20)
         '''
         convert = percent * 0.01
-        return int(self.label_size[1] * convert)
+        self.margin = int(self.label_size[1] * convert)
 
     def calculate_positions(self):
         start = self.margin
         end = self.label_size[1] - self.margin
         step = self.font_size + 10
-        return list(range(start,end,step))
+        self.line_positions = list(range(start,end,step))
 
     def combine_data(self):
-        return zip(self.attrs, self.line_positions)
+        self.data = zip(self.attrs, self.line_positions)

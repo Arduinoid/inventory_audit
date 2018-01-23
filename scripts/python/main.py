@@ -7,17 +7,12 @@ from utils import CSVReport, FileWatcher, PrinterTemplate, ThermalPrinter,TEMPLA
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
 specs = ServerParse(FILE_PATH)
 mac = MacAddressParse(FILE_PATH, 'SFP')
-zeb = ThermalPrinter(TEMPLATE, [mac])
+net = NetworkParser(FILE_PATH)
+drive = DriveParser(FILE_PATH)
+zeb = ThermalPrinter(net)
 watcher = FileWatcher(FILE_PATH)
 # report = CSVReport(FILE_PATH, 'test_report', mac)
 # header_written = False
-temp = PrinterTemplate(mac.attributes)
-
-net = NetworkParser(FILE_PATH)
-net_data = net(os.listdir(net.path)[1])
-
-drive = DriveParser(FILE_PATH)
-drive_data = drive(os.listdir(drive.path)[2])
 
 if __name__ == "__main__":
     print("   ________________________")
