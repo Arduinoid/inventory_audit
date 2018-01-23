@@ -4,6 +4,8 @@ from json import JSONDecodeError, loads
 import os
 import re
 
+from utils import PrinterTemplate
+
 # ----- SETUP VARIABLES ------ #
 # FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs'
 
@@ -152,7 +154,7 @@ class MacAddressParse(BaseProcess):
     def __init__(self,file_path, descriptor, file_name='lshw-network.json'):
         super().__init__(file_path, file_name)
         self.descriptor = descriptor
-        self.attributes = ['tag','mac']
+        self.attributes = ['mac','tag']
 
     def __call__(self, directory):
         self.extract_file_content(directory)
@@ -303,6 +305,7 @@ class NetworkParser(BaseProcess):
             'model': 'product',
             'mac': 'serial',
         }
+        self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
         self.extract_file_content(directory)

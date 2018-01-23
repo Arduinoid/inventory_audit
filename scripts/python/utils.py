@@ -8,13 +8,13 @@ from zebra import zebra
 
 TEMPLATE = '''
 ^XA
-^FO100,100
-^A0,60,60
+^FO70,50
+^A0,30,30
 ^FD
 MAC:{mac}
 ^FS
-^FO100,200
-^A0,60,60
+^FO70,90
+^A0,30,30
 ^FD
 TAG:{tag}
 ^FS
@@ -100,6 +100,7 @@ class ThermalPrinter(object):
         self.template = template
         self.content = dict()
         self.processors = processors
+        self.payload = None
 
     def __call__(self, directory):
         self.compose_content(directory)
@@ -108,12 +109,14 @@ class ThermalPrinter(object):
             self._flush_content()
 
     def print_out(self):
-        payload = self.template.format(**self.content)
-        self.printer.output(payload)
+        self.payload = self.template.format(**self.content)
+        self.printer.output(self.payload)
 
     def compose_content(self, directory):
         for p in self.processors:
             self.content.update(p(directory)) if p(directory) else None
+            self.template = p.template(directory) if p.template(directory) else None
+        
 
     def isEmpty(self, dict_):
         if dict_ and len(dict_) > 0 and isinstance(dict_,dict):
@@ -173,10 +176,52 @@ class CSVReport(object):
 
 
 class PrinterTemplate(object):
-    def __init__(self, attrs):
-        self.attrs = attrs
-        self.line = "{a}: {{{a}}}"
+    def __init__(self, attrs, label_size=(3,1), font_size=30, margin=20):
+        self.attrs = list(attrs)
+        self.font_size = font_size
+        self.dpi = 203
+        self.main_temp = '^XA\n{main}\n^XZ'
+        self.label_size = self.convert_size(label_size)
+        self.margin = self.set_margin(margin)
+        self.line_positions = self.calculate_positions()
+        self.data = self.combine_data()
+        self.payload = None
+        self.attr_content = '^FO70,{pos_y}\n^A0,{size},{size}\n^FD\n{attribute}: {{{attribute}}}\n^FS'
+
+    def __call__(self):
+        self.generate()
+        return self.payload
 
     def generate(self):
-        temp_string = [ line.format(a=a) for a in self.attrs ]
-        return '\n'.join(temp_string)
+        result = ''
+        for d in self.data:
+            result += self.attr_content.format(
+                pos_y=d[1],
+                size=self.font_size,
+                attribute=d[0]
+            )
+        self.payload = self.main_temp.format(main=result)
+
+    def convert_size(self, size):
+        '''Takes a tuple and returns a tuple'''
+        height, width = size
+        return (height*self.dpi, width*self.dpi)
+
+    def set_margin(self, percent):
+        '''
+        Takes an whole int that represents percent and sets
+        the margin field based on label height 
+        
+        set_margin(20)
+        '''
+        convert = percent * 0.01
+        return int(self.label_size[1] * convert)
+
+    def calculate_positions(self):
+        start = self.margin
+        end = self.label_size[1] - self.margin
+        step = self.font_size + 10
+        return list(range(start,end,step))
+
+    def combine_data(self):
+        return zip(self.attrs, self.line_positions)
