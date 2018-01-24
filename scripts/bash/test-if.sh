@@ -40,9 +40,4 @@ done
 echo "Attempting to raise interfaces..."
 up_link $INET
 
-if [ $ECODE -gt 0 ]
-then
-    ECODE=0
-    up_link $INET
-fi
 echo "network script exited with code: $ECODE" >> /scripts/script-log
