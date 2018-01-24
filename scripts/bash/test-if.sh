@@ -9,7 +9,7 @@ up_link() {
     do
         echo "Attempting to raise interface: $i"
         ip link set up $i
-        sleep 1
+        sleep 3
         STATE=`cat /sys/class/net/$i/carrier`
         if [ $STATE -eq 1 ]
         then
