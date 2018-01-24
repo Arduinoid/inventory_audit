@@ -14,7 +14,8 @@ up_link() {
         if [ $i -eq 1 ]
         then
             ifup $i &
-            exit 0
+            ECODE=0
+            break
         else
             ((ECODE++))
         fi
