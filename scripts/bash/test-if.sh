@@ -4,13 +4,20 @@ INET=`ifconfig -a | sed -n 's/^\S/&/p' | sed -n 's/^e.*/&/p' | cut -d ' ' -f 1`
 ETHCONF=/etc/network/interfaces
 ECODE=0
 
-check_ips() {
+up_link() {
     for i in $@
     do
         echo "Attempting to raise interface: $i"
-        ifup $i
-        IPADDR=`ip addr show $i | grep -i inet | sed -n 's/\s*//p' | cut -d ' ' -f 2`
-        [ ! -z "$IPADDR" ] && echo "Interface $i has ip: $IPADDR" || echo "Couldn't assign interface $i an ip"; ((ECODE++))
+        ip link set up $i
+        sleep 1
+        STATE=`cat /sys/class/net/$i/carrier`
+        if [ $i -eq 1 ]
+        then
+            ifup $i &
+            exit 0
+        else
+            ((ECODE++))
+        fi
     done
 }
 
@@ -30,11 +37,11 @@ do
     echo "" >> $ETHCONF
 done
 echo "Attempting to raise interfaces..."
-check_ips $INET
+up_link $INET
 
 if [ $ECODE -gt 0 ]
 then
     ECODE=0
-    check_ips $INET
+    up_link $INET
 fi
 echo "network script exited with code: $ECODE" >> /scripts/script-log
