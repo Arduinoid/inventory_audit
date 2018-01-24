@@ -11,7 +11,7 @@ up_link() {
         ip link set up $i
         sleep 1
         STATE=`cat /sys/class/net/$i/carrier`
-        if [ $i -eq 1 ]
+        if [ $STATE -eq 1 ]
         then
             ifup $i &
             ECODE=0

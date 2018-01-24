@@ -6,7 +6,7 @@ DIRNAME=$STAG-spec
 DIRPATH="/tmp/$DIRNAME"
 CLEANUP="/scripts/cleanup.sh"
 
-mkdir $DIRPATH
+mkdir -p $DIRPATH
 
 echo "#!/bin/sh" > $CLEANUP
 echo "cp -r $DIRPATH /mnt/server-specs" >> $CLEANUP
