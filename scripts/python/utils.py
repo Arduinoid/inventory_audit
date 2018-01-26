@@ -112,11 +112,17 @@ class ThermalPrinter(object):
             self.printer.output(p)
 
     def compose_content(self, directory):
-        self.content = self.parser(directory)
+        self.content = self.wrap_in_list(self.parser(directory))
         self.template = self.parser.template()
         for c in self.content:
             temp = self.template.format(**c)
             self.payload.append(temp)
+    
+    def wrap_in_list(self, content):
+        if not isinstance(content,list):
+            return [content]
+        else:
+            return content
 
 
 class CSVReport(object):
@@ -143,23 +149,24 @@ class CSVReport(object):
 
     def new_report(self):
         formatted = '{}_PO-{}_{}.csv'.format(self.report_name, self.POnumber, datetime.now())
-        return formatted.replace(' ','_').replace(':','-')
+        self.file_name = formatted.replace(' ','_').replace(':','-')
 
     def write_row(self, data):
-        if data:
-            self.writer.writerow(data)
+        if isinstance(data,list):
+            for d in data:
+                self.writer.writerow(d)
             print('new row written to report','\n')
         else:
+            self.writer.writerow(data)
             print('Empty data, no rows written','\n')
 
     def get_po_input(self):
         valid = False
         while not valid:
             POnum = input('Please enter PO number: ')
-            print(POnum,type(POnum))
             if POnum.isalnum:
                 self.POnumber = POnum
-                self.file_name = self.new_report()
+                self.new_report()
                 print("PO input excepted")
                 print("Scan servers to populate report located at:")
                 print(self.file_path, self.file_name)

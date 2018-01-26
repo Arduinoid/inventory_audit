@@ -10,9 +10,9 @@ mac = MacAddressParse(FILE_PATH, 'SFP')
 net = NetworkParser(FILE_PATH)
 drive = DriveParser(FILE_PATH)
 cpu = CPUParser(FILE_PATH)
-zeb = ThermalPrinter(cpu)
+zeb = ThermalPrinter(drive)
 watcher = FileWatcher(FILE_PATH)
-report = CSVReport(FILE_PATH, 'test_report', mac)
+report = CSVReport(FILE_PATH, 'server_report', drive)
 # header_written = False
 
 if __name__ == "__main__":

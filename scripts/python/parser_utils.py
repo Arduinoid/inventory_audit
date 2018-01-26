@@ -34,14 +34,6 @@ class BaseProcess(object):
             else:
                 self.content = f.read()
 
-    def set_server_make(self, directory):
-        files = os.listdir(self.path + '\\' + directory)
-        for file in files:
-            if file.find(self.file_name) > -1:
-                self.make = file.split('-')[0]
-                break
-        self.file_name = self.make + self.file_name
-
     def get_context(self, lines, term):
         '''
         Get the end index for each start index in a list
@@ -172,8 +164,7 @@ class MacAddressParse(BaseProcess):
 
     def _get_mac_address(self, card):
         if card:
-            print('Service Tag | Mac Address')
-            print(self.tag,'|',card['serial'],'\n')
+            
             return {'tag': self.tag, 'mac': card['serial']}
 
     def _is_product(self, card):
@@ -253,8 +244,9 @@ class CPUParser(BaseProcess):
             d['size'] = d['size'] / 1000**3
 
 class DriveParser(BaseProcess):
-    def __init__(self, file_path, term='physicaldrive', file_name='-drives.txt'):
-        super().__init__(file_path, file_name)
+    def __init__(self, file_path, term='physicaldrive', file_suffix='-drives.txt'):
+        super().__init__(file_path)
+        self.file_suffix = file_suffix
         self.descriptor = term
         self.make = None
         self.attributes = {
@@ -301,9 +293,17 @@ class DriveParser(BaseProcess):
         There will then be a new dict returned containing a new 'Make' field and the 
         existing 'Model' field will only contain the model info
         '''
-        data = dict_['Model'].strip().split(' ')
+        data = dict_['Model'].strip().split()
         dict_['Make'], dict_['Model'] = data
         return dict_
+
+    def set_server_make(self, directory):
+        files = os.listdir(self.path + '\\' + directory)
+        for file in files:
+            if file.find(self.file_suffix) > -1:
+                self.make = file.split('-')[0]
+                break
+        self.file_name = self.make + self.file_suffix
 
 
 class NetworkParser(BaseProcess):
