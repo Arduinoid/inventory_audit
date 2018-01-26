@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVER="10.11.203.100"
+SERVER="192.168.1.1"
 MOUNT=`df | grep -i nfs`
 COUNT=1
 PCOUNT=0
