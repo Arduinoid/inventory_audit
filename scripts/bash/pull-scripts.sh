@@ -12,12 +12,13 @@ then
     echo "Finished syning"
 
     echo "Distributing files throughout system..."
-    cp $DEST/get-specs.sh /scripts/get-specs.sh 
-    cp $DEST/check-mount.sh /scripts/check-mount.sh 
-    cp $DEST/test-if.sh /scripts/test-if.sh
-    cp $DEST/pull-scripts.sh /scripts/pull-scripts.sh
-    cp $DEST/config /home/tv/Tom/config 
-    cp $DEST/startup.sh /scripts/startup.sh
+    cp $DEST/get-specs.sh /scripts/
+    cp $DEST/check-mount.sh /scripts/ 
+    cp $DEST/test-if.sh /scripts/
+    cp $DEST/pull-scripts.sh /scripts/
+    cp $DEST/config /home/tv/Tom/ 
+    cp $DEST/startup.sh /scripts/
+    cp $DEST/dhclient.conf /etc/dhcp/
 else
     echo "NFS mount not availible"
 fi
