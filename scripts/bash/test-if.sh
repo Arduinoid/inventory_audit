@@ -13,7 +13,7 @@ up_link() {
         STATE=`cat /sys/class/net/$i/carrier`
         if [ $STATE -eq 1 ]
         then
-            ifup $i &
+            dhclient $i &
             ECODE=0
             break
         else
