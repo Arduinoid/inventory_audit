@@ -12,7 +12,7 @@ drive = DriveParser(FILE_PATH)
 cpu = CPUParser(FILE_PATH)
 zeb = ThermalPrinter(cpu)
 watcher = FileWatcher(FILE_PATH)
-# report = CSVReport(FILE_PATH, 'test_report', mac)
+report = CSVReport(FILE_PATH, 'test_report', mac)
 # header_written = False
 
 if __name__ == "__main__":
@@ -22,6 +22,6 @@ if __name__ == "__main__":
     print(r"\\________________________//",'\n')
     print('Press: ctrl+c to exit program','\n')
 
-    # report.get_po_input()
-    # report.open_report()
+    report.get_po_input()
+    report.open_report()
     watcher.watch(report,zeb)
