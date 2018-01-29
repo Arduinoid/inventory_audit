@@ -110,6 +110,7 @@ class ThermalPrinter(object):
     def print_out(self):
         for p in self.payload:
             self.printer.output(p)
+        self.clear_buffer()
 
     def compose_content(self, directory):
         self.content = self.wrap_in_list(self.parser(directory))
@@ -117,6 +118,11 @@ class ThermalPrinter(object):
         for c in self.content:
             temp = self.template.format(**c)
             self.payload.append(temp)
+
+    def clear_buffer(self):
+        self.content = None
+        self.template = None
+        self. payload = list()
     
     def wrap_in_list(self, content):
         if not isinstance(content,list):
