@@ -143,6 +143,10 @@ class BaseProcess(object):
             result.append({ k: data[v] if isinstance(v,str) else data[v[0]][v[1]] for k,v in self.attributes.items()})
         return result
 
+    def sum_(self):
+        '''This will turn many individual parts into a sum of their values'''
+        return dict()
+
 
 class MacAddressParse(BaseProcess):
     '''
@@ -183,6 +187,7 @@ class ServerParse(BaseProcess):
         super().__init__(file_path)
         self.file_path = file_path
         self.content = None
+        self.data = dict()
         self.components = {
             'chassis' : ChassisParser(file_path),
             'cpu': CPUParser(file_path),
@@ -203,9 +208,12 @@ class ServerParse(BaseProcess):
         self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
-        return self.output_specs()
+        self.compose_specs()
+        return self.data
 
-    def output_specs(self):
+    def compose_specs(self):
+        for key, part in self.components.items():
+            self.data.update(part.sum_())
         return dict()
 
     def collect_attributes(self):
