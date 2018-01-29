@@ -98,17 +98,24 @@ class BaseProcess(object):
         self.tag = directory.split('-')[0]
 
     def split_by_term(self, data):
-        last_term = 0
-        first_term = 0
+        last_index = 0
+        first_index = 0
         result = list()
+
+        for d in self.term_index(data):
+            if d == first_index:
+                continue
+            first_index = d
+            result.append(self.list_to_dict(data[last_index:first_index]))
+            last_index = first_index
+        self.data = result
+
+    def term_index(self, data):
         for index, value in enumerate(data):
             if self.descriptor in value:
-                first_term = index
-                sub_data = self.list_to_dict(data[last_term:first_term])
-                if sub_data != {}:
-                    result.append(sub_data)
-                last_term = first_term
-        self.data = result
+                yield index
+        else:
+            yield len(data)
 
     def list_to_dict(self, list_):
         '''
