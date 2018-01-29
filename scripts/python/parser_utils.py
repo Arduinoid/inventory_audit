@@ -101,7 +101,6 @@ class BaseProcess(object):
         last_index = 0
         first_index = 0
         result = list()
-
         for d in self.term_index(data):
             if d == first_index:
                 continue
@@ -215,7 +214,16 @@ class MemoryParser(BaseProcess):
         super().__init__(file_path, file_name)
         self.content = None
         self.descriptor = term
-        self.attributes = None
+        self.attributes = [
+            'Size',
+            'Type',
+            'TypeDetail',
+            'Manufacturer',
+            'SerialNumber',
+            'PartNumber',
+            'Rank',
+            'Speed',
+        ]
         self.empty_terms = {
             'Size': [
                 'NoModuleInstalled'
@@ -226,8 +234,8 @@ class MemoryParser(BaseProcess):
     def __call__(self,directory):
         self.extract_file_content(directory)
         self.split_by_term(self.content)
-        # return list(filter(self.filter_empty_terms, result))
-        return self.data
+        return list(filter(self.filter_empty_terms, self.data))
+        # return self.data
 
 
 class CPUParser(BaseProcess):
