@@ -214,7 +214,6 @@ class ServerParse(BaseProcess):
     def compose_specs(self):
         for key, part in self.components.items():
             self.data.update(part.sum_())
-        return dict()
 
 
 class MemoryParser(BaseProcess):
