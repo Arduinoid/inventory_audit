@@ -322,6 +322,21 @@ class NetworkParser(BaseProcess):
         return self.extract_attributes()
 
 
+class ChassisParser(BaseProcess):
+    def __init__(self, file_path, file_name='dmi-system.txt'):
+        super().__init__(file_path, file_name)
+        self.attributes = [
+            'Manufacturer',
+            'ProductName',
+            'SerialNumber',
+        ]
+        self.template = PrinterTemplate(self.attributes)
+
+    def __call__(self, directory):
+        self.extract_file_content(directory)
+        return self.list_to_dict(self.content)
+
+
 ########################################
 # CLEAN UP ZONE FOLLOWING THIS COMMENT #
 ########################################

@@ -1,7 +1,7 @@
 import csv, os
 from datetime import datetime
 
-from parser_utils import CPUParser, DriveParser, MacAddressParse, MemoryParser, NetworkParser, ServerParse
+from parser_utils import ChassisParser, CPUParser, DriveParser, MacAddressParse, MemoryParser, NetworkParser, ServerParse
 from utils import CSVReport, FileWatcher, PrinterTemplate, ThermalPrinter,TEMPLATE,z
 
 FILE_PATH = "//10.11.203.100/nfs/server-specs"
@@ -10,10 +10,11 @@ mac = MacAddressParse(FILE_PATH, 'SFP')
 net = NetworkParser(FILE_PATH)
 drive = DriveParser(FILE_PATH)
 cpu = CPUParser(FILE_PATH)
-zeb = ThermalPrinter(drive)
 watcher = FileWatcher(FILE_PATH)
 report = CSVReport(FILE_PATH, 'server_report', drive)
-# header_written = False
+chassis = ChassisParser(FILE_PATH)
+servers = os.listdir(chassis.path)
+zeb = ThermalPrinter(chassis)
 
 if __name__ == "__main__":
     print("   ________________________")
