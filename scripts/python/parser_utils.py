@@ -190,11 +190,23 @@ class ServerParse(BaseProcess):
             'drives': DriveParser(file_path),
             'network': NetworkParser(file_path),
         }
-        self.attributes = self.collect_attributes()
+        self.attributes = {
+            'make': 'Manufacturer',
+            'model': 'ProductName',
+            'tag': 'SerialNumber',
+            'cpu': 'cpu',
+            'memory': 'memory',
+            'storage': 'drives',
+            'controller': 'controller',
+            'network': 'network',
+        }
         self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
-        self.process(directory)
+        return self.output_specs()
+
+    def output_specs(self):
+        return dict()
 
     def collect_attributes(self):
         result = list()
