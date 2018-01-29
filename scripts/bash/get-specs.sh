@@ -14,8 +14,7 @@ echo "rm $CLEANUP" >> $CLEANUP
 chmod +x $CLEANUP
 
 dmidecode -t 1 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Product/p' -e '/Serial/p' > $DIRPATH/dmi-system.txt
-dmidecode -t 3 | sed -e 's/\t//g' -e 's/\s//g' | sed -n '/Asset/p' >> $DIRPATH/dmi-system.txt
-dmidecode -t 17 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Part/p' -e '/Serial/p' -e '/Size/p' -e'/Type/p' -e '/Rank/p' > $DIRPATH/dmi-memory.txt
+dmidecode -t 17 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Part/p' -e '/Serial/p' -e '/Size/p' -e'/Type/p' -e '/Rank/p' -e '/Speed/p' > $DIRPATH/dmi-memory.txt
 lshw -json -quiet > $DIRPATH/lshw-report.json
 lshw -html -quiet > $DIRPATH/lshw-report.html
 lshw -businfo -quiet > $DIRPATH/lshw-businfo.json
