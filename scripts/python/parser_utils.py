@@ -174,25 +174,27 @@ class MacAddressParse(BaseProcess):
 
 class ServerParse(BaseProcess):
     def __init__(self,file_path):
+        super().__init__(file_path)
         self.file_path = file_path
-        self.content = dict()
-        self.attributes = [
-            'make',
-            'model',
-            'serial',
-            'memory_total',
-            'memory_count',
-            'memory_size',
-            'cpu',
-            'cpu_count',
-            'mac',
-            'controller',
-            'cache',
-            ]
+        self.content = None
+        self.components = {
+            'chassis' : ChassisParser(file_path),
+            'cpu': CPUParser(file_path),
+            'memory': MemoryParser(file_path),
+            'drives': DriveParser(file_path),
+            'network': NetworkParser(file_path),
+        }
+        self.attributes = self.collect_attributes()
         self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
         self.process(directory)
+
+    def collect_attributes(self):
+        result = list()
+        for key, value in self.components.items():
+            result.append(value.attributes)
+        return result
 
     def process(self,directory):
         tag = directory.split('-')[0]
