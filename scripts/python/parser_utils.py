@@ -219,7 +219,8 @@ class MemoryParser(BaseProcess):
     def __call__(self,directory):
         self.extract_file_content(directory)
         result = self.split_by_term(self.content)
-        return list(filter(self.filter_empty_terms, result))
+        # return list(filter(self.filter_empty_terms, result))
+        return result
 
 
 class CPUParser(BaseProcess):
