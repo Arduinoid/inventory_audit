@@ -216,18 +216,6 @@ class ServerParse(BaseProcess):
             self.data.update(part.sum_())
         return dict()
 
-    def collect_attributes(self):
-        result = list()
-        for key, value in self.components.items():
-            result.append(value.attributes)
-        return result
-
-    def process(self,directory):
-        tag = directory.split('-')[0]
-        payload = dict()
-        with open(self.file_path + '/' + directory) as f:
-            pass
-
 
 class MemoryParser(BaseProcess):
     def __init__(self, file_path, term='Size', file_name='dmi-memory.txt'):
