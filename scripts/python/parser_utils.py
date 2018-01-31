@@ -266,6 +266,7 @@ class CPUParser(BaseProcess):
             'DDec': '12',
             'HDec': '16',
         }
+        self.sum_template = "{count}x {cores} {model}"
         self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
@@ -280,6 +281,10 @@ class CPUParser(BaseProcess):
 
     def sum_(self):
         result = dict()
+        cpu = self.data[0]
+        count = len(self.data)
+        model = cpu['version']
+        result['cpu'] = self.sum_template.format(count=count,cores=self.convert_cores(cpu), model=model)
         return result
 
     def convert_cores(self, data):
