@@ -257,6 +257,15 @@ class CPUParser(BaseProcess):
             'width': 'width',
             'threads': ['configuration', 'threads'],
         }
+        self.cores = {
+            'Dual': '2',
+            'Quad': '4',
+            'Hex': '6',
+            'Oct': '8',
+            'Deca': '10',
+            'DDec': '12',
+            'HDec': '16',
+        }
         self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
@@ -270,7 +279,13 @@ class CPUParser(BaseProcess):
             d['size'] = d['size'] / 1000**3
 
     def sum_(self):
-        return dict()
+        result = dict()
+        return result
+
+    def convert_cores(self, data):
+        for name, core in self.cores.items():
+            if core == data['configuration']['cores']:
+                return name
 
 
 class DriveParser(BaseProcess):
