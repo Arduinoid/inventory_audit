@@ -6,6 +6,8 @@ from datetime import datetime
 from time import sleep
 from zebra import zebra
 
+from config import PRINTER_NAME, LABEL_DIMENSIONS
+
 TEMPLATE = '''
 ^XA
 ^FO70,50
@@ -20,8 +22,6 @@ TAG:{tag}
 ^FS
 ^XZ
 '''
-
-z = zebra(queue='ZDesigner GK420d')
 
 
 class FileWatcher(object):
@@ -96,7 +96,7 @@ class ThermalPrinter(object):
 
     p = ThermalPrinter(mac, printer=Zebra)
     '''
-    def __init__(self, parser, printer=z):
+    def __init__(self, parser, printer):
         self.printer = printer
         self.template = None
         self.content = None
