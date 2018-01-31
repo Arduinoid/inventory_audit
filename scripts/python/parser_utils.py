@@ -6,8 +6,6 @@ import re
 
 from utils import PrinterTemplate
 
-# ----- SETUP VARIABLES ------ #
-# FILE_PATH = 'C:\\Users\\Jon\\Documents\\Code\\inventory_audit\\sample_info\\server-specs'
 
 class BaseProcess(object):
     '''
@@ -142,10 +140,6 @@ class BaseProcess(object):
         for data in self.data:
             result.append({ k: data[v] if isinstance(v,str) else data[v[0]][v[1]] for k,v in self.attributes.items()})
         return result
-
-def sum_(self):
-    '''This will turn many individual parts into a sum of their values'''
-    return dict()
 
 
 class MacAddressParse(BaseProcess):
@@ -459,91 +453,3 @@ class ChassisParser(BaseProcess):
 
     def cleanup_model(self):
         self.data['Manufacturer'] = self.data['Manufacturer'].replace('Inc.', '')
-
-
-########################################
-# CLEAN UP ZONE FOLLOWING THIS COMMENT #
-########################################
-
-
-# ------ BEGIN FUNCTIONS -------- #
-
-def process_drives(brand):
-    '''
-    Takes a list of list and returns a list of dicts
-
-    Using a lot of the utility functions this, function processes
-    sub lists into easier to use dictionaries for later usage
-
-    One of those intended uses is converting to json and then sending to a 
-    RESTful API
-
-    example:
-    process_drives([
-        ['spec1: value1', '   spec2: value2'],
-        ['spec1: value1', '   spec2: value2']
-    ]) 
-    > [
-        {'spec1': 'value1', 'spec2': 'value2'},
-        {'spec1': 'value1', 'spec2': 'value2'}
-        ]
-    '''
-    spec = 'drives'
-    process = server_files[brand][spec]['process']
-    attribs = server_files[brand][spec]['attributes']
-    drives = [lines_to_dict(drive) for drive in get_context(open_spec_file(brand,spec,server_files),spec)]
-    drives = [get_drive_attributes(process(drive),attribs) for drive in drives]
-
-    return drives
-
-
-# ------- UTILITY FUNCTIONS ------- #
-
-def sublist(bounds, lines):
-    '''
-    Takes a list and some indecies and returns a list of lists
-    In other words it splits a list into chunks
-
-    The intended use is for grouping lines from a file
-    '''
-    return [lines[i[0]:i[1]] for i in bounds]
-
-def get_drive_attributes(dict_, attribs):
-    '''
-    Take a dictionary of HP drive specs and return a new dictionary of specs 
-    based on a given list
-    '''
-    try:
-        assert type(dict_).__name__ == 'dict', "Need to make sure to pass in a dict"
-        return { key: dict_[key] for key in attribs }
-    except KeyError:
-        print("Key value does not exist in your list or dict argument")
-
-
-def parse_megaraid_inquiry_field(dict_):
-    '''
-    Takes a dictionary of megaraid attributes and parses
-    the 'InquiryData' field into it's separate 'make','model', and 'serial' data.
-    This is then injected back into the dictionary and returned. A non destructive
-    copy of the given dict is returned
-    '''
-    result = list()
-    data = dict_['InquiryData'].strip()
-    while True:
-        index = data.find(' ')
-        result.append(data[:index])
-        data = data[index:].strip()
-        if data.find(' ') < 0:
-            result.append(data)
-            break
-
-    assert len(result) == 3, f'Result does not have all three datum: {result}'
-    dict_['Make'] = result[0]
-    dict_['Model'] = result[1]
-    dict_['Serial'] = result[2]
-
-    return dict_
-
-
-
-
