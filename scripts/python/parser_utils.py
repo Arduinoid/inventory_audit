@@ -446,10 +446,15 @@ class ChassisParser(BaseProcess):
 
     def __call__(self, directory):
         self.extract_file_content(directory)
-        return self.list_to_dict(self.content)
+        self.data = self.list_to_dict(self.content)
+        return self.data
 
     def sum_(self):
-        return dict()
+        result = dict()
+        result['make'] = self.data['Manufacturer']
+        result['model'] = self.data['ProductName']
+        result['tag'] = self.data['SerialNumber']
+        return result
 
 
 ########################################
