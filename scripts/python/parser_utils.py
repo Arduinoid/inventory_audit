@@ -236,15 +236,40 @@ class MemoryParser(BaseProcess):
                 'NoModuleInstalled'
             ]
         }
+        self.sum_template = "{total}GB Total {count} pcs x {size}GB"
         self.template = PrinterTemplate(self.attributes)
 
     def __call__(self, directory):
         self.extract_file_content(directory)
         self.split_by_term(self.content)
-        return list(filter(self.filter_empty_terms, self.data))
+        self.data = list(filter(self.filter_empty_terms, self.data))
+        return self.data
 
     def sum_(self):
-        return dict()
+        result = dict()
+        mem = self.data[0]
+        count = len(self.data)
+        total = self.total_installed(self.data)
+        size = self.extract_number(mem['Size'])
+        result['memory'] = self.sum_template.format(
+            total=total,
+            count=count,
+            size=size
+        )
+        return result
+
+    def total_installed(self, data):
+        total = 0
+        for i in data:
+            total += self.extract_number(i['Size'])
+        return total
+
+    def extract_number(self, data):
+        return self.size_convert(int(data.replace('MB','')))
+
+    def size_convert(self, data):
+        return data // 1024
+
 
 class CPUParser(BaseProcess):
     def __init__(self, file_path, file_name='lshw-processor.json'):
