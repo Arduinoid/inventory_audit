@@ -174,7 +174,6 @@ class MacAddressParse(BaseProcess):
 
     def _get_mac_address(self, card):
         if card:
-            
             return {'tag': self.tag, 'mac': card['serial']}
 
     def _is_product(self, card):
@@ -213,8 +212,9 @@ class ServerParse(BaseProcess):
 
     def compose_specs(self, directory):
         for key, part in self.components.items():
-            # self.data.update(part(directory).sum_())
-            self.data.update(dict())
+            part(directory)
+            self.data.update(part.sum_())
+            # self.data.update(dict())
 
 
 class MemoryParser(BaseProcess):
@@ -268,6 +268,10 @@ class CPUParser(BaseProcess):
     def convert_speed(self):
         for d in self.data:
             d['size'] = d['size'] / 1000**3
+
+    def sum_(self):
+        return dict()
+
 
 class DriveParser(BaseProcess):
     def __init__(self, file_path, term='physicaldrive', file_suffix='-drives.txt'):
@@ -331,6 +335,9 @@ class DriveParser(BaseProcess):
                 break
         self.file_name = self.make + self.file_suffix
 
+    def sum_(self):
+        return dict()
+
 
 class NetworkParser(BaseProcess):
     def __init__(self, file_path, file_name='lshw-network.json'):
@@ -347,6 +354,9 @@ class NetworkParser(BaseProcess):
         self.get_json_data()
         return self.extract_attributes()
 
+    def sum_(self):
+        return dict()
+
 
 class ChassisParser(BaseProcess):
     def __init__(self, file_path, file_name='dmi-system.txt'):
@@ -362,6 +372,9 @@ class ChassisParser(BaseProcess):
     def __call__(self, directory):
         self.extract_file_content(directory)
         return self.list_to_dict(self.content)
+
+    def sum_(self):
+        return dict()
 
 
 ########################################
