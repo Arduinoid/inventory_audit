@@ -143,9 +143,9 @@ class BaseProcess(object):
             result.append({ k: data[v] if isinstance(v,str) else data[v[0]][v[1]] for k,v in self.attributes.items()})
         return result
 
-    def sum_(self):
-        '''This will turn many individual parts into a sum of their values'''
-        return dict()
+def sum_(self):
+    '''This will turn many individual parts into a sum of their values'''
+    return dict()
 
 
 class MacAddressParse(BaseProcess):
@@ -214,7 +214,6 @@ class ServerParse(BaseProcess):
         for key, part in self.components.items():
             part(directory)
             self.data.update(part.sum_())
-            # self.data.update(dict())
 
 
 class MemoryParser(BaseProcess):
@@ -243,8 +242,9 @@ class MemoryParser(BaseProcess):
         self.extract_file_content(directory)
         self.split_by_term(self.content)
         return list(filter(self.filter_empty_terms, self.data))
-        # return self.data
 
+    def sum_(self):
+        return dict()
 
 class CPUParser(BaseProcess):
     def __init__(self, file_path, file_name='lshw-processor.json'):
@@ -283,7 +283,7 @@ class CPUParser(BaseProcess):
         result = dict()
         cpu = self.data[0]
         count = len(self.data)
-        model = cpu['version']
+        model = self.cleanup_product_name(cpu['product'])
         result['cpu'] = self.sum_template.format(count=count,cores=self.convert_cores(cpu), model=model)
         return result
 
@@ -292,6 +292,10 @@ class CPUParser(BaseProcess):
             if core == data['configuration']['cores']:
                 return name
 
+    def cleanup_product_name(self, data):
+        result = data.replace('(R)', '').replace('CPU', '').split()
+        return ' '.join(result)
+
 
 class DriveParser(BaseProcess):
     def __init__(self, file_path, term='physicaldrive', file_suffix='-drives.txt'):
@@ -299,7 +303,7 @@ class DriveParser(BaseProcess):
         self.file_suffix = file_suffix
         self.descriptor = term
         self.make = None
-        self.attributes = {
+        self.hp_attributes = {
             'make': 'Make',
             'model': 'Model',
             'size': 'Size',
@@ -307,6 +311,20 @@ class DriveParser(BaseProcess):
             'type': 'DriveType',
             'interface': 'InterfaceType',
             'firmware': 'FirmwareRevision',
+        }
+        self.dell_attributes = {
+            'make': 'Make',
+            'model': 'Model',
+            'size': 'RawSize',
+            'serial': 'Serial',
+            'type': 'MediaType',
+            'interface': 'PDType',
+            'firmware': 'DeviceFirmwareLevel',
+        }
+        self.attributes = self.dell_attributes
+        self.terms = {
+            'hp': 'physicaldrive',
+            'dell': 'Enclosure Device ID'
         }
         self.procedures = {
             'hp': self.hp_process,
@@ -323,10 +341,12 @@ class DriveParser(BaseProcess):
         return self.extract_attributes()
 
     def hp_process(self):
+        self.attributes = self.hp_attributes
         self.data = list(map(self.split_hp_model_field, self.data[1:]))
 
     def dell_process(self):
-        pass
+        self.attributes = self.dell_attributes
+        self.data = list(map(self.split_dell_inquiry_field, self.data))
 
     def server_process(self):
         pass
@@ -345,6 +365,16 @@ class DriveParser(BaseProcess):
         '''
         data = dict_['Model'].strip().split()
         dict_['Make'], dict_['Model'] = data
+        return dict_
+
+    def split_dell_inquiry_field(self, dict_):
+        '''
+        split the inquiry field into make, model, and serial.
+        The MegaCli utility puts all of the information into on field
+        '''
+        data = dict_['InquiryData'].strip().split()
+        dict_['Make'], dict_['Model'], dict_['Serial'] = data
+        dict_['RawSize'] = dict_['RawSize'].split('[')[0].strip()
         return dict_
 
     def set_server_make(self, directory):

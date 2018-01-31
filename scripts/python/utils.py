@@ -160,13 +160,15 @@ class CSVReport(object):
         self.file_name = formatted.replace(' ','_').replace(':','-')
 
     def write_row(self, data):
-        if isinstance(data,list):
-            for d in data:
-                self.writer.writerow(d)
+        if data != None:
+            if isinstance(data,list):
+                for d in data:
+                    self.writer.writerow(d)
+            else:
+                self.writer.writerow(data)
             print('new row written to report','\n')
         else:
-            self.writer.writerow(data)
-            print('Empty data, no rows written','\n')
+            print('No data to write to report')
 
     def get_po_input(self):
         valid = False
