@@ -447,6 +447,7 @@ class ChassisParser(BaseProcess):
     def __call__(self, directory):
         self.extract_file_content(directory)
         self.data = self.list_to_dict(self.content)
+        self.cleanup_model()
         return self.data
 
     def sum_(self):
@@ -455,6 +456,9 @@ class ChassisParser(BaseProcess):
         result['model'] = self.data['ProductName']
         result['tag'] = self.data['SerialNumber']
         return result
+
+    def cleanup_model(self):
+        self.data['Manufacturer'] = self.data['Manufacturer'].replace('Inc.', '')
 
 
 ########################################
