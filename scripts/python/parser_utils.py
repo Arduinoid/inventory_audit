@@ -153,16 +153,15 @@ class MacAddressParse(BaseProcess):
     This class will extract mac address information
     based on a descriptor in a cards product name
     '''
-    def __init__(self,file_path, directory, descriptor, file_name='lshw-network.json'):
+    def __init__(self,file_path, descriptor, file_name='lshw-network.json'):
         super().__init__(file_path, file_name)
         self.descriptor = descriptor
-        self.directory = directory
         self.attributes = ['mac','tag']
         self.template = PrinterTemplate(self.attributes)
+
+    def __call__(self, directory):
         self.extract_file_content(directory)
         self.get_json_data()
-
-    def __call__(self):
         return self.get_each_card()
 
     def get_each_card(self):
@@ -184,18 +183,17 @@ class MacAddressParse(BaseProcess):
 
 
 class ServerParse(BaseProcess):
-    def __init__(self, file_path, directory):
+    def __init__(self, file_path):
         super().__init__(file_path)
         self.file_path = file_path
-        self.directory = directory
         self.content = None
         self.data = dict()
         self.components = {
-            'chassis' : ChassisParser(file_path, directory),
-            'cpu': CPUParser(file_path, directory),
-            'memory': MemoryParser(file_path, directory),
-            'drives': DriveParser(file_path, directory),
-            'network': NetworkParser(file_path, directory),
+            'chassis' : ChassisParser(file_path),
+            'cpu': CPUParser(file_path),
+            'memory': MemoryParser(file_path),
+            'drives': DriveParser(file_path),
+            'network': NetworkParser(file_path),
         }
         self.attributes = {
             'make': 'Manufacturer',
@@ -208,21 +206,21 @@ class ServerParse(BaseProcess):
             'network': 'network',
         }
         self.template = PrinterTemplate(self.attributes)
-        self.compose_specs()
 
-    def __call__(self):
+    def __call__(self, directory):
+        self.compose_specs(directory)
         return self.data
 
-    def compose_specs(self):
+    def compose_specs(self, directory):
         for key, part in self.components.items():
-            self.data.update(part.sum_())
+            # self.data.update(part(directory).sum_())
+            self.data.update(dict())
 
 
 class MemoryParser(BaseProcess):
-    def __init__(self, file_path, directory, term='Size', file_name='dmi-memory.txt'):
+    def __init__(self, file_path, term='Size', file_name='dmi-memory.txt'):
         super().__init__(file_path, file_name)
         self.content = None
-        self.directory = directory
         self.descriptor = term
         self.attributes = [
             'Size',
@@ -240,18 +238,17 @@ class MemoryParser(BaseProcess):
             ]
         }
         self.template = PrinterTemplate(self.attributes)
+
+    def __call__(self, directory):
         self.extract_file_content(directory)
         self.split_by_term(self.content)
-
-    def __call__(self):
         return list(filter(self.filter_empty_terms, self.data))
         # return self.data
 
 
 class CPUParser(BaseProcess):
-    def __init__(self, file_path, directory, file_name='lshw-processor.json'):
+    def __init__(self, file_path, file_name='lshw-processor.json'):
         super().__init__(file_path, file_name)
-        self.directory = directory
         self.attributes = {
             'make':'vendor',
             'model':'version',
@@ -261,11 +258,11 @@ class CPUParser(BaseProcess):
             'threads': ['configuration', 'threads'],
         }
         self.template = PrinterTemplate(self.attributes)
+
+    def __call__(self, directory):
         self.extract_file_content(directory)
         self.get_json_data()
         self.convert_speed()
-
-    def __call__(self):
         return self.extract_attributes()
 
     def convert_speed(self):
@@ -273,9 +270,8 @@ class CPUParser(BaseProcess):
             d['size'] = d['size'] / 1000**3
 
 class DriveParser(BaseProcess):
-    def __init__(self, file_path, directory, term='physicaldrive', file_suffix='-drives.txt'):
+    def __init__(self, file_path, term='physicaldrive', file_suffix='-drives.txt'):
         super().__init__(file_path)
-        self.directory = directory
         self.file_suffix = file_suffix
         self.descriptor = term
         self.make = None
@@ -294,12 +290,12 @@ class DriveParser(BaseProcess):
             'server': self.server_process,
         }
         self.template = PrinterTemplate(self.attributes)
+
+    def __call__(self, directory):
         self.set_server_make(directory)
         self.extract_file_content(directory)
         self.split_by_term(self.content)
         self.process_by_make()
-
-    def __call__(self):
         return self.extract_attributes()
 
     def hp_process(self):
@@ -337,35 +333,34 @@ class DriveParser(BaseProcess):
 
 
 class NetworkParser(BaseProcess):
-    def __init__(self, file_path, directory, file_name='lshw-network.json'):
+    def __init__(self, file_path, file_name='lshw-network.json'):
         super().__init__(file_path, file_name)
-        self.directory = directory
         self.attributes = {
             'make': 'vendor',
             'model': 'product',
             'mac': 'serial',
         }
         self.template = PrinterTemplate(self.attributes)
+
+    def __call__(self, directory):
         self.extract_file_content(directory)
         self.get_json_data()
-
-    def __call__(self):
         return self.extract_attributes()
 
 
 class ChassisParser(BaseProcess):
-    def __init__(self, file_path, directory, file_name='dmi-system.txt'):
+    def __init__(self, file_path, file_name='dmi-system.txt'):
         super().__init__(file_path, file_name)
-        self.directory = directory
+        
         self.attributes = [
             'Manufacturer',
             'ProductName',
             'SerialNumber',
         ]
         self.template = PrinterTemplate(self.attributes)
-        self.extract_file_content(directory)
 
-    def __call__(self):
+    def __call__(self, directory):
+        self.extract_file_content(directory)
         return self.list_to_dict(self.content)
 
 

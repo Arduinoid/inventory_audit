@@ -15,7 +15,7 @@ watcher = FileWatcher(FILE_PATH)
 report = CSVReport(FILE_PATH, 'server_report', mem)
 chassis = ChassisParser(FILE_PATH)
 servers = os.listdir(chassis.path)
-zeb = ThermalPrinter(chassis)
+zeb = ThermalPrinter(mac)
 
 if __name__ == "__main__":
     print("   ________________________")

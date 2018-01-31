@@ -113,11 +113,13 @@ class ThermalPrinter(object):
         self.clear_buffer()
 
     def compose_content(self, directory):
-        self.content = self.wrap_in_list(self.parser(directory))
-        self.template = self.parser.template()
-        for c in self.content:
-            temp = self.template.format(**c)
-            self.payload.append(temp)
+        result = self.parser(directory)
+        if result != None:
+            self.content = self.wrap_in_list(result)
+            self.template = self.parser.template()
+            for c in self.content:
+                temp = self.template.format(**c)
+                self.payload.append(temp)
 
     def clear_buffer(self):
         self.content = None
