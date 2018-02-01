@@ -2,7 +2,7 @@
 
 STAG=`dmidecode -t 1 | grep -i serial | sed -e 's/^.*:\s//' -e 's/\s//g'`
 MANU=`dmidecode -t 1 | grep -i manufact | sed -e 's/^.*:\s//' | cut -d ' ' -f 1`
-DIRNAME=$STAG-spec
+[ -z "$STAG" ] && GEN=$RANDOM; DIRNAME=NNAA$GEN-spec || DIRNAME=$STAG-spec
 DIRPATH="/tmp/$DIRNAME"
 CLEANUP="/scripts/cleanup.sh"
 
@@ -14,6 +14,7 @@ echo "rm $CLEANUP" >> $CLEANUP
 chmod +x $CLEANUP
 
 dmidecode -t 1 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Product/p' -e '/Serial/p' > $DIRPATH/dmi-system.txt
+[ -z "$STAG" ] && sed -i "s/SerialNumber:/& $GEN/" $DIRPATH/dmi-system.txt
 dmidecode -t 17 | sed -e 's/\t//g' -e 's/\s//g' | sed -n -e '/Manufacturer/p' -e '/Part/p' -e '/Serial/p' -e '/Size/p' -e'/Type/p' -e '/Rank/p' -e '/Speed/p' > $DIRPATH/dmi-memory.txt
 lshw -json -quiet > $DIRPATH/lshw-report.json
 lshw -html -quiet > $DIRPATH/lshw-report.html
