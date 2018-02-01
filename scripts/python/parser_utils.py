@@ -156,6 +156,7 @@ class MacAddressParse(BaseProcess):
     def __call__(self, directory):
         self.extract_file_content(directory)
         self.get_json_data()
+        print('Printing mac address for server: {}'.format(self.tag))
         return self.get_each_card()
 
     def get_each_card(self):

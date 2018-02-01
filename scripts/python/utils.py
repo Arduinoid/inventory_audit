@@ -166,7 +166,7 @@ class CSVReport(object):
                     self.writer.writerow(d)
             else:
                 self.writer.writerow(data)
-            print('new row written to report','\n')
+            print('new row written to report'.format(data['tag']),'\n')
         else:
             print('No data to write to report')
 
